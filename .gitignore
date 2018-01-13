@@ -1,2 +1,5 @@
 /bin/
 *.classpath
+*.class
+Desktop.ini
+*.jar
