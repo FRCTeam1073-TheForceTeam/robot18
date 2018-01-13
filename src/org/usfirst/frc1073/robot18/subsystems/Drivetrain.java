@@ -80,6 +80,11 @@ public class DriveTrain extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    public void basicDrive(double left, double right) {
+    	
+    	rightMotor3E.set(right);
+    	leftMotor1E.set(left);
+    }
 
 }
 
