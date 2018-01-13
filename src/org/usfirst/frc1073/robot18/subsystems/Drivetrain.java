@@ -80,6 +80,8 @@ public class DriveTrain extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    
+    //Used for non-PID auto routines (semi-temp).
     public void basicDrive(double left, double right) {
     	
     	rightMotor3E.set(right);
