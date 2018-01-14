@@ -20,7 +20,7 @@ public class Drive extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    	difDrive = new DifferentialDrive(RobotMap.leftMotor1E, RobotMap.rightMotor3E);
+    	difDrive = new DifferentialDrive(RobotMap.leftMotor3E, RobotMap.rightMotor3E);
     }
 
     // Called repeatedly when this Command is scheduled to run

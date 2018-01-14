@@ -107,22 +107,22 @@ public class AutonomousCommand extends Command {
 	// If block is far away: sets motor directions
 			if (xWidth < 200) {
 				if (dir.equals("Right")) {
-					RobotMap.leftMotor1E.set(-speedEnd);
+					RobotMap.leftMotor3E.set(-speedEnd);
 					RobotMap.rightMotor3E.set(-speedEnd);
 				}
 				else if (dir.equals("Left")) {
-					RobotMap.leftMotor1E.set(speedEnd);
+					RobotMap.leftMotor3E.set(speedEnd);
 					RobotMap.rightMotor3E.set(speedEnd);
 
 				}
 				else if (dir.equals("Center")) {
-					RobotMap.leftMotor1E.set(-speedEnd);
+					RobotMap.leftMotor3E.set(-speedEnd);
 					RobotMap.rightMotor3E.set(speedEnd);
 				}
 			}
 	// Else: stops
 			else {
-				RobotMap.leftMotor1E.set(0);
+				RobotMap.leftMotor3E.set(0);
 				RobotMap.rightMotor3E.set(0);
 			}
 		}
@@ -131,7 +131,7 @@ public class AutonomousCommand extends Command {
 	// while the bot looks for the target
 		else {
 			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
-			RobotMap.leftMotor1E.set(0);
+			RobotMap.leftMotor3E.set(0);
 			RobotMap.rightMotor3E.set(0);
 		}
 	}
@@ -143,14 +143,14 @@ public class AutonomousCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		RobotMap.leftMotor1E.set(0);
+		RobotMap.leftMotor3E.set(0);
 		RobotMap.rightMotor3E.set(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		RobotMap.leftMotor1E.set(0);
+		RobotMap.leftMotor3E.set(0);
 		RobotMap.rightMotor3E.set(0);
 	}
 }

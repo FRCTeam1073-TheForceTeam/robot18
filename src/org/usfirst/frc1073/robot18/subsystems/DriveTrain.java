@@ -20,9 +20,9 @@ public class Drivetrain extends Subsystem {
     private final WPI_TalonSRX rightMotor1 = RobotMap.rightMotor1;
     private final WPI_TalonSRX rightMotor2 = RobotMap.rightMotor2;
     private final WPI_TalonSRX rightMotor3E = RobotMap.rightMotor3E;
-    private final WPI_TalonSRX leftMotor1E = RobotMap.leftMotor1E;
+    private final WPI_TalonSRX leftMotor3E = RobotMap.leftMotor3E;
     private final WPI_TalonSRX leftMotor2 = RobotMap.leftMotor2;
-    private final WPI_TalonSRX leftMotor3 = RobotMap.leftMotor3;
+    private final WPI_TalonSRX leftMotor1 = RobotMap.leftMotor1;
     private final Encoder rightEnc = RobotMap.rightEnc;
     private final Encoder leftEnc = RobotMap.leftEnc;
     
@@ -30,15 +30,15 @@ public class Drivetrain extends Subsystem {
     private boolean rightInverted = true;
     
 	public Drivetrain() {
-	    	leftMotor3.setInverted(leftInverted);
+	    	leftMotor1.setInverted(leftInverted);
 	    	leftMotor2.setInverted(leftInverted);
-	    	leftMotor1E.setInverted(leftInverted);
+	    	leftMotor3E.setInverted(leftInverted);
 	    	rightMotor1.setInverted(rightInverted);
 	    	rightMotor2.setInverted(rightInverted);
 	    	rightMotor3E.setInverted(rightInverted);
 	    	
-	    	leftMotor2.follow(leftMotor1E);
-	    	leftMotor3.follow(leftMotor1E);
+	    	leftMotor2.follow(leftMotor3E);
+	    	leftMotor1.follow(leftMotor3E);
 	    	rightMotor2.follow(rightMotor3E);
 	    	rightMotor1.follow(rightMotor3E);
 	}
@@ -63,7 +63,7 @@ public class Drivetrain extends Subsystem {
     public void basicDrive(double left, double right) {
     	
     	rightMotor3E.set(right);
-    	leftMotor1E.set(left);
+    	leftMotor3E.set(left);
     }
 
 }
