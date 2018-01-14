@@ -34,9 +34,9 @@ public class RobotMap {
         rightMotor2 = new WPI_TalonSRX(2);
         rightMotor3E = new WPI_TalonSRX(3);
         //Left
-        leftMotor3E = new WPI_TalonSRX(4);
+        leftMotor1 = new WPI_TalonSRX(4);
         leftMotor2 = new WPI_TalonSRX(5);
-        leftMotor1 = new WPI_TalonSRX(6);
+        leftMotor3E = new WPI_TalonSRX(6);
         
     // Encoder init
         // Right
