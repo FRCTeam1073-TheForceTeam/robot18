@@ -1,5 +1,7 @@
 package org.usfirst.frc1073.robot18.commands;
 
+import org.usfirst.frc1073.robot18.subsystems.Drivetrain;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -24,7 +26,21 @@ public class AutoTest extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new TurnWithGyro(10, 180, "clockwise"));
-    	addParallel(new TurnWithGyro(60, 90, "counterclockwise"));
+    	
+    	//addParallel(new VariableCurvatureDrive (.5, .5, false));
+    	
+    	
+    	
+    	
+    	//addParallel(new TurnWithGyro(10, 180, "clockwise"));
+    	//addParallel(new TurnWithGyro(60, 90, "counterclockwise"));
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     }
 }
