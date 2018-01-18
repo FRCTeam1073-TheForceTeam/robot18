@@ -6,6 +6,7 @@ import org.usfirst.frc1073.robot18.subsystems.*;
 import com.ctre.phoenix.motorcontrol.*;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -15,6 +16,8 @@ public class DriveWithPID extends Command {
 	double target;
 	double errorleft;
 	double errorright;
+	double Eright;
+	double Eleft;
     public DriveWithPID(double _target) {
     	target = _target*Math.PI*3.9;
     }
@@ -84,6 +87,14 @@ public class DriveWithPID extends Command {
     protected void execute() {
     	errorleft = Math.abs(RobotMap.leftMotor3E.getClosedLoopError(0));
     	errorright = Math.abs(RobotMap.rightMotor3E.getClosedLoopError(0));
+    	
+    	Eright = RobotMap.rightMotor3E.get();
+    	Eleft = RobotMap.leftMotor3E.get();
+    	
+    	SmartDashboard.putNumber("Error Right", errorright);
+    	SmartDashboard.putNumber("Error Left", errorleft);
+    	SmartDashboard.putNumber("Encoder Right", Eright);
+    	SmartDashboard.putNumber("Encoder Left", Eright);
     	
     }
 

@@ -123,15 +123,15 @@ public class AutonomousCommand extends Command{
 				driveDir = 0;
 			}
 			if (dir.equals("Right")) {
-				RobotMap.leftMotor1E.set((-speedEnd * 1.15) * driveDir);
+				RobotMap.leftMotor3E.set((-speedEnd * 1.15) * driveDir);
 				RobotMap.rightMotor3E.set((speedEnd / 4) * driveDir);
 			}
 			else if (dir.equals("Left")) {
-				RobotMap.leftMotor1E.set((-speedEnd / 4) * driveDir);
+				RobotMap.leftMotor3E.set((-speedEnd / 4) * driveDir);
 				RobotMap.rightMotor3E.set((speedEnd * 1.15) * driveDir);
 			}
 			else if (dir.equals("Center")) {
-				RobotMap.leftMotor1E.set(-speedEnd * driveDir);
+				RobotMap.leftMotor3E.set(-speedEnd * driveDir);
 				RobotMap.rightMotor3E.set(speedEnd * driveDir);
 			}
 		}
@@ -140,7 +140,7 @@ public class AutonomousCommand extends Command{
 	// while the bot looks for the target
 		else {
 			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
-			RobotMap.leftMotor1E.set(0);
+			RobotMap.leftMotor3E.set(0);
 			RobotMap.rightMotor3E.set(0);
 		}
 	}

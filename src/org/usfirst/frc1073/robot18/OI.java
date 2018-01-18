@@ -44,7 +44,7 @@ public class OI {
     	driverControl = new XboxController(0);
 
         // SmartDashboard Buttons
-        SmartDashboard.putData("Drive", new Drive());
+        SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
     }
 }
 
