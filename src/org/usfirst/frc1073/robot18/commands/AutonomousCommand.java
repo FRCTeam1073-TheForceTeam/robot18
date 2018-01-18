@@ -8,6 +8,10 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.RobotMap;
+import org.usfirst.frc1073.robot18.subsystems.Drivetrain;
+
+import edu.wpi.first.wpilibj.MotorSafety;
+import edu.wpi.first.wpilibj.MotorSafetyHelper;
 
 /** Auto command for myTurret:
  *	
@@ -18,15 +22,17 @@ import org.usfirst.frc1073.robot18.RobotMap;
  *	Sponsered by Lays! "Stay Wavy"
  */
 @SuppressWarnings("deprecation")
-public class AutonomousCommand extends Command {
+public class AutonomousCommand extends Command{
+	
 
 	NetworkTable netTable;
-	public static double xDelta;
-	public static double xWidth;
-	public static double yDelta;
-	public static double yWidth;
-	public static double blockCount;
+	public double xDelta;
+	public double xWidth;
+	public double yDelta;
+	public double yWidth;
+	public double blockCount;
 	public String dir;
+	public double driveDir;
 
 	public AutonomousCommand() {
 		netTable = NetworkTable.getTable("TurretTable");
@@ -34,6 +40,8 @@ public class AutonomousCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+
+		driveDir = 0;
 		dir = "not set";
 	}
 
@@ -73,11 +81,11 @@ public class AutonomousCommand extends Command {
 			if (Math.abs(xDelta) > side) {
 				if (Math.abs(xDelta) > side + 25) {
 					// Second fastest
-					speedEnd = (1.25 * speedStart);
+					speedEnd = (1.2 * speedStart);
 				}
 				if (Math.abs(xDelta) > side + 50){
 					// Fastest speed
-					speedEnd = (1.5 * speedStart);
+					speedEnd = (1.3 * speedStart);
 				}
 				else {
 					// Third fastest
@@ -86,7 +94,7 @@ public class AutonomousCommand extends Command {
 			}
 			else {
 				// Nothing changes
-				speedEnd = .25;
+				speedEnd = speedStart;
 			}
 
 	// This code handles the left and right motion of the bot
@@ -105,25 +113,26 @@ public class AutonomousCommand extends Command {
 			}
 			
 	// If block is far away: sets motor directions
-			if (xWidth < 200) {
-				if (dir.equals("Right")) {
-					RobotMap.leftMotor3E.set(-speedEnd);
-					RobotMap.rightMotor3E.set(-speedEnd);
-				}
-				else if (dir.equals("Left")) {
-					RobotMap.leftMotor3E.set(speedEnd);
-					RobotMap.rightMotor3E.set(speedEnd);
-
-				}
-				else if (dir.equals("Center")) {
-					RobotMap.leftMotor3E.set(-speedEnd);
-					RobotMap.rightMotor3E.set(speedEnd);
-				}
+			if (xWidth < 30) {
+				driveDir = 1;
 			}
-	// Else: stops
+			else if (xWidth > 45) {
+				driveDir = -1;
+			}
 			else {
-				RobotMap.leftMotor3E.set(0);
-				RobotMap.rightMotor3E.set(0);
+				driveDir = 0;
+			}
+			if (dir.equals("Right")) {
+				RobotMap.leftMotor1E.set((-speedEnd * 1.15) * driveDir);
+				RobotMap.rightMotor3E.set((speedEnd / 4) * driveDir);
+			}
+			else if (dir.equals("Left")) {
+				RobotMap.leftMotor1E.set((-speedEnd / 4) * driveDir);
+				RobotMap.rightMotor3E.set((speedEnd * 1.15) * driveDir);
+			}
+			else if (dir.equals("Center")) {
+				RobotMap.leftMotor1E.set(-speedEnd * driveDir);
+				RobotMap.rightMotor3E.set(speedEnd * driveDir);
 			}
 		}
 
@@ -131,7 +140,7 @@ public class AutonomousCommand extends Command {
 	// while the bot looks for the target
 		else {
 			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
-			RobotMap.leftMotor3E.set(0);
+			RobotMap.leftMotor1E.set(0);
 			RobotMap.rightMotor3E.set(0);
 		}
 	}
@@ -143,14 +152,10 @@ public class AutonomousCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		RobotMap.leftMotor3E.set(0);
-		RobotMap.rightMotor3E.set(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		RobotMap.leftMotor3E.set(0);
-		RobotMap.rightMotor3E.set(0);
 	}
 }

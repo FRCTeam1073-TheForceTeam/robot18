@@ -15,12 +15,12 @@ public class Drive extends Command {
         requires(Robot.driveTrain);
 
     }
-
+    
     DifferentialDrive difDrive;
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    	difDrive = new DifferentialDrive(RobotMap.leftMotor3E, RobotMap.rightMotor3E);
+    	difDrive = new DifferentialDrive(RobotMap.leftMotor1E, RobotMap.rightMotor3E);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,7 +37,7 @@ public class Drive extends Command {
     	double forward = Robot.oi.driverControl.getRawAxis(1);
     	double turn = Robot.oi.driverControl.getRawAxis(4);
 
-    	difDrive.arcadeDrive(forward, turn);
+    	difDrive.arcadeDrive(forward, - turn);
     }
 
     // Make this return true when this Command no longer needs to run execute()
