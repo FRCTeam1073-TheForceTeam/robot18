@@ -16,9 +16,9 @@ public class Drivetrain extends Subsystem {
     private final WPI_TalonSRX rightMotor1 = RobotMap.rightMotor1;
     private final WPI_TalonSRX rightMotor2 = RobotMap.rightMotor2;
     private final WPI_TalonSRX rightMotor3E = RobotMap.rightMotor3E;
-    private final WPI_TalonSRX leftMotor1E = RobotMap.leftMotor1E;
+    private final WPI_TalonSRX leftMotor1E = RobotMap.leftMotor1;
     private final WPI_TalonSRX leftMotor2 = RobotMap.leftMotor2;
-    private final WPI_TalonSRX leftMotor3 = RobotMap.leftMotor3;
+    private final WPI_TalonSRX leftMotor3 = RobotMap.leftMotor3E;
     private final Encoder rightEnc = RobotMap.rightEnc;
     private final Encoder leftEnc = RobotMap.leftEnc;
     
@@ -41,7 +41,7 @@ public class Drivetrain extends Subsystem {
     
     @Override
     public void initDefaultCommand() {
-    	setDefaultCommand(new Drive());
+    	setDefaultCommand(new ControllerDifferentialDrive());
 
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
