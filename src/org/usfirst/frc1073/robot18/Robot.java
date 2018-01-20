@@ -28,6 +28,7 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 
 	public static OI oi;
+	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
     public static CameraServer cameraSwitcher;
 
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
+		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		// OI must be constructed after subsystems. If the OI creates Commands
 		//(which it very likely will), subsystems are not guaranteed to be
