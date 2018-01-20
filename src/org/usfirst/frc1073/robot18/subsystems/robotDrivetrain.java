@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Drivetrain extends Subsystem {
+public class robotDrivetrain extends Subsystem {
 	
     private final WPI_TalonSRX rightMotor1 = RobotMap.rightMotor1;
     private final WPI_TalonSRX rightMotor2 = RobotMap.rightMotor2;
@@ -25,7 +25,7 @@ public class Drivetrain extends Subsystem {
     private boolean leftInverted = true;
     private boolean rightInverted = true;
     
-	public Drivetrain() {
+	public robotDrivetrain() {
 	    	leftMotor1E.setInverted(leftInverted);
 	    	leftMotor2.setInverted(leftInverted);
 	    	leftMotor3.setInverted(leftInverted);

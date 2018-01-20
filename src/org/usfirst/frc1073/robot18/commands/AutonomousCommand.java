@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.RobotMap;
-import org.usfirst.frc1073.robot18.subsystems.Drivetrain;
+import org.usfirst.frc1073.robot18.subsystems.robotDrivetrain;
 
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.MotorSafetyHelper;

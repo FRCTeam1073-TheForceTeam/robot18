@@ -1,12 +1,20 @@
 
 package org.usfirst.frc1073.robot18;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.subsystems.*;
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,7 +28,8 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 
 	public static OI oi;
-	public static Drivetrain driveTrain;
+	public static robotDrivetrain drivetrain;
+    public static CameraServer cameraSwitcher;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -28,7 +37,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
-		driveTrain = new Drivetrain();
+		drivetrain = new robotDrivetrain();
 		// OI must be constructed after subsystems. If the OI creates Commands
 		//(which it very likely will), subsystems are not guaranteed to be
 		// constructed yet. Thus, their requires() statements may grab null

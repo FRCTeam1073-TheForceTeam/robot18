@@ -18,7 +18,7 @@ public class TurnWithGyro extends Command {
     	turnSpeed = Speed;
     	turnDegrees = Degrees;
     	turnDirection = Direction;
-        requires(Robot.driveTrain);
+        requires(Robot.drivetrain);
 
     }
 
@@ -33,11 +33,11 @@ public class TurnWithGyro extends Command {
     	if(turnDirection == "clockwise") {
     		double right = turnSpeed;
     		double left = turnSpeed * -1;
-    		Robot.driveTrain.basicDrive(left, right);	
+    		Robot.drivetrain.basicDrive(left, right);	
     	} else if(turnDirection == "counterclockwise") {
     		double right = turnSpeed * -1;
     		double left = turnSpeed;
-    		Robot.driveTrain.basicDrive(left, right);
+    		Robot.drivetrain.basicDrive(left, right);
     	}
     }
 
@@ -53,7 +53,7 @@ public class TurnWithGyro extends Command {
     }
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.basicDrive(0, 0);
+    	Robot.drivetrain.basicDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same

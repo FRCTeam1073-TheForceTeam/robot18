@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class ControllerDifferentialDrive extends Command {
 
     public ControllerDifferentialDrive() {
-        requires(Robot.driveTrain);
+        requires(Robot.drivetrain);
 
     }
     

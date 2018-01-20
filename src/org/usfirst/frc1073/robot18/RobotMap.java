@@ -3,7 +3,9 @@ package org.usfirst.frc1073.robot18;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.cscore.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
@@ -24,7 +26,7 @@ public class RobotMap {
     public static WPI_TalonSRX leftMotor1;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
-
+    
     public static ADXRS450_Gyro headingGyro;
     
     public static void init() {
@@ -37,7 +39,7 @@ public class RobotMap {
         leftMotor3E = new WPI_TalonSRX(4);
         leftMotor2 = new WPI_TalonSRX(5);
         leftMotor1 = new WPI_TalonSRX(6);
-        
+    
     // Encoder init
         // Right
         rightEnc = new Encoder(2, 3, false, EncodingType.k4X);
@@ -49,7 +51,7 @@ public class RobotMap {
         leftEnc.setDistancePerPulse(1.0);
         leftEnc.setPIDSourceType(PIDSourceType.kRate);
         LiveWindow.addSensor("DriveTrain", "leftEnc", leftEnc);
-        
+            
     // Gyro
         headingGyro = new ADXRS450_Gyro();
         LiveWindow.addSensor("DriveTrain", "headingGyro", headingGyro);

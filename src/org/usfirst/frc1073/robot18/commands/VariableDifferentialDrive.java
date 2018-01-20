@@ -15,7 +15,7 @@ public class VariableDifferentialDrive extends Command {
     private double turnRadius;
 	
     public VariableDifferentialDrive(double forward, double turn) {
-        requires(Robot.driveTrain);
+        requires(Robot.drivetrain);
         forwardDist = forward;
         turnRadius = turn;
 

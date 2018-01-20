@@ -16,7 +16,7 @@ public class VariableCurvatureDrive extends Command {
     private boolean isQuickTurn;
 	
     public VariableCurvatureDrive(double forward, double turn, boolean isQuick) {
-        requires(Robot.driveTrain);
+        requires(Robot.drivetrain);
         forwardDist = forward;
         turnRadius = turn;
         isQuickTurn = isQuick;
