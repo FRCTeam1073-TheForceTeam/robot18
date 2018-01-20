@@ -45,6 +45,7 @@ public class OI {
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
+        SmartDashboard.putData("TurnWithGyro", new TurnWithGyro(1, 90, "clockwise"));
     }
 }
 

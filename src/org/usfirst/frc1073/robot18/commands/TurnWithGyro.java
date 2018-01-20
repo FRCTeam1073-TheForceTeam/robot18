@@ -30,17 +30,28 @@ public class TurnWithGyro extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double right = 0,left = 0;
     	if(turnDirection == "clockwise") {
-    		double right = turnSpeed;
-    		double left = turnSpeed * -1;
-    		Robot.drivetrain.basicDrive(left, right);	
+    		right = turnSpeed;
+    		left = turnSpeed * -1;	
     	} else if(turnDirection == "counterclockwise") {
-    		double right = turnSpeed * -1;
-    		double left = turnSpeed;
-    		Robot.drivetrain.basicDrive(left, right);
+    		right = turnSpeed * -1;
+    		left = turnSpeed;
     	}
+    	
+ 	   if(originalDegrees >= turnDegrees){
+ 	   	right = turnSpeed/2; 
+ 	   	left = turnSpeed/2;
+ 	   }
+ 	   if(originalDegrees <= turnDegrees){
+ 	   	right = turnSpeed/2; 
+ 	   	left = turnSpeed/2;
+ 	   }
+ 	   	
+ 	   	Robot.drivetrain.basicDrive(left, right);
+ 	   	
     }
-
+   
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if(turnDirection == "clockwise") {
@@ -51,6 +62,8 @@ public class TurnWithGyro extends Command {
     		return false;
     	}
     }
+  
+    
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drivetrain.basicDrive(0, 0);
