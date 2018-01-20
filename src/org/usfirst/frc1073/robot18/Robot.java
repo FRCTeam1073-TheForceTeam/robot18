@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.subsystems.*;
 import edu.wpi.cscore.CvSink;
@@ -30,7 +32,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
-    public static CameraServer cameraSwitcher;
+	public static CameraServer cameraSwitcher;
+	public static boolean selectedCamera;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -49,6 +52,59 @@ public class Robot extends IterativeRobot {
 		// instantiate the command used for the autonomous period
 
 		autonomousCommand = new AutonomousCommand();
+
+		/** Instantiate a the camera server for both USB webcams in a separate thread **/
+		Thread cameraThread = new Thread(() -> {
+
+			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);            
+			camera1.setResolution(320, 240);
+			camera1.setFPS(15);
+
+			try {
+				Thread.sleep(20);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			CvSink cvSink = CameraServer.getInstance().getVideo(camera1);
+			CvSource outputStream = CameraServer.getInstance().putVideo("Video", 320, 240);
+			Mat source = new Mat();
+			boolean currentCamera = selectedCamera;
+			while( !Thread.interrupted() ) {
+				if ( currentCamera != selectedCamera ) {
+					currentCamera = selectedCamera;
+					if ( selectedCamera == false ) {
+						cvSink.setSource(camera1);            		
+						SmartDashboard.putString("Camera", "Camera 1");
+					}
+				}
+				cvSink.grabFrame(source);
+
+				if ( source.empty() == false ) {
+					int rows = source.rows();
+					int columns = source.cols();
+
+					Point lineStart = new Point(columns/2, 0);
+					Point lineEnd = new Point(columns/2, rows);
+					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
+
+					lineStart = new Point(0,rows/2);
+					lineEnd = new Point(columns, rows/2);
+					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
+
+					outputStream.putFrame(source);
+				}
+
+				try{
+					Thread.sleep(50);
+				} catch(Exception e) {           		
+				}
+
+			}
+		});
+
+		cameraThread.start();;
+
 	}
 
 	/**
