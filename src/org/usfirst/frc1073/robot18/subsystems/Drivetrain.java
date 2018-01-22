@@ -61,6 +61,17 @@ public class DriveTrain extends Subsystem {
 	    	rightMotor2.follow(rightMotor3E);
 	    	rightMotor1.follow(rightMotor3E);
 	}
+	    	
+	 public void basicDrive(double left, double right){
+            	
+	        	rightMotor3E.set(right);
+	        	rightMotor2.set(right);
+	        	rightMotor1.set(right);
+	        	leftMotor3.set(left);
+	        	leftMotor1E.set(left);
+	        	leftMotor2.set(left);;
+	        	
+	        }
     
     @Override
     public void initDefaultCommand() {
