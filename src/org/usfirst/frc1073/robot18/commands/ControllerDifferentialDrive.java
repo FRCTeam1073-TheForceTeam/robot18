@@ -4,7 +4,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -16,11 +19,11 @@ public class ControllerDifferentialDrive extends Command {
 
     }
     
-    DifferentialDrive difDrive;
+    //DifferentialDrive difDrive;
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    	difDrive = new DifferentialDrive(RobotMap.leftMotor3E, RobotMap.rightMotor3E);
+    	//difDrive = new DifferentialDrive(RobotMap.leftMotor3E, RobotMap.rightMotor3E);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,10 +39,28 @@ public class ControllerDifferentialDrive extends Command {
     	
     	double forward = Robot.oi.driverControl.getRawAxis(1);
     	double turn = Robot.oi.driverControl.getRawAxis(4);
+    	
+    	
+    	if((Robot.oi.driverControl.getRawAxis(1) < .05 && Robot.oi.driverControl.getRawAxis(1) > 0) 
+    			|| (Robot.oi.driverControl.getRawAxis(1) > (-0.05) && Robot.oi.driverControl.getRawAxis(1) < 0))
+    	{
+    		forward = 0;
+    	}
+    	
+    	if((Robot.oi.driverControl.getRawAxis(4) < .05 && Robot.oi.driverControl.getRawAxis(4) > 0) 
+    			|| (Robot.oi.driverControl.getRawAxis(4) > (-0.05) && Robot.oi.driverControl.getRawAxis(4) < 0))
+    	{
+    		turn = 0;
+    	}
 
-    	difDrive.arcadeDrive(forward, - turn);
+    	SmartDashboard.putNumber("forward", forward);
+    	SmartDashboard.putNumber("turn", turn);
+    	
+    	Robot.drivetrain.difDrive.arcadeDrive(forward, turn*-1);
+    	
+    	//Robot.drivetrain.arcadeDrive(forward, turn*-1);
+    
     }
-
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;

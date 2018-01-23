@@ -3,6 +3,7 @@ package org.usfirst.frc1073.robot18.commands;
 import org.usfirst.frc1073.robot18.subsystems.robotDrivetrain;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -28,7 +29,6 @@ public class AutoTest extends CommandGroup {
         // arm.
     	
     	//addParallel(new VariableCurvatureDrive (.5, .5, false));
-    	
     	addParallel(new DriveWithPID(100));
     	addParallel(new TurnWithGyro(0,0,"clockwise"));
     	
