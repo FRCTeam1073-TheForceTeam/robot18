@@ -6,3 +6,6 @@ Desktop.ini
 src/org/usfirst/frc1073/robot18/subsystems/DriveTrain.java
 *.jar
 src/org/usfirst/frc1073/robot18/subsystems/Drivetrain.java
+*.java~
+*.class
+*.jar
