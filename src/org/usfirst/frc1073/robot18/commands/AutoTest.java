@@ -1,13 +1,16 @@
 package org.usfirst.frc1073.robot18.commands;
 
+import org.usfirst.frc1073.robot18.subsystems.robotDrivetrain;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class AutoAutoline extends CommandGroup {
+public class AutoTest extends CommandGroup {
 
-    public AutoAutoline() {
+    public AutoTest() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,6 +28,20 @@ public class AutoAutoline extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential (new DriveWithPID(104));
+    	//addParallel(new VariableCurvatureDrive (.5, .5, false));
+    	addParallel(new DriveWithPID(100));
+    	addParallel(new TurnWithGyro(0,0,"clockwise"));
+    	
+    	
+    	//addParallel(new TurnWithGyro(10, 180, "clockwise"));
+    	//addParallel(new TurnWithGyro(60, 90, "counterclockwise"));
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     }
 }
