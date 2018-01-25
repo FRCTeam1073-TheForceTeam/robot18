@@ -72,8 +72,8 @@ public class robotDrivetrain extends Subsystem {
     //Used for non-PID auto routines (semi-temp).
     public void basicDrive(double left, double right) {
     	
-    	rightMotor3E.set(right);
-    	leftMotor3E.set(left);
+    	rightMotor3E.set(ControlMode.PercentOutput, right);
+    	leftMotor3E.set(ControlMode.PercentOutput, left);
     }
     
     public void arcadeDrive(double left, double right) {

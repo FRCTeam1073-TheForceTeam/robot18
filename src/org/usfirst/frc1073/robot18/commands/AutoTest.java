@@ -29,8 +29,8 @@ public class AutoTest extends CommandGroup {
         // arm.
     	
     	//addParallel(new VariableCurvatureDrive (.5, .5, false));
-    	addParallel(new DriveWithPID(100));
-    	addParallel(new TurnWithGyro(0,0,"clockwise"));
+    	addParallel(new DriveWithPID(10));
+    	//addParallel(new TurnWithGyro(0,0,"clockwise"));
     	
     	
     	//addParallel(new TurnWithGyro(10, 180, "clockwise"));

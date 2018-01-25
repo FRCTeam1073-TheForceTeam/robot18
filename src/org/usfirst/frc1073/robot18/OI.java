@@ -45,7 +45,8 @@ public class OI {
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
-        SmartDashboard.putData("AutoTest", new AutoTest());
+        SmartDashboard.putData("MoveWithPID", new AutoTest());
+        SmartDashboard.putData("MoveWithEnc", new MoveWithEnc(10, 0.25));
     }
 }
 
