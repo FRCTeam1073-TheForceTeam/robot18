@@ -7,6 +7,7 @@ import edu.wpi.cscore.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
@@ -25,8 +26,13 @@ public class RobotMap {
     public static WPI_TalonSRX leftMotor1;
     public static WPI_TalonSRX leftMotor2;
     public static WPI_TalonSRX leftMotor3E;
+    public static WPI_TalonSRX liftMotor;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
+    public static Encoder liftEncoder;
+    public static DigitalInput liftSwitchBottom;
+    public static DigitalInput liftSwitchTop;
+    
     
     public static AnalogInput leftSensor;
     public static AnalogInput rightSensor;
