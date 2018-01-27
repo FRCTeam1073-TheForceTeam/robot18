@@ -70,6 +70,7 @@ public class robotDrivetrain extends Subsystem {
     // here. Call these from Commands.
     
     //Used for non-PID auto routines (semi-temp).
+    /**Basic non-PID drive */
     public void basicDrive(double left, double right) {
     	
     	rightMotor3E.set(ControlMode.PercentOutput, right);

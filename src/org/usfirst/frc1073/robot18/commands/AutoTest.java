@@ -28,20 +28,11 @@ public class AutoTest extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	//addParallel(new VariableCurvatureDrive (.5, .5, false));
-    	addParallel(new DriveWithPID(10));
-    	//addParallel(new TurnWithGyro(0,0,"clockwise"));
+    	//addSequential(new VariableCurvatureDrive (.5, .5, false));
+    	//addSequential(new DriveWithPID(10));
+    	//addSequential(new TurnWithGyro(0,0,"clockwise"));
     	
-    	
-    	//addParallel(new TurnWithGyro(10, 180, "clockwise"));
-    	//addParallel(new TurnWithGyro(60, 90, "counterclockwise"));
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+    	addSequential(new TurnWithGyro(.2, 90, "clockwise"));
+    	addSequential(new TurnWithGyro(.2, 90, "counterclockwise"));
     }
 }

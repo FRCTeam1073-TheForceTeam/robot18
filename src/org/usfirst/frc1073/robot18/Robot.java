@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
+		RobotMap.headingGyro.reset();
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		// OI must be constructed after subsystems. If the OI creates Commands
