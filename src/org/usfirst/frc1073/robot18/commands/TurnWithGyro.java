@@ -19,7 +19,7 @@ public class TurnWithGyro extends Command {
 	/** Uses basic drive to turn based on the gyro's position from the last time the gyro was reset
 	 * 
 	 * @author Jack
-	 * 
+	 * @category Drive Command
 	 * @param Speed from 0 to 1
 	 * @param Degrees should be positive
 	 * @param Direction should be either "clockwise" or "counterclockwise"

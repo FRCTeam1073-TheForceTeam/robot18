@@ -1,30 +1,13 @@
 package org.usfirst.frc1073.robot18.commands;
 
-import org.usfirst.frc1073.robot18.*;
-
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc1073.robot18.RobotMap;
-import org.usfirst.frc1073.robot18.subsystems.robotDrivetrain;
 
-import edu.wpi.first.wpilibj.MotorSafety;
-import edu.wpi.first.wpilibj.MotorSafetyHelper;
-
-/** Auto command for myTurret:
- *	
- *	Seeks a designated target and tracks it when found.
- *	
- *	By Nathaniel!
- *	Featuring panny and tilty!
- *	Sponsered by Lays! "Stay Wavy"
- */
 @SuppressWarnings("deprecation")
 public class visionCubeTracker extends Command{
 	
-
 	NetworkTable netTable;
 	public double xDelta;
 	public double xWidth;
@@ -34,7 +17,7 @@ public class visionCubeTracker extends Command{
 	public String dir;
 	public double driveDir;
 
-	/** Stays about 2 feet away from a cube. Will back up or move forwards and turn as necesarry.
+	/** Stays about 2 feet away from a cube. Will back up or move forwards and turn as necessary.
 	 * @category Autonomous
 	 * @param None No parameters
 	 * @author Nathaniel
