@@ -50,6 +50,8 @@ public class OI {
         SmartDashboard.putData("LidarAlign", new LidarAlign());
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
         SmartDashboard.putData("AutoTest", new AutoTest());
+        SmartDashboard.putData("LidarMoveAway", new LidarMoveAway());
+
     }
 }
 
