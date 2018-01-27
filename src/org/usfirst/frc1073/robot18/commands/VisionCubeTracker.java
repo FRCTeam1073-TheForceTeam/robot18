@@ -3,10 +3,10 @@ package org.usfirst.frc1073.robot18.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc1073.robot18.RobotMap;
+import org.usfirst.frc1073.robot18.Robot;
 
 @SuppressWarnings("deprecation")
-public class visionCubeTracker extends Command{
+public class VisionCubeTracker extends Command{
 	
 	NetworkTable netTable;
 	public double xDelta;
@@ -15,6 +15,7 @@ public class visionCubeTracker extends Command{
 	public double yWidth;
 	public double blockCount;
 	public String dir;
+	public boolean fullDir;
 	public double driveDir;
 
 	/** Stays about 2 feet away from a cube. Will back up or move forwards and turn as necessary.
@@ -22,7 +23,7 @@ public class visionCubeTracker extends Command{
 	 * @param None No parameters
 	 * @author Nathaniel
 	 */
-	public visionCubeTracker() {
+	public VisionCubeTracker() {
 		netTable = NetworkTable.getTable("TurretTable");
 	}
 
@@ -31,6 +32,7 @@ public class visionCubeTracker extends Command{
 
 		driveDir = 0;
 		dir = "not set";
+		fullDir = false;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -46,7 +48,7 @@ public class visionCubeTracker extends Command{
 		double[] location = {xDelta, yDelta};
 
 	// Defines speed and slow down markers
-		double speedStart = 0.25;
+		double speedStart = 0.22;
 		double speedEnd = 0;
 		double side = 25; // Marks the reasonable area around the center	
 
@@ -67,13 +69,14 @@ public class visionCubeTracker extends Command{
 	// how far the target is to the left or right
 	// by increasing the size of the increment
 			if (Math.abs(xDelta) > side) {
-				if (Math.abs(xDelta) > side + 25) {
+				if (Math.abs(xDelta) > side + 35) {
 					// Second fastest
 					speedEnd = (1.2 * speedStart);
 				}
-				if (Math.abs(xDelta) > side + 50){
+				if (Math.abs(xDelta) > side + 65) {
 					// Fastest speed
 					speedEnd = (1.3 * speedStart);
+					fullDir = true;
 				}
 				else {
 					// Third fastest
@@ -101,26 +104,53 @@ public class visionCubeTracker extends Command{
 			}
 			
 	// If block is far away: sets motor directions
-			if (xWidth < 30) {
-				driveDir = 1;
+			if (xWidth < 100) {
+				if (xWidth < 80) {
+					if (xWidth < 60) {
+						if (xWidth < 40) {
+							if (xWidth < 20) {
+								driveDir = 2;
+							}
+							else {
+								driveDir = 1.75;
+							}
+						}
+						else {
+							driveDir = 1.5;
+						}
+					}
+					else {
+						driveDir = 1.25;	
+					}
+				}
+				else {
+					driveDir = 1;
+				}
 			}
-			else if (xWidth > 45) {
+			else if (xWidth > 130) {
 				driveDir = -1;
 			}
 			else {
 				driveDir = 0;
 			}
-			if (dir.equals("Right")) {
-				RobotMap.leftMotor3E.set((-speedEnd * 1.15) * driveDir);
-				RobotMap.rightMotor3E.set((speedEnd / 4) * driveDir);
+			if (dir.equals("Right") && driveDir >= 0) {
+				if (fullDir == true) {
+					Robot.drivetrain.basicDrive(-speedEnd * driveDir, -speedEnd * driveDir);
+				}
+				else {
+					Robot.drivetrain.basicDrive(-speedEnd * driveDir, (speedEnd / 2) * driveDir);
+				}
 			}
-			else if (dir.equals("Left")) {
-				RobotMap.leftMotor3E.set((-speedEnd / 4) * driveDir);
-				RobotMap.rightMotor3E.set((speedEnd * 1.15) * driveDir);
+			else if (dir.equals("Left") && driveDir >= 0) {
+				if (fullDir == true) {
+					Robot.drivetrain.basicDrive(speedEnd * driveDir, speedEnd * driveDir);
+				}
+				else {
+					Robot.drivetrain.basicDrive((-speedEnd / 2) * driveDir, speedEnd * driveDir);
+				}
 			}
 			else if (dir.equals("Center")) {
-				RobotMap.leftMotor3E.set(-speedEnd * driveDir);
-				RobotMap.rightMotor3E.set(speedEnd * driveDir);
+				Robot.drivetrain.basicDrive(-speedEnd * driveDir, speedEnd * driveDir);
 			}
 		}
 
@@ -128,8 +158,7 @@ public class visionCubeTracker extends Command{
 	// while the bot looks for the target
 		else {
 			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
-			RobotMap.leftMotor3E.set(0);
-			RobotMap.rightMotor3E.set(0);
+			Robot.drivetrain.basicDrive(0, 0);
 		}
 	}
 
