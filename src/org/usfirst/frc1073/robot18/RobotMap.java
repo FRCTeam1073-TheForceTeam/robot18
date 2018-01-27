@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.cscore.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -26,6 +27,11 @@ public class RobotMap {
     public static WPI_TalonSRX leftMotor3E;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
+    
+    public static AnalogInput leftSensor;
+    public static AnalogInput rightSensor;
+    public static AnalogInput frontSensor;
+    public static AnalogInput backSensor;
     
     public static ADXRS450_Gyro headingGyro;
     
@@ -51,6 +57,12 @@ public class RobotMap {
         leftEnc.setDistancePerPulse(1.0);
         leftEnc.setPIDSourceType(PIDSourceType.kRate);
         LiveWindow.addSensor("DriveTrain", "leftEnc", leftEnc);
+        
+    // Proximity Sensors
+        leftSensor = new AnalogInput(0);
+        rightSensor = new AnalogInput(1);
+        frontSensor = new AnalogInput(2);
+        backSensor = new AnalogInput(3);
             
     // Gyro
         headingGyro = new ADXRS450_Gyro();
