@@ -75,6 +75,23 @@ public class robotDrivetrain extends Subsystem {
     	rightMotor3E.set(ControlMode.PercentOutput, right);
     	leftMotor3E.set(ControlMode.PercentOutput, left);
     }
+    /** Basic drive that stops after a set time
+     * @author Eben
+     * @param left speed
+     * @param right speed
+     * @param time in milliseconds (1000 milliseconds in 1 second)
+     */
+    public void basicDriveTimed(double left, double right, int time) { 
+    	
+    	basicDrive(left, right);
+    	try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	basicDrive(0, 0);
+    }
     
     public void arcadeDrive(double left, double right) {
         
