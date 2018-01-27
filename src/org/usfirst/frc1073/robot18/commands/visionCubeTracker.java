@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.MotorSafetyHelper;
  *	Sponsered by Lays! "Stay Wavy"
  */
 @SuppressWarnings("deprecation")
-public class AutonomousCommand extends Command{
+public class visionCubeTracker extends Command{
 	
 
 	NetworkTable netTable;
@@ -34,7 +34,12 @@ public class AutonomousCommand extends Command{
 	public String dir;
 	public double driveDir;
 
-	public AutonomousCommand() {
+	/** Stays about 2 feet away from a cube. Will back up or move forwards and turn as necesarry.
+	 * @category Autonomous
+	 * @param None No parameters
+	 * @author Nathaniel
+	 */
+	public visionCubeTracker() {
 		netTable = NetworkTable.getTable("TurretTable");
 	}
 

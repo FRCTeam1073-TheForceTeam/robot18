@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 
 		// instantiate the command used for the autonomous period
 
-		autonomousCommand = new AutonomousCommand();
+		autonomousCommand = new visionCubeTracker();
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {
