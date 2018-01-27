@@ -53,12 +53,14 @@ public class Robot extends IterativeRobot {
 
 		autonomousCommand = new AutonomousCommand();
 
-		/** Instantiate a the camera server for both USB webcams in a separate thread **/
-		Thread cameraThread = new Thread(() -> {
-
-			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);            
+		// The first thread, running the front Webcam to the driver station
+		Thread camera1Thread = new Thread(() -> {
+			
+			// Sets up the camera, its resolution, and limits the framerate
+			// to help with bandwidth
+			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);   
 			camera1.setResolution(320, 240);
-			camera1.setFPS(15);
+			camera1.setFPS(12);
 
 			try {
 				Thread.sleep(20);
@@ -67,7 +69,7 @@ public class Robot extends IterativeRobot {
 			}
 
 			CvSink cvSink = CameraServer.getInstance().getVideo(camera1);
-			CvSource outputStream = CameraServer.getInstance().putVideo("Video", 320, 240);
+			CvSource outputStream = CameraServer.getInstance().putVideo("Video 1", 320, 240);
 			Mat source = new Mat();
 			boolean currentCamera = selectedCamera;
 			while( !Thread.interrupted() ) {
@@ -75,7 +77,7 @@ public class Robot extends IterativeRobot {
 					currentCamera = selectedCamera;
 					if ( selectedCamera == false ) {
 						cvSink.setSource(camera1);            		
-						SmartDashboard.putString("Camera", "Camera 1");
+						SmartDashboard.putString("Camera 1", "Camera 1");
 					}
 				}
 				cvSink.grabFrame(source);
@@ -102,9 +104,57 @@ public class Robot extends IterativeRobot {
 
 			}
 		});
+		
+		Thread camera2Thread = new Thread(() -> {
 
-		cameraThread.start();;
+			UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);   
+			camera2.setResolution(320, 240);
+			camera2.setFPS(12);
 
+			try {
+				Thread.sleep(20);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			CvSink cvSink = CameraServer.getInstance().getVideo(camera2);
+			CvSource outputStream = CameraServer.getInstance().putVideo("Video 2", 320, 240);
+			Mat source = new Mat();
+			boolean currentCamera = selectedCamera;
+			while( !Thread.interrupted() ) {
+				if ( currentCamera != selectedCamera ) {
+					currentCamera = selectedCamera;
+					if ( selectedCamera == false ) {
+						cvSink.setSource(camera2);            		
+						SmartDashboard.putString("Camera 2", "Camera 2");
+					}
+				}
+				cvSink.grabFrame(source);
+
+				if ( source.empty() == false ) {
+					int rows = source.rows();
+					int columns = source.cols();
+
+					Point lineStart = new Point(columns/2, 0);
+					Point lineEnd = new Point(columns/2, rows);
+					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
+
+					lineStart = new Point(0,rows/2);
+					lineEnd = new Point(columns, rows/2);
+					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
+
+					outputStream.putFrame(source);
+				}
+
+				try{
+					Thread.sleep(50);
+				} catch(Exception e) {           		
+				}
+
+			}
+		});
+		camera1Thread.start();
+		camera2Thread.start();
 	}
 
 	/**
@@ -136,7 +186,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null) autonomousCommand.cancel();
+		//if (autonomousCommand != null) autonomousCommand.cancel();
 	}
 
 	/**
