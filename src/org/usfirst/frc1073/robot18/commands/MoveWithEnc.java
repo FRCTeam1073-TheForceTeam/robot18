@@ -16,9 +16,15 @@ public class MoveWithEnc extends Command {
 	double target;
 	double speed;
 	
-    public MoveWithEnc(double _target, double _speed) {
-    	target = _target*1440;
-    	speed = _speed;
+	/** Drive Command that moves a certain distance
+	 * @param target Distance you want to go in revolutions
+	 * @param speed Speed that you want motors to move at(0-1)
+	 * @author sreekar and anderson
+	 * @category Drive Command
+	 */
+    public MoveWithEnc(double target, double speed) {
+    	this.target = target*1440;
+    	this.speed = speed;
     }
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -32,7 +38,7 @@ public class MoveWithEnc extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    		RobotMap.leftMotor3E.set(ControlMode.Position, -speed);
+    		RobotMap.leftMotor3E.set(ControlMode.PercentOutput, -speed);
     		RobotMap.rightMotor3E.set(ControlMode.PercentOutput, speed);
     		
     		RobotMap.leftMotor3E.setSensorPhase(true);
