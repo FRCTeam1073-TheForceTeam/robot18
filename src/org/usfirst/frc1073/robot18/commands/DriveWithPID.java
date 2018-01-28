@@ -145,11 +145,14 @@ public class DriveWithPID extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		if(Math.abs(errorleft) < 100){
-    		return true;
+    	boolean finish = false;
+		if(Math.abs(errorleft) < 100 || Robot.oi.cancel.get() == true){
+    		finish = true;
     	}
-    	else
-    		return false;
+    	else {
+    		finish = false;
+    	}
+		return finish;
     }
 
     // Called once after isFinished returns true

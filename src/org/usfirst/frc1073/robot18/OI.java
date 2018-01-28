@@ -18,6 +18,7 @@ public class OI {
 	public JoystickButton RobotTeleInit;
 	public JoystickButton visionButton;
 	public JoystickButton lidarButton;
+	public JoystickButton PIDButton;
 	public JoystickButton cancel;
 	public boolean cancelPushed;
 	
@@ -32,6 +33,9 @@ public class OI {
     	
     	lidarButton = driverControl.y;
     	lidarButton.whenPressed(new LidarAlign());
+    	
+    	PIDButton = driverControl.x;
+    	PIDButton.whenPressed(new DriveWithPID(5));
     	
     	cancel = driverControl.a;
 
