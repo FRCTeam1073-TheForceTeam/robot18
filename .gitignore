@@ -9,3 +9,4 @@ src/org/usfirst/frc1073/robot18/subsystems/Drivetrain.java
 *.class
 *.jar
 *~
+dist/FRCUserProgram.jar
