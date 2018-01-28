@@ -55,7 +55,22 @@ public class TurnWithGyro extends Command {
     	SmartDashboard.putNumber("TurnSpeed", turnSpeed);
     	
  	   	
- 	   	Robot.drivetrain.basicDrive(left, right);
+    	if(turnDirection.equals("clockwise")) {
+ 	   		if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees + turnDegrees)) > 11) {
+ 	   			Robot.drivetrain.basicDrive(left, right);
+ 	   		}
+ 	   		else if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees + turnDegrees)) <= 11) {
+ 	   			Robot.drivetrain.basicDrive(left*left*-1, right*right*-1);
+ 	   		}
+ 	   	}else if(turnDirection.equals("counterclockwise")){
+ 	   		if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees - turnDegrees)) > 11) {
+ 	   			Robot.drivetrain.basicDrive(left, right);
+ 	   		}
+ 	   		else if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees - turnDegrees)) <= 11) {
+ 	   		Robot.drivetrain.basicDrive(left*left, right*right);
+ 	   		}
+ 	   	}
+
  	   	
     }
    

@@ -3,6 +3,8 @@ package org.usfirst.frc1073.robot18.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc1073.robot18.OI;
 import org.usfirst.frc1073.robot18.Robot;
 
 @SuppressWarnings("deprecation")
@@ -48,9 +50,8 @@ public class VisionCubeTracker extends Command{
 		double[] location = {xDelta, yDelta};
 
 	// Defines speed and slow down markers
-		double speedStart = 0.22;
-		double speedEnd = 0;
-		double side = 25; // Marks the reasonable area around the center	
+		double speed = 0.22;
+		double side = 50; // Marks the reasonable area around the center	
 
 	// Puts variables from Network Tables on SmartDashboard
 		SmartDashboard.putNumber("xDelta", xDelta);
@@ -64,29 +65,6 @@ public class VisionCubeTracker extends Command{
 	// when it sees something, we track it
 		if (blockCount > 0) {
 			SmartDashboard.putString("Current State", "Targeting (" + blockCount + ")");
-
-	// Increases speed of the bot's rotation depending on 
-	// how far the target is to the left or right
-	// by increasing the size of the increment
-			if (Math.abs(xDelta) > side) {
-				if (Math.abs(xDelta) > side + 35) {
-					// Second fastest
-					speedEnd = (1.2 * speedStart);
-				}
-				if (Math.abs(xDelta) > side + 65) {
-					// Fastest speed
-					speedEnd = (1.3 * speedStart);
-					fullDir = true;
-				}
-				else {
-					// Third fastest
-					speedEnd = (1 * speedStart);
-				}
-			}
-			else {
-				// Nothing changes
-				speedEnd = speedStart;
-			}
 
 	// This code handles the left and right motion of the bot
 	// based on the Pixy's values
@@ -103,24 +81,31 @@ public class VisionCubeTracker extends Command{
 				SmartDashboard.putString("Target", "Centered");
 			}
 			
+			if (Math.abs(xDelta) > 115) {
+				fullDir = true;
+			}
+			else {
+				fullDir = false;
+			}
+				
 	// If block is far away: sets motor directions
 			if (xWidth < 100) {
 				if (xWidth < 80) {
 					if (xWidth < 60) {
 						if (xWidth < 40) {
 							if (xWidth < 20) {
-								driveDir = 2;
+								driveDir = 3;
 							}
 							else {
-								driveDir = 1.75;
+								driveDir = 2.5;
 							}
 						}
 						else {
-							driveDir = 1.5;
+							driveDir = 2;
 						}
 					}
 					else {
-						driveDir = 1.25;	
+						driveDir = 1.5;	
 					}
 				}
 				else {
@@ -128,6 +113,9 @@ public class VisionCubeTracker extends Command{
 				}
 			}
 			else if (xWidth > 130) {
+				if (xWidth > 200) {
+					driveDir = -1.5;
+				}
 				driveDir = -1;
 			}
 			else {
@@ -135,22 +123,22 @@ public class VisionCubeTracker extends Command{
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
 				if (fullDir == true) {
-					Robot.drivetrain.basicDrive(-speedEnd * driveDir, -speedEnd * driveDir);
+					Robot.drivetrain.basicDrive(-speed * driveDir, -speed * driveDir);
 				}
 				else {
-					Robot.drivetrain.basicDrive(-speedEnd * driveDir, (speedEnd / 2) * driveDir);
+					Robot.drivetrain.basicDrive(-speed * driveDir, (speed / 3) * driveDir);
 				}
 			}
 			else if (dir.equals("Left") && driveDir >= 0) {
 				if (fullDir == true) {
-					Robot.drivetrain.basicDrive(speedEnd * driveDir, speedEnd * driveDir);
+					Robot.drivetrain.basicDrive(speed * driveDir, speed * driveDir);
 				}
 				else {
-					Robot.drivetrain.basicDrive((-speedEnd / 2) * driveDir, speedEnd * driveDir);
+					Robot.drivetrain.basicDrive((-speed / 3) * driveDir, speed * driveDir);
 				}
 			}
 			else if (dir.equals("Center")) {
-				Robot.drivetrain.basicDrive(-speedEnd * driveDir, speedEnd * driveDir);
+				Robot.drivetrain.basicDrive(-speed * driveDir, speed * driveDir);
 			}
 		}
 
@@ -164,7 +152,8 @@ public class VisionCubeTracker extends Command{
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		boolean finished = Robot.oi.cancel.get();
+		return finished;
 	}
 
 	// Called once after isFinished returns true

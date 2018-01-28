@@ -94,10 +94,11 @@ public class robotDrivetrain extends Subsystem {
     	leftMotor3E.set(ControlMode.PercentOutput, left);
     }
     /** Basic drive that stops after a set time
-     * @author Eben
+     * @author Eben, Xander, and Nathaniel
      * @param left speed
      * @param right speed
      * @param time in milliseconds (1000 milliseconds in 1 second)
+     * @category Drive Command
      */
     public void basicDriveTimed(double left, double right, int time) { 
     	

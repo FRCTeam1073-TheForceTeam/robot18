@@ -187,7 +187,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		//if (autonomousCommand != null) autonomousCommand.cancel();
+		if (Robot.oi.RobotTeleInit.get() == true) autonomousCommand.cancel();
 	}
 
 	/**
