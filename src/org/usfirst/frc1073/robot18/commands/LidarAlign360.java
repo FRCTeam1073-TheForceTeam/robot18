@@ -1,4 +1,3 @@
-
 package org.usfirst.frc1073.robot18.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LidarAlign extends Command {
+public class LidarAlign360 extends Command {
 
 
 	NetworkTable lidarSendTable;
@@ -28,7 +27,7 @@ public class LidarAlign extends Command {
 	//Variable for button used in isFinished
 	boolean isPressed = false;
 
-	public LidarAlign() {
+	public LidarAlign360() {
 
 		requires(Robot.drivetrain);
 
@@ -76,11 +75,8 @@ public class LidarAlign extends Command {
 	}
 
 	protected boolean isFinished() {
-		boolean finished = false;
-		if (Robot.oi.cancel.get() == true) {
-			finished = true;
-		}
-		return finished;
+		boolean is_finished = false;
+		return is_finished;
 
 		//SmartDashboard.putString("lidar info", "isFinished");
 

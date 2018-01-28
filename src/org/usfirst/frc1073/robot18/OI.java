@@ -15,24 +15,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 	
 	public XboxController driverControl;
-	public JoystickButton RobotTeleInit;
+	public JoystickButton RobotPRGMInit;
 	public JoystickButton visionButton;
 	public JoystickButton lidarButton;
 	public JoystickButton PIDButton;
+	public JoystickButton leftBumper;
+	public JoystickButton rightBumper;
 	public JoystickButton cancel;
+	
 	public boolean cancelPushed;
 	
     public OI() {
     	
     	driverControl = new XboxController(0);
     	
-    	RobotTeleInit = driverControl.start;
+    	RobotPRGMInit = driverControl.start;
+    	
+    	leftBumper = driverControl.leftBumper;
+    	rightBumper= driverControl.rightBumper;
     	
     	visionButton = driverControl.b;
     	visionButton.whenPressed(new VisionCubeTracker());
     	
     	lidarButton = driverControl.y;
-    	lidarButton.whenPressed(new LidarAlign());
+    	lidarButton.whenPressed(new LidarAuto());
     	
     	PIDButton = driverControl.x;
     	PIDButton.whenPressed(new DriveWithPID(5));

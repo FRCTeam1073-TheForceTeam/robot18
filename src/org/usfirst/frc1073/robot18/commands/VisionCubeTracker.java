@@ -126,6 +126,7 @@ public class VisionCubeTracker extends Command{
 					Robot.drivetrain.basicDrive(-speed * driveDir, -speed * driveDir);
 				}
 				else {
+					speed = speed / 1.5;
 					Robot.drivetrain.basicDrive(-speed * driveDir, (speed / 3) * driveDir);
 				}
 			}
@@ -134,6 +135,7 @@ public class VisionCubeTracker extends Command{
 					Robot.drivetrain.basicDrive(speed * driveDir, speed * driveDir);
 				}
 				else {
+					speed = speed / 1.5;
 					Robot.drivetrain.basicDrive((-speed / 3) * driveDir, speed * driveDir);
 				}
 			}
