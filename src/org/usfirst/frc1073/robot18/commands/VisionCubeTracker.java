@@ -1,5 +1,6 @@
 package org.usfirst.frc1073.robot18.commands;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,15 +11,11 @@ import org.usfirst.frc1073.robot18.Robot;
 @SuppressWarnings("deprecation")
 public class VisionCubeTracker extends Command{
 	
-	NetworkTable netTable;
-	public double xDelta;
-	public double xWidth;
-	public double yDelta;
-	public double yWidth;
-	public double blockCount;
+	edu.wpi.first.networktables.NetworkTable netTable;
+	NetworkTableInstance netTableInst;
+	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir;
 	public String dir;
 	public boolean fullDir;
-	public double driveDir;
 
 	/** Stays about 2 feet away from a cube. Will back up or move forwards and turn as necessary.
 	 * @category Autonomous
@@ -26,7 +23,9 @@ public class VisionCubeTracker extends Command{
 	 * @author Nathaniel
 	 */
 	public VisionCubeTracker() {
-		netTable = NetworkTable.getTable("TurretTable");
+		netTableInst = NetworkTableInstance.getDefault();
+        netTable = netTableInst.getTable("TurretTable");
+		//netTable = NetworkTable.getTable("TurretTable");
 	}
 
 	// Called just before this Command runs the first time
@@ -40,14 +39,11 @@ public class VisionCubeTracker extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		// Pulls variables from Network Tables
-		xDelta =  netTable.getNumber("centerDistX", 0);
-		xWidth =  netTable.getNumber("AverageWidth", 0);
-		yDelta =  netTable.getNumber("centerDistY", 0);
-		yWidth =  netTable.getNumber("AverageHeight", 0);
-		blockCount = netTable.getNumber("Blocks", 0);
-
-	// Creates an array of the Center Points
-		double[] location = {xDelta, yDelta};
+		xDelta = netTable.getEntry("centerDistX").getDouble(0);
+		xWidth = netTable.getEntry("AverageWidth").getDouble(0);
+		yDelta = netTable.getEntry("centerDistY").getDouble(0);
+		yWidth = netTable.getEntry("AverageHeight").getDouble(0);
+		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
 	// Defines speed and slow down markers
 		double speed = 0.22;
@@ -59,7 +55,6 @@ public class VisionCubeTracker extends Command{
 		SmartDashboard.putNumber("yDelta", yDelta);
 		SmartDashboard.putNumber("yWidth", yWidth);
 		SmartDashboard.putNumber("Block Count", blockCount);
-		SmartDashboard.putNumberArray("Object Locator", location);
 
 	// BLockCount asks the Pixy how many things it sees
 	// when it sees something, we track it
@@ -90,14 +85,14 @@ public class VisionCubeTracker extends Command{
 				
 	// If block is far away: sets motor directions
 			if (xWidth < 100) {
-				if (xWidth < 80) {
-					if (xWidth < 60) {
-						if (xWidth < 40) {
-							if (xWidth < 20) {
-								driveDir = 3;
+				if (xWidth < 90) {
+					if (xWidth < 75) {
+						if (xWidth < 50) {
+							if (xWidth < 35) {
+								driveDir = 4;
 							}
 							else {
-								driveDir = 2.5;
+								driveDir = 3;
 							}
 						}
 						else {
@@ -113,8 +108,8 @@ public class VisionCubeTracker extends Command{
 				}
 			}
 			else if (xWidth > 130) {
-				if (xWidth > 200) {
-					driveDir = -1.5;
+				if (xWidth > 180) {
+					driveDir = -2;
 				}
 				driveDir = -1;
 			}
@@ -123,20 +118,22 @@ public class VisionCubeTracker extends Command{
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
 				if (fullDir == true) {
+					speed = speed;
 					Robot.drivetrain.basicDrive(-speed * driveDir, -speed * driveDir);
 				}
 				else {
-					speed = speed / 1.5;
-					Robot.drivetrain.basicDrive(-speed * driveDir, (speed / 3) * driveDir);
+					speed = speed / 1.3;
+					Robot.drivetrain.basicDrive(-speed * driveDir, 0);
 				}
 			}
 			else if (dir.equals("Left") && driveDir >= 0) {
 				if (fullDir == true) {
+					speed = speed;
 					Robot.drivetrain.basicDrive(speed * driveDir, speed * driveDir);
 				}
 				else {
-					speed = speed / 1.5;
-					Robot.drivetrain.basicDrive((-speed / 3) * driveDir, speed * driveDir);
+					speed = speed / 1.3;
+					Robot.drivetrain.basicDrive(0, speed * driveDir);
 				}
 			}
 			else if (dir.equals("Center")) {
