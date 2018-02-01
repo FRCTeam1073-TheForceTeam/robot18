@@ -29,10 +29,7 @@ public class AutoTest extends CommandGroup {
         // arm.
     	
     	//addSequential(new VariableCurvatureDrive (.5, .5, false));
-    	//addSequential(new DriveWithPID(10));
+    	addSequential(new DriveWithPID(10));	
     	//addSequential(new TurnWithGyro(0,0,"clockwise"));
-    	
-    	addSequential(new TurnWithGyro(.2, 90, "clockwise"));
-    	addSequential(new TurnWithGyro(.2, 90, "counterclockwise"));
     }
 }
