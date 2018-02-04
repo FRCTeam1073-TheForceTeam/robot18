@@ -46,6 +46,8 @@ public class OI {
         SmartDashboard.putData("Lidar Align", new LidarAlignAuto());
         SmartDashboard.putData("DriveWithPID", new DriveWithPID(10));
         SmartDashboard.putData("LidarMiniMap", new LidarMiniMap());
+        SmartDashboard.putData("AutoTest", new AutoTest());
+        SmartDashboard.putData("Reset Sticky Faults", new ClearStickyFault());
     }
 }
 
