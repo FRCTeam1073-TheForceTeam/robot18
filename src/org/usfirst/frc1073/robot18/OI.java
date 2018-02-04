@@ -39,6 +39,8 @@ public class OI {
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
         SmartDashboard.putData("Lidar Align", new LidarAlignAuto());
         SmartDashboard.putData("DriveWithPID", new DriveWithPID(10));
+        SmartDashboard.putData("lidaralign360", new LidarAlign360());
+        SmartDashboard.putData("LidarMoveAway", new LidarMoveAway());
     }
 }
 
