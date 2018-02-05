@@ -45,6 +45,7 @@ public class OI {
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
         SmartDashboard.putData("Lidar Align", new LidarAlignAuto());
         SmartDashboard.putData("DriveWithPID", new DriveWithPID(10));
+        SmartDashboard.putData("DriveWitTime", new DriveWithInches(.5, 12));
     }
 }
 
