@@ -38,14 +38,11 @@ public class Robot extends IterativeRobot {
 	public static robotDrivetrain drivetrain;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
-<<<<<<< HEAD
 	
 	public static String FMS;
 	public static SendableChooser<String> autonomousChooser;
 
-=======
 	public static String gameData;
->>>>>>> af950d86f8d03b871e0bf57cddae5cfc3e9f87c2
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
