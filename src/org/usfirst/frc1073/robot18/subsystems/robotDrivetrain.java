@@ -111,6 +111,7 @@ public class robotDrivetrain extends Subsystem {
     	basicDrive(0, 0);
     }
     
+    // @ToDo comment on this 
     public void arcadeDrive(double left, double right) {
         
     	//double tempLeft = cubicScale(deadzone(left,DEADZONE_VALUE),CUBIC_SCALE)-cubicScale(deadzone(right,DEADZONE_VALUE*3),CUB);
