@@ -5,8 +5,11 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.hal.PDPJNI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.commands.*;
@@ -35,6 +38,10 @@ public class Robot extends IterativeRobot {
 	public static robotDrivetrain drivetrain;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
+	
+	public static String FMS;
+	public static SendableChooser<String> autonomousChooser;
+
 	public static String gameData;
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -45,15 +52,19 @@ public class Robot extends IterativeRobot {
 		RobotMap.headingGyro.reset();
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
-		// OI must be constructed after subsystems. If the OI creates Commands
-		//(which it very likely will), subsystems are not guaranteed to be
-		// constructed yet. Thus, their requires() statements may grab null
-		// pointers. Bad news. Don't move it.
 		oi = new OI();
-
+		
+		/* The Chooser */
+		autonomousChooser = new SendableChooser<String>();
+		autonomousChooser.addDefault("Left", "left");
+		autonomousChooser.addObject("Center", "center");
+		autonomousChooser.addObject("Right", "right");
+		autonomousChooser.addObject("Left", "");
+		autonomousChooser.addObject("Center", "");
+		autonomousChooser.addObject("Right", "");
+		
 		// instantiate the command used for the autonomous period
-
-		autonomousCommand = new VisionCubeTracker();
+		autonomousCommand = new Auto();
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {
@@ -202,7 +213,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (Robot.oi.RobotPRGMInit.get() == true) autonomousCommand.cancel();
+		if (Robot.oi.RobotPRGMInit.get()) autonomousCommand.cancel();
 	}
 
 	/**

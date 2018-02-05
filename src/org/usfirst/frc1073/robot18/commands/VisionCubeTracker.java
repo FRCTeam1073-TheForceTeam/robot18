@@ -111,7 +111,9 @@ public class VisionCubeTracker extends Command{
 				if (xWidth > 180) {
 					driveDir = -2;
 				}
-				driveDir = -1;
+				else {
+					driveDir = -1;
+				}
 			}
 			else {
 				driveDir = 0;
