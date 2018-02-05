@@ -2,6 +2,7 @@
 package org.usfirst.frc1073.robot18;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -37,10 +38,14 @@ public class Robot extends IterativeRobot {
 	public static robotDrivetrain drivetrain;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
+<<<<<<< HEAD
 	
 	public static String FMS;
 	public static SendableChooser<String> autonomousChooser;
 
+=======
+	public static String gameData;
+>>>>>>> af950d86f8d03b871e0bf57cddae5cfc3e9f87c2
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -178,6 +183,20 @@ public class Robot extends IterativeRobot {
 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		String switchSide;
+		String scaleSide;
+		//gameData = DriverStation.getInstance().getGameSpecificMessage();
+		gameData = "RRR";
+		if(gameData.charAt(0) == 'L') {
+			switchSide = "left";
+		}else {
+			switchSide = "right";
+		}
+		if(gameData.charAt(1) == 'L') {
+			scaleSide = "left";
+		}else {
+			scaleSide = "right";
+		}
 	}
 
 	public void autonomousInit() {
@@ -197,7 +216,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (Robot.oi.RobotPRGMInit.get() == true) autonomousCommand.cancel();
+		if (Robot.oi.RobotPRGMInit.get()) autonomousCommand.cancel();
 	}
 
 	/**
