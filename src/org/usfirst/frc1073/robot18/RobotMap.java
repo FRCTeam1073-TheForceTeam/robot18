@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -36,7 +36,9 @@ public class RobotMap {
     public static DigitalInput liftSwitchTop;
     public static WPI_TalonSRX leftCollectorMotor;
     public static WPI_TalonSRX rightCollectorMotor; 
-  
+    public static DigitalInput CollectorSwitchBottom;
+    public static Encoder CollectorEncoder;
+    
     
     
     public static AnalogInput leftSensor;
@@ -79,5 +81,8 @@ public class RobotMap {
         headingGyro = new ADXRS450_Gyro();
         LiveWindow.addSensor("DriveTrain", "headingGyro", headingGyro);
         pdp = new PowerDistributionPanel();
+        
+    // Solenoid
+        
     }
 }
