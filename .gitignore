@@ -1,9 +1,9 @@
-./bin/
+bin/
 *.classpath
 *.class
 Desktop.ini
 *.class
 *.jar
 *~
-dist/*
-build/*
+dist/
+build/
