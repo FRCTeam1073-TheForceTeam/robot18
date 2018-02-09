@@ -1,9 +1,8 @@
-bin/
-*.classpath
-*.class
 Desktop.ini
+*.classpath
 *.class
 *.jar
 *~
+bin/
 dist/
 build/
