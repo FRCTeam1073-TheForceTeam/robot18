@@ -45,10 +45,10 @@ public class AdvancedDrive2 extends Command {
 
 	    // Called just before this Command runs the first time
 	    protected void initialize() {
-	    	RobotMap.leftMotor3E.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-	    	RobotMap.leftMotor3E.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-	    	originalLeft = RobotMap.leftMotor3E.getSelectedSensorPosition(0);
-	    	originalRight = RobotMap.rightMotor3E.getSelectedSensorPosition(0);
+	    	RobotMap.leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+	    	RobotMap.leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+	    	originalLeft = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+	    	originalRight = RobotMap.rightMotor1.getSelectedSensorPosition(0);
 	    	originalHeading = RobotMap.headingGyro.getAngle();
 	    	originalDist = ((originalLeft + originalRight) / 2) * 3.9 * Math.PI * 1440;
 	    }
@@ -56,8 +56,8 @@ public class AdvancedDrive2 extends Command {
 	    // Called repeatedly when this Command is scheduled to run
 	    protected void execute() {
 	    	//Set all of my variables that need to updated every loop
-	    	currentLeft = RobotMap.leftMotor3E.getSelectedSensorPosition(0)*-1;
-	    	currentRight = RobotMap.rightMotor3E.getSelectedSensorPosition(0);
+	    	currentLeft = RobotMap.leftMotor1.getSelectedSensorPosition(0)*-1;
+	    	currentRight = RobotMap.rightMotor1.getSelectedSensorPosition(0);
 	    	encoderDif = currentLeft - currentRight;
 	    	gyroDif = Math.abs(originalHeading - RobotMap.headingGyro.getAngle());
 	    	currentAvg = (currentLeft + currentRight) / 2;

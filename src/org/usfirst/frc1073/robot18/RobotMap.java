@@ -53,13 +53,12 @@ public class RobotMap {
     // Motor init
     	// Right
         rightMotor1 = new WPI_TalonSRX(1);
-        rightMotor2 = new WPI_TalonSRX(2);
-        rightMotor3E = new WPI_TalonSRX(3);
+        rightMotor2 = new WPI_VictorSPX(2);
+
         //Left
         leftMotor1 = new WPI_TalonSRX(4);
-        leftMotor2 = new WPI_TalonSRX(5);
-        leftMotor3E = new WPI_TalonSRX(6);
-    
+        leftMotor2 = new WPI_VictorSPX(5);
+        
     // Encoder init
         // Right
         rightEnc = new Encoder(2, 3, false, EncodingType.k4X);
