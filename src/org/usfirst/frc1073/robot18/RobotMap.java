@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSourceType;
-
+import edu.wpi.first.wpilibj.hal.PDPJNI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -22,19 +22,17 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * floating around.
  */
 public class RobotMap {
-    public static WPI_VictorSPX rightMotor1;
-    //public static WPI_TalonSRX rightMotor2;
-    public static WPI_TalonSRX rightMotor3E;
-    public static WPI_VictorSPX leftMotor1;
-    //public static WPI_TalonSRX leftMotor2;
-    public static WPI_TalonSRX leftMotor3E;
+    public static PDPJNI pdp;
+	public static WPI_VictorSPX rightMotor2;
+    public static WPI_TalonSRX rightMotor1;
+    public static WPI_VictorSPX leftMotor2;
+    public static WPI_TalonSRX leftMotor1;
     public static WPI_TalonSRX liftMotor;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
     public static Encoder liftEncoder;
     public static DigitalInput liftSwitchBottom;
     public static DigitalInput liftSwitchTop;
-    
     
     public static AnalogInput leftSensor;
     public static AnalogInput rightSensor;
@@ -43,16 +41,20 @@ public class RobotMap {
     
     public static ADXRS450_Gyro headingGyro;
     
+	public static Encoder CollectorEncoder;
+	public static WPI_TalonSRX leftCollectorMotor;
+	public static WPI_TalonSRX rightCollectorMotor;
+	public static DigitalInput CollectorSwitchBottom;
+	public static WPI_TalonSRX liftMotor1;
+    
     public static void init() {
     // Motor init
     	// Right
-        rightMotor1 = new WPI_VictorSPX(9);
-       // rightMotor2 = new WPI_TalonSRX(2);
-        rightMotor3E = new WPI_TalonSRX(3);
+        rightMotor2 = new WPI_VictorSPX(2);
+        rightMotor1 = new WPI_TalonSRX(3);
         //Left
-        leftMotor1 = new WPI_VictorSPX(4);
-        //leftMotor2 = new WPI_TalonSRX(5);
-        leftMotor3E = new WPI_TalonSRX(6);
+        leftMotor2 = new WPI_VictorSPX(9);
+        leftMotor1 = new WPI_TalonSRX(8);
     
     // Encoder init
         // Right

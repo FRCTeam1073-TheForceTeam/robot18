@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto2FMSR extends CommandGroup {
 	/** If Chooser is set to Right */
 	public Auto2FMSR() {
+		SmartDashboard.putString("CurrentCommand", "R is running");
 		switch(Robot.FMS) {
 		case "RRR":
 			addSequential(new Auto3CommandR_RR());

@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new robotDrivetrain();
 		oi = new OI();
 		
-		FMS = "init";
+		FMS = "";
 
 		/* Chooser Objects */
 		left = new AutoObject(1);
@@ -84,8 +84,7 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Right", right);
 		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
 
-		/* instantiate the command used for the autonomous period */
-		autonomousCommand = new Auto1Chooser();
+		
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {
@@ -204,7 +203,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		// schedule the autonomous command (example)
+		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		Scheduler.getInstance().run();
 		new LidarMiniMap();
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -218,7 +217,12 @@ public class Robot extends IterativeRobot {
 		}else {
 			scaleSide = "right";
 		}
+		
+		/* instantiate the command used for the autonomous period */
+		autonomousCommand = new Auto1Chooser();
+		
 		if (autonomousCommand != null) autonomousCommand.start();
+		
 		voltage = RobotMap.frontSensor.getVoltage();
 		distance = (voltage - 0.0399)/0.0234;  
 		SmartDashboard.putNumber("Ultrasonic Distance", distance);
@@ -239,7 +243,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		new LidarMiniMap();
-		if (Robot.oi.RobotPRGMInit.get() == true) autonomousCommand.cancel();
+		if (autonomousCommand != null) autonomousCommand.cancel();
 	}
 
 	/**

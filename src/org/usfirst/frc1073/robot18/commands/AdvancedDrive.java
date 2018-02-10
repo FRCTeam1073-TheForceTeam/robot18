@@ -50,7 +50,7 @@ public class AdvancedDrive extends Command {
 		rightEncDif = Math.abs(startrightEncDif - RobotMap.rightMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Left Encoder", leftEncDif);
 		SmartDashboard.putNumber("Right Encoder", rightEncDif);
-		
+		/*
 		if (leftEncDif < (rightEncDif * 1.1)) {
 			currentSpeedL = .90;
 		}
@@ -73,18 +73,16 @@ public class AdvancedDrive extends Command {
 				currentSpeed = currentSpeed * .45;
 			}
     	}
-		
-		Robot.drivetrain.basicDrive(-currentSpeed /* * currentSpeedL*/, currentSpeed /* currentSpeedR*/);
-    	
-		/*Robot.drivetrain.basicDrive(-speed, speed);
+		*/
+	//	Robot.drivetrain.basicDrive(-currentSpeed /* * currentSpeedL*/, currentSpeed /* currentSpeedR*/);
+		Robot.drivetrain.basicDrive(-speed, speed);
 		SmartDashboard.putNumber("toBeTraveled", n);
 		n++;
-		*/
 	}
 
 	protected boolean isFinished() {
 		boolean isFinished = false;
-    	if (Robot.oi.cancel.get() == true || percentComplete >= .95) {
+    	if (Robot.oi.cancel.get() == true || percentComplete >= .95 || n >= dist) {
     		isFinished = true;
     		Robot.drivetrain.basicDrive(0, 0);
     	}
