@@ -52,12 +52,12 @@ public class RobotMap {
     public static void init() {
     // Motor init
     	// Right
-        rightMotor1 = new WPI_TalonSRX(1);
+        rightMotor1 = new WPI_TalonSRX(3);
         rightMotor2 = new WPI_VictorSPX(2);
 
         //Left
-        leftMotor1 = new WPI_TalonSRX(4);
-        leftMotor2 = new WPI_VictorSPX(5);
+        leftMotor1 = new WPI_TalonSRX(8);
+        leftMotor2 = new WPI_VictorSPX(9);
         
     // Encoder init
         // Right

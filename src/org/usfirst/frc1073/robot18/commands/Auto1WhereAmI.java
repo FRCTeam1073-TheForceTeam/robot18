@@ -19,5 +19,4 @@ public class Auto1WhereAmI extends Command {
 		boolean isFinished = true;
 		return isFinished;
 	}
-
 }

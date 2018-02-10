@@ -1,4 +1,3 @@
-
 package org.usfirst.frc1073.robot18;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -62,6 +61,8 @@ public class Robot extends IterativeRobot {
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		oi = new OI();
+		
+		FMS = "init";
 
 		/* Chooser Objects */
 		left = new AutoObject(1);
@@ -80,7 +81,7 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Right", right);
 		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
 
-		// instantiate the command used for the autonomous period
+		/* instantiate the command used for the autonomous period */
 		autonomousCommand = new Auto1Chooser();
 
 		// The first thread, running the front Webcam to the driver station
@@ -202,6 +203,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// schedule the autonomous command (example)
 		Scheduler.getInstance().run();
+		new LidarMiniMap();
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L') {
 			switchSide = "left";
@@ -213,13 +215,6 @@ public class Robot extends IterativeRobot {
 		}else {
 			scaleSide = "right";
 		}
-
-<<<<<<< HEAD
-	public void autonomousInit() {
-		// schedule the autonomous command (example)
-		new LidarMiniMap();
-=======
->>>>>>> f7411f30a899381f38c07e2f6a5657078eff4cc4
 		if (autonomousCommand != null) autonomousCommand.start();
 	}
 
@@ -235,12 +230,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-<<<<<<< HEAD
 		new LidarMiniMap();
 		if (Robot.oi.RobotPRGMInit.get() == true) autonomousCommand.cancel();
-=======
-		if (Robot.oi.RobotPRGMInit.get()) autonomousCommand.cancel();
->>>>>>> f7411f30a899381f38c07e2f6a5657078eff4cc4
 	}
 
 	/**
