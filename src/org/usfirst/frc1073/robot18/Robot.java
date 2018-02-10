@@ -40,31 +40,38 @@ public class Robot extends IterativeRobot {
 	public static boolean selectedCamera;
 	
 	public static String FMS;
-	public static SendableChooser<String> autonomousChooser;
-
+	public static SendableChooser<AutoObject> autonomousChooser;
+	public AutoObject left;
+	public AutoObject center;
+	public AutoObject right;
+	
 	public static String gameData;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
 		RobotMap.init();
-		RobotMap.headingGyro.reset();
+//		RobotMap.headingGyro.reset();
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		oi = new OI();
 		
+		/* Chooser Objects */
+		left = new AutoObject(1);
+		center = new AutoObject(2);
+		right = new AutoObject(3);
+		
 		/* The Chooser */
-		autonomousChooser = new SendableChooser<String>();
-		autonomousChooser.addDefault("Left", "left");
-		autonomousChooser.addObject("Center", "center");
-		autonomousChooser.addObject("Right", "right");
-		autonomousChooser.addObject("Left", "");
-		autonomousChooser.addObject("Center", "");
-		autonomousChooser.addObject("Right", "");
+		autonomousChooser = new SendableChooser<AutoObject>();
+		autonomousChooser.addDefault("Left", left);
+		autonomousChooser.addObject("Center", center);
+		autonomousChooser.addObject("Right", right);
+		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
 		
 		// instantiate the command used for the autonomous period
-		autonomousCommand = new Auto();
+		autonomousCommand = new Auto1Chooser();
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {
