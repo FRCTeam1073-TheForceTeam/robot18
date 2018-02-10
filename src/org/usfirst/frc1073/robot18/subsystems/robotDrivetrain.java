@@ -24,8 +24,8 @@ public class robotDrivetrain extends Subsystem {
     private final Encoder rightEnc = RobotMap.rightEnc;
     private final Encoder leftEnc = RobotMap.leftEnc;
     
-    private boolean leftInverted = true;
-    private boolean rightInverted = true;
+    private boolean leftInverted = false;
+    private boolean rightInverted = false;
     
     public DifferentialDrive difDrive;
     

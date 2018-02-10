@@ -6,3 +6,4 @@ Desktop.ini
 bin/
 dist/
 build/
+src/org/usfirst/frc1073/robot18/commands/AutoTest.java
