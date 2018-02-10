@@ -43,6 +43,9 @@ public class Robot extends IterativeRobot {
 	public AutoObject left;
 	public AutoObject center;
 	public AutoObject right;
+	
+	public static double voltage;
+	public static double distance;
 
 	public static String gameData;
 	public static int position;
@@ -216,13 +219,18 @@ public class Robot extends IterativeRobot {
 			scaleSide = "right";
 		}
 		if (autonomousCommand != null) autonomousCommand.start();
+		voltage = RobotMap.frontSensor.getVoltage();
+		distance = (voltage - 0.0399)/0.0234;  
+		SmartDashboard.putNumber("Ultrasonic Distance", distance);
 	}
+	
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+
 	}
 
 	public void teleopInit() {
