@@ -24,14 +24,14 @@ public class AdvancedDrive extends Command {
 	public AdvancedDrive(double speed, double dist) {
 		this.speed = speed;
 		this.dist = dist;
-		RobotMap.leftMotor3E.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-		RobotMap.rightMotor3E.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		RobotMap.leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		RobotMap.rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		
 	}
 	
 	protected void initialize() {
-		startleftEncDif = RobotMap.leftMotor3E.getSelectedSensorPosition(0);
-		startrightEncDif = RobotMap.rightMotor3E.getSelectedSensorPosition(0);
+		startleftEncDif = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+		startrightEncDif = RobotMap.rightMotor1.getSelectedSensorPosition(0);
 		
 		currentSpeed = speed;
 		
@@ -46,8 +46,8 @@ public class AdvancedDrive extends Command {
 	}
 	
 	protected void execute() {
-		leftEncDif = Math.abs(startleftEncDif - RobotMap.leftMotor3E.getSelectedSensorPosition(0));
-		rightEncDif = Math.abs(startrightEncDif - RobotMap.rightMotor3E.getSelectedSensorPosition(0));
+		leftEncDif = Math.abs(startleftEncDif - RobotMap.leftMotor1.getSelectedSensorPosition(0));
+		rightEncDif = Math.abs(startrightEncDif - RobotMap.rightMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Left Encoder", leftEncDif);
 		SmartDashboard.putNumber("Right Encoder", rightEncDif);
 		

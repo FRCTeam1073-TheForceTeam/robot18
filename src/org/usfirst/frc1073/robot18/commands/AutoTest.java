@@ -14,7 +14,7 @@ public class AutoTest extends CommandGroup {
     public AutoTest() {
     	
     	//addSequential(new VariableCurvatureDrive (.5, .5, false));
-    	addSequential(new AdvancedDrive(.25, .25, 10));	
+    	addSequential(new AdvancedDrive(.25, 10));	
     	//addSequential(new TurnWithGyro(0,0,"clockwise"));
     }
 }

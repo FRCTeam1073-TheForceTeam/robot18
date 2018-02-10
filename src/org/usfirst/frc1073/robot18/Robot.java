@@ -38,59 +38,53 @@ public class Robot extends IterativeRobot {
 	public static robotDrivetrain drivetrain;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
-	
+
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousChooser;
 	public AutoObject left;
 	public AutoObject center;
 	public AutoObject right;
-	
+
 	public static String gameData;
-<<<<<<< HEAD
-	
-=======
 	public static int position;
 	public static String elevatorWorking;
 	public static String othersScale;
 	public static String switchSide;
 	public static String scaleSide;
->>>>>>> a587964df5ced13ee780b79901afc0ab655c7238
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
 		RobotMap.init();
-//		RobotMap.headingGyro.reset();
+		//		RobotMap.headingGyro.reset();
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		oi = new OI();
-		
-<<<<<<< HEAD
+
 		/* Chooser Objects */
 		left = new AutoObject(1);
 		center = new AutoObject(2);
 		right = new AutoObject(3);
-=======
+
 		/* Jack's Auto Variables*/
 		position = (int) SmartDashboard.getNumber("Position", 1);
 		elevatorWorking = String.valueOf(SmartDashboard.getBoolean("Elevator Working?", true));
 		othersScale = String.valueOf(SmartDashboard.getBoolean("Other Bots Scale?", false));
->>>>>>> a587964df5ced13ee780b79901afc0ab655c7238
-		
+
 		/* The Chooser */
 		autonomousChooser = new SendableChooser<AutoObject>();
 		autonomousChooser.addDefault("Left", left);
 		autonomousChooser.addObject("Center", center);
 		autonomousChooser.addObject("Right", right);
 		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
-		
+
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Auto1Chooser();
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {
-			
+
 			// Sets up the camera, its resolution, and limits the framerate
 			// to help with bandwidth
 			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);   
@@ -139,7 +133,7 @@ public class Robot extends IterativeRobot {
 
 			}
 		});
-		
+
 		Thread camera2Thread = new Thread(() -> {
 
 			UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);   
@@ -201,7 +195,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-		
+
 	}
 
 	public void autonomousInit() {
