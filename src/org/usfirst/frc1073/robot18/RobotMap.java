@@ -2,6 +2,8 @@
 package org.usfirst.frc1073.robot18;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.cscore.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -20,11 +22,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * floating around.
  */
 public class RobotMap {
-    public static WPI_TalonSRX rightMotor1;
-    public static WPI_TalonSRX rightMotor2;
+    public static WPI_VictorSPX rightMotor1;
+    //public static WPI_TalonSRX rightMotor2;
     public static WPI_TalonSRX rightMotor3E;
-    public static WPI_TalonSRX leftMotor1;
-    public static WPI_TalonSRX leftMotor2;
+    public static WPI_VictorSPX leftMotor1;
+    //public static WPI_TalonSRX leftMotor2;
     public static WPI_TalonSRX leftMotor3E;
     public static WPI_TalonSRX liftMotor;
     public static Encoder rightEnc;
@@ -44,12 +46,12 @@ public class RobotMap {
     public static void init() {
     // Motor init
     	// Right
-        rightMotor1 = new WPI_TalonSRX(1);
-        rightMotor2 = new WPI_TalonSRX(2);
+        rightMotor1 = new WPI_VictorSPX(9);
+       // rightMotor2 = new WPI_TalonSRX(2);
         rightMotor3E = new WPI_TalonSRX(3);
         //Left
-        leftMotor1 = new WPI_TalonSRX(4);
-        leftMotor2 = new WPI_TalonSRX(5);
+        leftMotor1 = new WPI_VictorSPX(4);
+        //leftMotor2 = new WPI_TalonSRX(5);
         leftMotor3E = new WPI_TalonSRX(6);
     
     // Encoder init
