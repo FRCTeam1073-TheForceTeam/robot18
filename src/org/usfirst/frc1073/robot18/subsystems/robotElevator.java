@@ -13,7 +13,7 @@ public class robotElevator extends Subsystem {
 	// Initialization of the elevator objects
 	private final DigitalInput switchTop = RobotMap.liftSwitchTop;
     private final Encoder liftEncoder = RobotMap.liftEncoder;
-    private final WPI_TalonSRX liftMotor = RobotMap.liftMotor;
+    private final WPI_TalonSRX liftMotor = RobotMap.liftMotor1;
     private final DigitalInput switchBottom = RobotMap.liftSwitchBottom;
     
 	public robotElevator() {
