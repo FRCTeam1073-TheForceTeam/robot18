@@ -1,12 +1,8 @@
-/bin/
-*.classpath
-*.class
 Desktop.ini
-*.jar
-src/org/usfirst/frc1073/robot18/subsystems/DriveTrain.java
-*.jar
-src/org/usfirst/frc1073/robot18/subsystems/Drivetrain.java
+*.classpath
 *.class
 *.jar
 *~
-dist/FRCUserProgram.jar
+bin/
+dist/
+build/

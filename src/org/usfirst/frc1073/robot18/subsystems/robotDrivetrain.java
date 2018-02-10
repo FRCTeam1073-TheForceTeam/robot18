@@ -3,9 +3,10 @@ package org.usfirst.frc1073.robot18.subsystems;
 
 import org.usfirst.frc1073.robot18.RobotMap;
 import org.usfirst.frc1073.robot18.commands.*;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -17,11 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class robotDrivetrain extends Subsystem {
 	
     private final WPI_TalonSRX rightMotor1 = RobotMap.rightMotor1;
-    private final WPI_TalonSRX rightMotor2 = RobotMap.rightMotor2;
-    private final WPI_TalonSRX rightMotor3E = RobotMap.rightMotor3E;
+    private final WPI_VictorSPX rightMotor2 = RobotMap.rightMotor2;
     private final WPI_TalonSRX leftMotor1 = RobotMap.leftMotor1;
-    private final WPI_TalonSRX leftMotor2 = RobotMap.leftMotor2;
-    private final WPI_TalonSRX leftMotor3E = RobotMap.leftMotor3E;
+    private final WPI_VictorSPX leftMotor2 = RobotMap.leftMotor2;
     private final Encoder rightEnc = RobotMap.rightEnc;
     private final Encoder leftEnc = RobotMap.leftEnc;
     
@@ -33,24 +32,18 @@ public class robotDrivetrain extends Subsystem {
 	public robotDrivetrain() {
 	    	leftMotor1.setInverted(leftInverted);
 	    	leftMotor2.setInverted(leftInverted);
-	    	leftMotor3E.setInverted(leftInverted);
 	    	rightMotor1.setInverted(rightInverted);
 	    	rightMotor2.setInverted(rightInverted);
-	    	rightMotor3E.setInverted(rightInverted);
 	    	
-	    	leftMotor2.follow(leftMotor3E);
-	    	leftMotor1.follow(leftMotor3E);
-	    	rightMotor2.follow(rightMotor3E);
-	    	rightMotor1.follow(rightMotor3E);
+	    	leftMotor2.follow(leftMotor1);
+	    	rightMotor2.follow(rightMotor1);
 	    	
 	    	rightMotor1.setSafetyEnabled(false);
 	    	rightMotor2.setSafetyEnabled(false);
-	    	rightMotor3E.setSafetyEnabled(false);
 	    	leftMotor1.setSafetyEnabled(false);
 	    	leftMotor2.setSafetyEnabled(false);
-	    	leftMotor3E.setSafetyEnabled(false);
 	    	
-	    	difDrive = new DifferentialDrive(RobotMap.leftMotor3E, RobotMap.rightMotor3E);
+	    	difDrive = new DifferentialDrive(RobotMap.leftMotor1, RobotMap.rightMotor1);
 	    	}
     
     @Override
@@ -90,8 +83,8 @@ public class robotDrivetrain extends Subsystem {
     		right = -1;
     	}
     	
-    	rightMotor3E.set(ControlMode.PercentOutput, right);
-    	leftMotor3E.set(ControlMode.PercentOutput, left);
+    	rightMotor1.set(ControlMode.PercentOutput, right);
+    	leftMotor1.set(ControlMode.PercentOutput, left);
     }
     /** Basic drive that stops after a set time
      * @author Eben, Xander, and Nathaniel
@@ -112,6 +105,7 @@ public class robotDrivetrain extends Subsystem {
     	basicDrive(0, 0);
     }
     
+    // @ToDo comment on this 
     public void arcadeDrive(double left, double right) {
         
     	//double tempLeft = cubicScale(deadzone(left,DEADZONE_VALUE),CUBIC_SCALE)-cubicScale(deadzone(right,DEADZONE_VALUE*3),CUB);
@@ -155,8 +149,8 @@ public class robotDrivetrain extends Subsystem {
     	
     	    	
     		
-    	RobotMap.rightMotor3E.set(ControlMode.PercentOutput, tempRight);
-        RobotMap.leftMotor3E.set(ControlMode.PercentOutput, tempLeft);
+    	RobotMap.rightMotor1.set(ControlMode.PercentOutput, tempRight);
+        RobotMap.leftMotor1.set(ControlMode.PercentOutput, tempLeft);
     }
 
 }

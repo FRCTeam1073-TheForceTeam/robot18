@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LidarAlign360 extends Command {
+public class LidarMiniMap extends Command {
 
 
 	NetworkTable lidarSendTable;
@@ -23,11 +23,14 @@ public class LidarAlign360 extends Command {
 	double left;
 	double right;
 	double Inches;
+	double x;
+	double y;
+	String rightLeft = new String (SmartDashboard.getString("rightLeft", "right"));
 
 	//Variable for button used in isFinished
 	boolean isPressed = false;
 
-	public LidarAlign360() {
+	public LidarMiniMap() {
 
 		requires(Robot.drivetrain);
 
@@ -38,47 +41,23 @@ public class LidarAlign360 extends Command {
 	protected void initialize() {
 		SmartDashboard.putString("lidar info", "init");
 		SmartDashboard.putString("hello_world", "x");
-
+		rightLeft = SmartDashboard.getString("rightLeft", "right");
+		lidarSendTable.putString("rightLeft", rightLeft);
+			
+		
+		
 	}
 
 	protected void execute() {
-		SmartDashboard.putString("lidar info", "execute");
-		//These are the variables that get manipulated in the code
-
-		double mmToIn = 1.0;
-		SmartDashboard.putNumber("ultimateMeasurement", ultimateMeasurement);
-
-		//These are the variables for speed - start slow
-
-		//These are what the Pixy send us
-		robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
-		left = lidarSendTable.getNumber("left", 99);
-		right = lidarSendTable.getNumber("right", 99);
-		degrees = lidarSendTable.getNumber("degrees",99);
-		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
-
-
-
-		//This code modifies the speed based on how close you are to the peg
-		SmartDashboard.putNumber("Lidar Distance" , ultimateMeasurement);
-		SmartDashboard.putNumber("Lidar Degrees" , degrees);
-		SmartDashboard.putNumber("Lidar To Inches", ultimateMeasurement/mmToIn);
-		SmartDashboard.putNumber("Robot Speed", robotSpeed);
-		SmartDashboard.putNumber("left", left);
-		SmartDashboard.putNumber("right", right);
-
-		Robot.drivetrain.basicDrive(-1*left, right);
-
-
-
-
+		SmartDashboard.putString("lidar info", "executing");
+		x = lidarSendTable.getNumber("x", 0);
+		y = lidarSendTable.getNumber("x", 0);
+		SmartDashboard.putNumber("X Coordinate", x);
+		SmartDashboard.putNumber("Y Coordinate", y);
 	}
-
 	protected boolean isFinished() {
 		boolean is_finished = false;
 		return is_finished;
-
-		//SmartDashboard.putString("lidar info", "isFinished");
 
 		//Checks the cancel button for its state
 		//isPressed = Robot.oi.cancelAny.get();
@@ -91,14 +70,10 @@ public class LidarAlign360 extends Command {
 	// }
 
 	protected void end() {
-		//Stops motors and sets bling
-		Robot.drivetrain.basicDrive(0, 0);
-		//Robot.bling.sendRemoveGear();
+		
 	}
 
 	protected void interrupted() {
-		//Stops motors and sets bling
-		Robot.drivetrain.basicDrive(0, 0);
 		SmartDashboard.putString("lidar info", "Interrupted");
 		//Robot.bling.sendRemoveGear();
 	}

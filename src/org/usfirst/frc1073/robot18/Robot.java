@@ -1,11 +1,14 @@
-
 package org.usfirst.frc1073.robot18;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.hal.PDPJNI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.commands.*;
@@ -35,28 +38,55 @@ public class Robot extends IterativeRobot {
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
 
+	public static String FMS;
+	public static SendableChooser<AutoObject> autonomousChooser;
+	public AutoObject left;
+	public AutoObject center;
+	public AutoObject right;
+
+	public static String gameData;
+	public static int position;
+	public static String elevatorWorking;
+	public static String othersScale;
+	public static String switchSide;
+	public static String scaleSide;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		
 		RobotMap.init();
-		RobotMap.headingGyro.reset();
+		//		RobotMap.headingGyro.reset();
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
-		// OI must be constructed after subsystems. If the OI creates Commands
-		//(which it very likely will), subsystems are not guaranteed to be
-		// constructed yet. Thus, their requires() statements may grab null
-		// pointers. Bad news. Don't move it.
 		oi = new OI();
+		
+		FMS = "init";
 
-		// instantiate the command used for the autonomous period
+		/* Chooser Objects */
+		left = new AutoObject(1);
+		center = new AutoObject(2);
+		right = new AutoObject(3);
 
-		autonomousCommand = new VisionCubeTracker();
+		/* Jack's Auto Variables*/
+		position = (int) SmartDashboard.getNumber("Position", 1);
+		elevatorWorking = String.valueOf(SmartDashboard.getBoolean("Elevator Working?", true));
+		othersScale = String.valueOf(SmartDashboard.getBoolean("Other Bots Scale?", false));
+
+		/* The Chooser */
+		autonomousChooser = new SendableChooser<AutoObject>();
+		autonomousChooser.addDefault("Left", left);
+		autonomousChooser.addObject("Center", center);
+		autonomousChooser.addObject("Right", right);
+		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
+
+		/* instantiate the command used for the autonomous period */
+		autonomousCommand = new Auto1Chooser();
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {
-			
+
 			// Sets up the camera, its resolution, and limits the framerate
 			// to help with bandwidth
 			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);   
@@ -105,7 +135,7 @@ public class Robot extends IterativeRobot {
 
 			}
 		});
-		
+
 		Thread camera2Thread = new Thread(() -> {
 
 			UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);   
@@ -167,11 +197,24 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
+
 	}
 
 	public void autonomousInit() {
 		// schedule the autonomous command (example)
+		Scheduler.getInstance().run();
+		new LidarMiniMap();
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		if(gameData.charAt(0) == 'L') {
+			switchSide = "left";
+		}else {
+			switchSide = "right";
+		}
+		if(gameData.charAt(1) == 'L') {
+			scaleSide = "left";
+		}else {
+			scaleSide = "right";
+		}
 		if (autonomousCommand != null) autonomousCommand.start();
 	}
 
@@ -187,7 +230,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (Robot.oi.RobotTeleInit.get() == true) autonomousCommand.cancel();
+		new LidarMiniMap();
+		if (Robot.oi.RobotPRGMInit.get() == true) autonomousCommand.cancel();
 	}
 
 	/**

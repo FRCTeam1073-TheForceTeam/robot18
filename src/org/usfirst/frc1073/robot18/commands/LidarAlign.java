@@ -76,8 +76,11 @@ public class LidarAlign extends Command {
 	}
 
 	protected boolean isFinished() {
-		boolean is_finished = false;
-		return is_finished;
+		boolean finished = false;
+		if (Robot.oi.cancel.get() == true) {
+			finished = true;
+		}
+		return finished;
 
 		//SmartDashboard.putString("lidar info", "isFinished");
 
