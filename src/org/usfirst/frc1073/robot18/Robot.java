@@ -57,7 +57,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		
 		RobotMap.init();
-		//		RobotMap.headingGyro.reset();
+		RobotMap.headingGyro.reset();
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		oi = new OI();
