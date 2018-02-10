@@ -43,6 +43,11 @@ public class Robot extends IterativeRobot {
 	public static SendableChooser<String> autonomousChooser;
 
 	public static String gameData;
+	public static int position;
+	public static String elevatorWorking;
+	public static String othersScale;
+	public static String switchSide;
+	public static String scaleSide;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -53,6 +58,11 @@ public class Robot extends IterativeRobot {
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		oi = new OI();
+		
+		/* Jack's Auto Variables*/
+		position = (int) SmartDashboard.getNumber("Position", 1);
+		elevatorWorking = String.valueOf(SmartDashboard.getBoolean("Elevator Working?", true));
+		othersScale = String.valueOf(SmartDashboard.getBoolean("Other Bots Scale?", false));
 		
 		/* The Chooser */
 		autonomousChooser = new SendableChooser<String>();
@@ -179,11 +189,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
+		
+	}
+
+	public void autonomousInit() {
+		// schedule the autonomous command (example)
 		Scheduler.getInstance().run();
-		String switchSide;
-		String scaleSide;
-		//gameData = DriverStation.getInstance().getGameSpecificMessage();
-		gameData = "RRR";
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L') {
 			switchSide = "left";
 		}else {
@@ -194,10 +206,7 @@ public class Robot extends IterativeRobot {
 		}else {
 			scaleSide = "right";
 		}
-	}
 
-	public void autonomousInit() {
-		// schedule the autonomous command (example)
 		if (autonomousCommand != null) autonomousCommand.start();
 	}
 

@@ -5,6 +5,7 @@ import org.usfirst.frc1073.robot18.Robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -13,7 +14,7 @@ public class AutoSystem extends CommandGroup {
 
     public AutoSystem() {
     	
-    /**Selects an autonomous using choices from the AutoTable on the Smart Dashboard
+    /**Selects an autonomous using choices from the choosers on the Smart Dashboard
      * @author Jack
      * @category Autonomous
      * @param Position "1" to "3", left to right, in front of the driver stations
@@ -21,55 +22,28 @@ public class AutoSystem extends CommandGroup {
      * @param Objective Positions "LLL", "RRR", "LRL", "RLR", set by the FMS
      * @param Others Scale "yes" or "no", whether other robots on the alliance can put their cubes on the scale
      */
-    String position = null;
-    String elevatorWorking = null;
-    String othersScale = null;
-    if(DriverStation.Alliance.Blue != null) {
+    /*if(DriverStation.Alliance.Blue != null) {
     	String alliance = "blue";
     }else {
     	String alliance = "red";
-    }
-    /*
-    switch(position) {
-    case "1":
-    	switch(elevatorWorking) {
+    }*/
+    
+    switch(Robot.position) {
+    case 1:
+    	switch(Robot.elevatorWorking) {
     	case "yes":
     		switch(Robot.gameData) {
-    		case "RRR":
-    			addSequential(new DriveWithPID(1));
-    			addSequential(new TurnWithGyro(.1, 90, "clockwise"));
-    			addSequential(new DriveWithPID(1));
-    			addSequential(new TurnWithGyro(.1, 90, "clockwise")); //Turns and drives into position 3
-    			addSequential(new DriveWithPID(1)); //Drives forward to switch
-    			addSequential(new GearShift());
-    			//addSequential(new robotElevator.drop()); //Drops cube into switch
-    			addSequential(new TurnWithGyro(.1, 90, "clockwise"));
-    			addSequential(new DriveWithPID(1));
-    			addSequential(new TurnWithGyro(.1, 90, "clockwise"));
-    			addSequential(new DriveWithPID(1));
-    			addSequential(new TurnWithGyro(.1, 90, "clockwise"));
-    			addSequential(new DriveWithPID(1)); //Moved to cube near platform zone
-    			//addSequential(new robotElevator.pickUp();
-    			addSequential(new TurnWithGyro(.1, 90, "clockwise"));
-    			addSequential(new DriveWithPID(1)); //Move to scale
-    			for(int i = 0; i < 6 && !; i++ ) {
-    				//addSequential(new robotElevator.drop());
-    			addSequential(new TurnWithGyro(.1, 90, "clockwise"));
-    			addSequential(new DriveWithPID(1)); //Turn around and drive to cube
-    			//addSequential(new robotElevator.pickUp();
-    			addSequential(new TurnWithGyro(.1, 90, "clockwise"));
-    			addSequential(new DriveWithPID(1));
-    			//addSequential(new robotElevator.drop());
-    			}
+    		case "LLL":
+    			addSequential(new AutoSwitchScale());
     			break;
     		case "LRL":
-    			addSequential(new DriveWithPID(1));
+    			addSequential(new AutoSwitchScale());
     			break;
     		case "RLR":
-    			addSequential(new DriveWithPID(1));
+    			addSequential(new AutoSwitchScale());
     			break;
-    		case "LLL":
-    			switch(othersScale) {
+    		case "RRR":
+    			switch(Robot.othersScale) {
     			case "yes":
         			addSequential(new DriveWithPID(1));
         			break;
@@ -98,21 +72,21 @@ public class AutoSystem extends CommandGroup {
     			break;
     }
     			break;
-    case "2":
-    	switch(elevatorWorking) {
+    case 2:
+    	switch(Robot.elevatorWorking) {
     	case "yes":
     		switch(Robot.gameData) {
     		case "RRR":
-    			addSequential(new DriveWithPID(1));
+    			addSequential(new AutoSwitchScale());
     			break;
     		case "LRL":
-    			addSequential(new DriveWithPID(1));
+    			addSequential(new AutoSwitchScale());
     			break;
     		case "RLR":
-    			addSequential(new DriveWithPID(1));
+    			addSequential(new AutoSwitchScale());
     			break;
     		case "LLL":
-    			switch(othersScale) {
+    			switch(Robot.othersScale) {
     			case "yes":
         			addSequential(new DriveWithPID(1));
         			break;
@@ -141,21 +115,21 @@ public class AutoSystem extends CommandGroup {
     			break;
     }
     			break;
-    case "3":
-    	switch(elevatorWorking) {
+    case 3:
+    	switch(Robot.elevatorWorking) {
     	case "yes":
     		switch(Robot.gameData) {
-    		case "RRR":
-    			addSequential(new DriveWithPID(1));
+    		case "LLL":
+    			addSequential(new AutoSwitchScale());
     			break;
     		case "LRL":
-    			addSequential(new DriveWithPID(1));
+    			addSequential(new AutoSwitchScale());
     			break;
     		case "RLR":
-    			addSequential(new DriveWithPID(1));
+    			addSequential(new AutoSwitchScale());
     			break;
-    		case "LLL":
-    			switch(othersScale) {
+    		case "RRR":
+    			switch(Robot.othersScale) {
     			case "yes":
         			addSequential(new DriveWithPID(1));
         			break;
@@ -185,9 +159,4 @@ public class AutoSystem extends CommandGroup {
     }
     			break;
     
-    }}
-
-	private void until(boolean b) {
-		// TODO Auto-generated method stub
-	*/	
-	}}
+    }}}
