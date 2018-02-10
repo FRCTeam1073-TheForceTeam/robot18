@@ -2,6 +2,8 @@
 package org.usfirst.frc1073.robot18;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.cscore.*;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -23,12 +25,11 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class RobotMap {
 	public static PowerDistributionPanel pdp;
     public static WPI_TalonSRX rightMotor1;
-    public static WPI_TalonSRX rightMotor2;
-    public static WPI_TalonSRX rightMotor3E;
+    public static WPI_VictorSPX rightMotor2;
     public static WPI_TalonSRX leftMotor1;
-    public static WPI_TalonSRX leftMotor2;
-    public static WPI_TalonSRX leftMotor3E;
-    public static WPI_TalonSRX liftMotor;
+    public static WPI_VictorSPX leftMotor2;
+    public static WPI_TalonSRX liftMotor1;
+    public static WPI_TalonSRX lightMotor2;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
     public static Encoder liftEncoder;

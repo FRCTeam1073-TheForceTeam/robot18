@@ -29,22 +29,22 @@ public class MoveWithEnc extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	int absolutePosition = RobotMap.leftMotor3E.getSelectedSensorPosition(0) & 0xFFF;
+    	int absolutePosition = RobotMap.leftMotor1.getSelectedSensorPosition(0) & 0xFFF;
     	
-    	RobotMap.leftMotor3E.setSelectedSensorPosition(absolutePosition, 0, 0);
-    	RobotMap.rightMotor3E.setSelectedSensorPosition(absolutePosition, 0, 0);
+    	RobotMap.leftMotor1.setSelectedSensorPosition(absolutePosition, 0, 0);
+    	RobotMap.rightMotor1.setSelectedSensorPosition(absolutePosition, 0, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    		RobotMap.leftMotor3E.set(ControlMode.PercentOutput, -speed);
-    		RobotMap.rightMotor3E.set(ControlMode.PercentOutput, speed);
+    		RobotMap.leftMotor1.set(ControlMode.PercentOutput, -speed);
+    		RobotMap.rightMotor1.set(ControlMode.PercentOutput, speed);
     		
-    		RobotMap.leftMotor3E.setSensorPhase(true);
+    		RobotMap.leftMotor1.setSensorPhase(true);
     		
-        	double Eright = RobotMap.rightMotor3E.getSelectedSensorPosition(0);
-        	double Eleft = RobotMap.leftMotor3E.getSelectedSensorPosition(0);
+        	double Eright = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+        	double Eleft = RobotMap.leftMotor1.getSelectedSensorPosition(0);
         	
         	SmartDashboard.putNumber("Encoder Right", Eright);
         	SmartDashboard.putNumber("Encoder Left", Eleft);
@@ -53,7 +53,7 @@ public class MoveWithEnc extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (RobotMap.leftMotor3E.getSelectedSensorPosition(0) >= target)
+    	if (RobotMap.leftMotor1.getSelectedSensorPosition(0) >= target)
     	{
     		return true;
     	}

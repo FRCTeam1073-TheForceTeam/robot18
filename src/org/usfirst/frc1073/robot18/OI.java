@@ -37,7 +37,7 @@ public class OI {
     	visionButton.whenPressed(new VisionCubeTracker());
     	
     	PIDButton = driverControl.x;
-    	PIDButton.whenPressed(new DriveWithPID(5));
+    	PIDButton.whenPressed(new AdvancedDrive2(5));
     	
     	cancel = driverControl.a;
 
