@@ -37,7 +37,7 @@ public class OI {
     	visionButton.whenPressed(new VisionCubeTracker());
     	
     	PIDButton = driverControl.x;
-    	PIDButton.whenPressed(new DriveWithPID(5));
+    	PIDButton.whenPressed(new AdvancedDrive2(5));
     	
     	cancel = driverControl.a;
 
@@ -46,6 +46,8 @@ public class OI {
         SmartDashboard.putData("Lidar Align", new LidarAlignAuto());
         SmartDashboard.putData("DriveWithPID", new DriveWithPID(10));
         SmartDashboard.putData("LidarMiniMap", new LidarMiniMap());
+        SmartDashboard.putData("AutoTest", new AutoTest());
+        SmartDashboard.putData("Reset Sticky Faults", new ClearStickyFault());
     }
 }
 
