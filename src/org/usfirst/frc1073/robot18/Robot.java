@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		
 		RobotMap.init();
 		RobotMap.headingGyro.reset();
 		elevator = new robotElevator();
@@ -187,6 +188,7 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		// schedule the autonomous command (example)
+		new LidarMiniMap();
 		if (autonomousCommand != null) autonomousCommand.start();
 	}
 
@@ -202,6 +204,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		new LidarMiniMap();
 		if (Robot.oi.RobotPRGMInit.get() == true) autonomousCommand.cancel();
 	}
 

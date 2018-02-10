@@ -44,54 +44,20 @@ public class LidarMiniMap extends Command {
 		rightLeft = SmartDashboard.getString("rightLeft", "right");
 		lidarSendTable.putString("rightLeft", rightLeft);
 			
-			
 		
 		
 	}
 
 	protected void execute() {
-
-		SmartDashboard.putString("lidar info", "execute");
-		//These are the variables that get manipulated in the code
-
-		double mmToIn = 1.0;
-		SmartDashboard.putNumber("ultimateMeasurement", ultimateMeasurement);
-
-		//These are the variables for speed - start slow
-
-		//These are what the Pixy send us
-		robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
-		left = lidarSendTable.getNumber("left", 99);
-		right = lidarSendTable.getNumber("right", 99);
-		degrees = lidarSendTable.getNumber("degrees",99);
+		SmartDashboard.putString("lidar info", "executing");
 		x = lidarSendTable.getNumber("x", 0);
 		y = lidarSendTable.getNumber("x", 0);
 		SmartDashboard.putNumber("X Coordinate", x);
 		SmartDashboard.putNumber("Y Coordinate", y);
-		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
-
-
-
-		//This code modifies the speed based on how close you are to the peg
-		SmartDashboard.putNumber("Lidar Distance" , ultimateMeasurement);
-		SmartDashboard.putNumber("Lidar Degrees" , degrees);
-		SmartDashboard.putNumber("Lidar To Inches", ultimateMeasurement/mmToIn);
-		SmartDashboard.putNumber("Robot Speed", robotSpeed);
-		SmartDashboard.putNumber("left", left);
-		SmartDashboard.putNumber("right", right);
-
-		Robot.drivetrain.basicDrive(-1*left, right);
-
-
-
-
 	}
-
 	protected boolean isFinished() {
 		boolean is_finished = false;
 		return is_finished;
-
-		//SmartDashboard.putString("lidar info", "isFinished");
 
 		//Checks the cancel button for its state
 		//isPressed = Robot.oi.cancelAny.get();
@@ -104,14 +70,10 @@ public class LidarMiniMap extends Command {
 	// }
 
 	protected void end() {
-		//Stops motors and sets bling
-		Robot.drivetrain.basicDrive(0, 0);
-		//Robot.bling.sendRemoveGear();
+		
 	}
 
 	protected void interrupted() {
-		//Stops motors and sets bling
-		Robot.drivetrain.basicDrive(0, 0);
 		SmartDashboard.putString("lidar info", "Interrupted");
 		//Robot.bling.sendRemoveGear();
 	}
