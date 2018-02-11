@@ -44,6 +44,7 @@ public class OI {
         SmartDashboard.putData("LidarMoveAway360", new LidarMoveAway360());
         SmartDashboard.putData("LidarWallTurnRight", new LidarAlignWallRight());
         SmartDashboard.putData("LidarWallTurnLeft", new LidarAlignWallLeft());
+        SmartDashboard.putData("DriveWithProx", new DriveWithProx());
     }
 }
 

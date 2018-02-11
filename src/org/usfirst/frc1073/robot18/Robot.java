@@ -199,7 +199,14 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-
+		double total = 0;
+		for (int i = 0; i < 10; i++) {
+			voltage = RobotMap.frontSensor.getVoltage();
+			distance = (Robot.voltage - 0.0399)/0.0234;  
+			total += distance;
+		}
+		total = total/10;
+		SmartDashboard.putNumber("Ultrasonic Distance", total );
 	}
 
 	public void autonomousInit() {
@@ -223,9 +230,7 @@ public class Robot extends IterativeRobot {
 		
 		if (autonomousCommand != null) autonomousCommand.start();
 		
-		voltage = RobotMap.frontSensor.getVoltage();
-		distance = (voltage - 0.0399)/0.0234;  
-		SmartDashboard.putNumber("Ultrasonic Distance", distance);
+		
 	}
 	
 
@@ -234,6 +239,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
 
 	}
 
@@ -256,7 +262,8 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during test mode
 	 */
+	@SuppressWarnings("deprecation")
 	public void testPeriodic() {
-		LiveWindow.run();
+		LiveWindow.run();		
 	}
 }
