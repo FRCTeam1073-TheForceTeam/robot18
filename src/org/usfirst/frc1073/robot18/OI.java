@@ -38,13 +38,14 @@ public class OI {
         // SmartDashboard Buttons
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
         SmartDashboard.putData("Lidar Align", new LidarAlignAuto());
-        SmartDashboard.putData("DriveWithPID", new DriveWithPID(10));
+        SmartDashboard.putData("DriveWithPID", new DriveWithPID(40));
         SmartDashboard.putData("lidaralign360", new LidarAlign360());
         SmartDashboard.putData("LidarMoveAway", new LidarMoveAway());
         SmartDashboard.putData("LidarMoveAway360", new LidarMoveAway360());
         SmartDashboard.putData("LidarWallTurnRight", new LidarAlignWallRight());
         SmartDashboard.putData("LidarWallTurnLeft", new LidarAlignWallLeft());
         SmartDashboard.putData("AutoTest", new AutoTest());
+        SmartDashboard.putData("DriveWithProx", new DriveWithProx());
     }
 }
 
