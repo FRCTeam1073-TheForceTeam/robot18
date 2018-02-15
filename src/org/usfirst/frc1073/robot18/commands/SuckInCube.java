@@ -4,31 +4,33 @@ import org.usfirst.frc1073.robot18.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc1073.robot18.RobotMap;
+
 /**
  *
  */
-public class GearShift extends Command {
+public class SuckInCube extends Command {
 
-    public GearShift() {
+    public SuckInCube() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	RobotMap.leftCollectorMotor.set(-0.5);
-    	RobotMap.rightCollectorMotor.set(-0.5);
+    	RobotMap.leftCollectorMotor.set(0.5);
+    	RobotMap.rightCollectorMotor.set(0.5);
     	try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//RobotMap.pdp.clearStickyFaults();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -40,7 +42,6 @@ public class GearShift extends Command {
     protected void end() {
     	RobotMap.leftCollectorMotor.set(0);
     	RobotMap.rightCollectorMotor.set(0);
-    	
     }
 
     // Called when another command which requires one or more of the same

@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GearShift extends Command {
+public class SpitOutCube extends Command {
 
-    public GearShift() {
+    public SpitOutCube() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
