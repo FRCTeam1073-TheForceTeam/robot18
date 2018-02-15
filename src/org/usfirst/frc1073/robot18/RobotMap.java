@@ -33,6 +33,11 @@ public class RobotMap {
     public static Encoder liftEncoder;
     public static DigitalInput liftSwitchBottom;
     public static DigitalInput liftSwitchTop;
+    public static WPI_TalonSRX rightCollectorMotor;
+    public static WPI_TalonSRX leftCollectorMotor;
+    public static Encoder CollectorEncoder;
+    public static DigitalInput CollectorSwitchBottom;
+    
     
     public static AnalogInput leftSensor;
     public static AnalogInput rightSensor;
