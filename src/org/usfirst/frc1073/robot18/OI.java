@@ -14,12 +14,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 	
+	public double dropoffSpeed = Robot.robotPreferences.getDouble("Dropoff Speed", 1);
+	
+	public boolean cancelPushed;
+	
 	public XboxController driverControl;
+	public XboxController operatorControl;
+	
 	public JoystickButton RobotTeleInit;
 	public JoystickButton visionButton;
 	public JoystickButton lidarButton;
 	public JoystickButton cancel;
-	public boolean cancelPushed;
+	public JoystickButton conveyorRight;
+	public JoystickButton conveyorLeft;
 	
     public OI() {
     	
@@ -34,7 +41,16 @@ public class OI {
     	lidarButton.whenPressed(new LidarAlign());
     	
     	cancel = driverControl.a;
-
+    	
+    	conveyorRight = driverControl.rightBumper;
+    	conveyorRight.whenPressed(new Dropoff(-(dropoffSpeed)));
+    	conveyorRight.whenReleased(new Dropoff(0));
+    	conveyorLeft = driverControl.leftBumper;
+    	conveyorLeft.whenPressed(new Dropoff(dropoffSpeed));
+    	conveyorLeft.whenReleased(new Dropoff(0));
+    	
+    	operatorControl = new XboxController(1);
+    	
         // SmartDashboard Buttons
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
         SmartDashboard.putData("Lidar Align", new LidarAlignAuto());

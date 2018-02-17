@@ -41,12 +41,11 @@ public class RobotMap {
     
     public static ADXRS450_Gyro headingGyro;
     
-	public static Encoder CollectorEncoder;
+	public static Encoder collectorEncoder;
 	public static WPI_TalonSRX leftCollectorMotor;
 	public static WPI_TalonSRX rightCollectorMotor;
-	public static DigitalInput CollectorSwitchBottom;
-	public static WPI_TalonSRX liftMotor1;
-	public static WPI_TalonSRX ConveyorMotor;
+	public static DigitalInput collectorSwitchBottom;
+	public static WPI_TalonSRX conveyorMotor;
     
     public static void init() {
     // Motor init
@@ -78,8 +77,10 @@ public class RobotMap {
     // Gyro
         headingGyro = new ADXRS450_Gyro();
         LiveWindow.addSensor("DriveTrain", "headingGyro", headingGyro);
-    // Conveyor Motor 
-     
+        
+    // Conveyor Motor
+        conveyorMotor = new WPI_TalonSRX(10);
+        
     // Collector Motors
         leftCollectorMotor = new WPI_TalonSRX(7);
         rightCollectorMotor = new WPI_TalonSRX(4);
