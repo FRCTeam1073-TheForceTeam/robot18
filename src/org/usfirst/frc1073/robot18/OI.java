@@ -16,8 +16,6 @@ public class OI {
 	
 	public double dropoffSpeed = Robot.robotPreferences.getDouble("Dropoff Speed", 1);
 	
-	public boolean cancelPushed;
-	
 	public XboxController driverControl;
 	public XboxController operatorControl;
 	
