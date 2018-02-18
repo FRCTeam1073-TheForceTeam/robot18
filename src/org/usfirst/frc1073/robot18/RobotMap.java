@@ -28,8 +28,6 @@ public class RobotMap {
     public static WPI_TalonSRX rightMotor1;
     public static WPI_VictorSPX leftMotor2;
     public static WPI_TalonSRX leftMotor1;
-    public static WPI_TalonSRX elevatorMotorRight;
-    public static WPI_TalonSRX elevatorMotorLeft;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
     
@@ -46,10 +44,10 @@ public class RobotMap {
     public static ADXRS450_Gyro headingGyro;
     
 	public static Encoder collectorEncoder;
+	public static WPI_TalonSRX leftCollectorMotor;
+	public static WPI_TalonSRX rightCollectorMotor;
 	public static DigitalInput collectorSwitchBottom;
 	public static WPI_TalonSRX conveyorMotor;
-	public static WPI_VictorSPX leftCollectorMotor;
-	public static WPI_VictorSPX rightCollectorMotor;
     
     public static void init() {
     // Motor init
@@ -86,11 +84,7 @@ public class RobotMap {
         conveyorMotor = new WPI_TalonSRX(10);
         
     // Collector Motors
-        leftCollectorMotor = new WPI_VictorSPX(7);
-        rightCollectorMotor = new WPI_VictorSPX(6);
-        
-     // Elevator Motors
-        elevatorMotorRight = new WPI_TalonSRX(4);
-        elevatorMotorLeft = new WPI_TalonSRX(5);
+        leftCollectorMotor = new WPI_TalonSRX(7);
+        rightCollectorMotor = new WPI_TalonSRX(4);
         }
 }

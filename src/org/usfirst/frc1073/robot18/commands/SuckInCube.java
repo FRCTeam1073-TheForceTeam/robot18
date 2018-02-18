@@ -2,7 +2,6 @@ package org.usfirst.frc1073.robot18.commands;
 
 import org.usfirst.frc1073.robot18.RobotMap;
 
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc1073.robot18.RobotMap;
@@ -12,9 +11,6 @@ import org.usfirst.frc1073.robot18.RobotMap;
  */
 public class SuckInCube extends Command {
 
-	//Until Set
-	//Solenoid rightSolenoid = new Solenoid(1); 
-	
     public SuckInCube() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,11 +18,8 @@ public class SuckInCube extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//if (rightSolenoid.get() == false)
-			//rightSolenoid.set(true);
-    	
     	RobotMap.leftCollectorMotor.set(0.5);
-    	RobotMap.rightCollectorMotor.set(-0.5);
+    	RobotMap.rightCollectorMotor.set(0.5);
     	try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {

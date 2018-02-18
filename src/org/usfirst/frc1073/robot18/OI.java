@@ -16,6 +16,8 @@ public class OI {
 	
 	public double dropoffSpeed = Robot.robotPreferences.getDouble("Dropoff Speed", 1);
 	
+	public boolean cancelPushed;
+	
 	public XboxController driverControl;
 	public XboxController operatorControl;
 	
@@ -25,14 +27,10 @@ public class OI {
 	public JoystickButton cancel;
 	public JoystickButton conveyorRight;
 	public JoystickButton conveyorLeft;
-	public JoystickButton suckInButton;
-	public JoystickButton suckOutButton;
-	public boolean cancelPushed;
 	
     public OI() {
     	
     	driverControl = new XboxController(0);
-    	operatorControl = new XboxController(1);
     	
     	RobotTeleInit = driverControl.start;
     	
@@ -50,11 +48,8 @@ public class OI {
     	conveyorLeft = driverControl.leftBumper;
     	conveyorLeft.whenPressed(new Dropoff(dropoffSpeed));
     	conveyorLeft.whenReleased(new Dropoff(0));
-    	suckInButton = operatorControl.a;
-    	suckInButton.whenPressed(new SuckInCube());
-
-    	suckOutButton = operatorControl.b;
-    	suckOutButton.whenPressed(new SpitOutCube());
+    	
+    	operatorControl = new XboxController(1);
     	
         // SmartDashboard Buttons
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());

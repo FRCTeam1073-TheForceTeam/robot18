@@ -43,9 +43,6 @@ public class robotDrivetrain extends Subsystem {
 	    	leftMotor1.setSafetyEnabled(false);
 	    	leftMotor2.setSafetyEnabled(false);
 	    	
-	    	leftMotor1.configOpenloopRamp(.5, 10);
-	    	rightMotor1.configOpenloopRamp(.5, 10);
-	    	
 	    	difDrive = new DifferentialDrive(RobotMap.leftMotor1, RobotMap.rightMotor1);
 	    	}
     

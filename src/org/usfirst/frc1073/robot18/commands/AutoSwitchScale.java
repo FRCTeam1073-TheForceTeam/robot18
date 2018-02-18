@@ -43,7 +43,7 @@ public class AutoSwitchScale extends CommandGroup {
     	
     	
 		addSequential(new DriveWithPID(1)); //Drives forward to switch
-		addSequential(new GearShift(true));
+		addSequential(new GearShift());
 		//addSequential(new robotElevator.drop()); //Drops cube into switch
 		
 		if(Robot.gameData.charAt(0) == 'R') {

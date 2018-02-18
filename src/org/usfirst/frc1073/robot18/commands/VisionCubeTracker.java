@@ -10,10 +10,10 @@ import org.usfirst.frc1073.robot18.Robot;
 
 @SuppressWarnings("deprecation")
 public class VisionCubeTracker extends Command{
-
+	
 	edu.wpi.first.networktables.NetworkTable netTable;
 	NetworkTableInstance netTableInst;
-	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir, v;
+	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir;
 	public String dir;
 	public boolean fullDir;
 
@@ -24,16 +24,16 @@ public class VisionCubeTracker extends Command{
 	 */
 	public VisionCubeTracker() {
 		netTableInst = NetworkTableInstance.getDefault();
-		netTable = netTableInst.getTable("TurretTable");
+        netTable = netTableInst.getTable("TurretTable");
 		//netTable = NetworkTable.getTable("TurretTable");
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+
 		driveDir = 0;
 		dir = "not set";
 		fullDir = false;
-		v = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -45,27 +45,24 @@ public class VisionCubeTracker extends Command{
 		yWidth = netTable.getEntry("AverageHeight").getDouble(0);
 		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
-		// Defines speed and slow down markers
-		double speed = .75;
+	// Defines speed and slow down markers
+		double speed = 0.22;
 		double side = 50; // Marks the reasonable area around the center	
 
-		// Puts variables from Network Tables on SmartDashboard
+	// Puts variables from Network Tables on SmartDashboard
 		SmartDashboard.putNumber("xDelta", xDelta);
 		SmartDashboard.putNumber("xWidth", xWidth);
 		SmartDashboard.putNumber("yDelta", yDelta);
 		SmartDashboard.putNumber("yWidth", yWidth);
 		SmartDashboard.putNumber("Block Count", blockCount);
-		
-		// Stop stuff
-		SmartDashboard.putNumber("v", v);
 
-		// BLockCount asks the Pixy how many things it sees
-		// when it sees something, we track it
+	// BLockCount asks the Pixy how many things it sees
+	// when it sees something, we track it
 		if (blockCount > 0) {
 			SmartDashboard.putString("Current State", "Targeting (" + blockCount + ")");
 
-			// This code handles the left and right motion of the bot
-			// based on the Pixy's values
+	// This code handles the left and right motion of the bot
+	// based on the Pixy's values
 			if (xDelta > side) {
 				dir = "Right";
 				SmartDashboard.putString("Target", "Right");
@@ -78,16 +75,16 @@ public class VisionCubeTracker extends Command{
 				dir = "Center";
 				SmartDashboard.putString("Target", "Centered");
 			}
-
+			
 			if (Math.abs(xDelta) > 115) {
 				fullDir = true;
 			}
 			else {
 				fullDir = false;
 			}
-
-			// If block is far away: sets motor directions
-			if (xWidth < 250) {
+				
+	// If block is far away: sets motor directions
+			if (xWidth < 100) {
 				if (xWidth < 90) {
 					if (xWidth < 75) {
 						if (xWidth < 50) {
@@ -110,9 +107,16 @@ public class VisionCubeTracker extends Command{
 					driveDir = 1;
 				}
 			}
+			else if (xWidth > 130) {
+				if (xWidth > 180) {
+					driveDir = -2;
+				}
+				else {
+					driveDir = -1;
+				}
+			}
 			else {
 				driveDir = 0;
-				v++;
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
 				if (fullDir == true) {
@@ -139,22 +143,17 @@ public class VisionCubeTracker extends Command{
 			}
 		}
 
-
-		// When no blocks are seen, we strafe back and forth, and up and down,
-		// while the bot looks for the target
+	// When no blocks are seen, we strafe back and forth, and up and down,
+	// while the bot looks for the target
 		else {
 			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
 			Robot.drivetrain.basicDrive(0, 0);
 		}
-		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		boolean finished = false;
-		if (Robot.oi.cancel.get() == true || v > 10) {
-			finished = true;
-		}
+		boolean finished = Robot.oi.cancel.get();
 		return finished;
 	}
 
