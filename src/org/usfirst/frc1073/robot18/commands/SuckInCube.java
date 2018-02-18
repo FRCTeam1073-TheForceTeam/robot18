@@ -13,7 +13,7 @@ import org.usfirst.frc1073.robot18.RobotMap;
 public class SuckInCube extends Command {
 
 	//Until Set
-	Solenoid rightSolenoid = new Solenoid(1); 
+	//Solenoid rightSolenoid = new Solenoid(1); 
 	
     public SuckInCube() {
         // Use requires() here to declare subsystem dependencies
@@ -22,8 +22,8 @@ public class SuckInCube extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (rightSolenoid.get() == false)
-			rightSolenoid.set(true);
+    	//if (rightSolenoid.get() == false)
+			//rightSolenoid.set(true);
     	
     	RobotMap.leftCollectorMotor.set(0.5);
     	RobotMap.rightCollectorMotor.set(-0.5);

@@ -32,6 +32,7 @@ public class OI {
     public OI() {
     	
     	driverControl = new XboxController(0);
+    	operatorControl = new XboxController(1);
     	
     	RobotTeleInit = driverControl.start;
     	
@@ -51,8 +52,7 @@ public class OI {
     	conveyorLeft.whenReleased(new Dropoff(0));
     	suckInButton = operatorControl.a;
     	suckInButton.whenPressed(new SuckInCube());
-    	
-    	operatorControl = new XboxController(1);
+
     	suckOutButton = operatorControl.b;
     	suckOutButton.whenPressed(new SpitOutCube());
     	

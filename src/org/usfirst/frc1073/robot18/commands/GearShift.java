@@ -13,8 +13,8 @@ public class GearShift extends Command {
 	boolean down = false;
 	
 	//Until Set
-	Solenoid rightSolenoid = new Solenoid(0);
-	Solenoid leftSolenoid = new Solenoid(1);
+	//Solenoid rightSolenoid = new Solenoid(0);
+	//Solenoid leftSolenoid = new Solenoid(1);
 	
     public GearShift(boolean down) {
         // Use requires() here to declare subsystem dependencies
@@ -28,13 +28,13 @@ public class GearShift extends Command {
     	
     	if (down) 
     	{
-    		rightSolenoid.set(true);
-    		leftSolenoid.set(true);
+    		//rightSolenoid.set(true);
+    		//leftSolenoid.set(true);
     	}
     	else 
     	{
-    		rightSolenoid.set(false);
-    		leftSolenoid.set(false);
+    		//rightSolenoid.set(false);
+    		//leftSolenoid.set(false);
     	}
     	
     	

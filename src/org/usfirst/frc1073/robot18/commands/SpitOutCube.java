@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SpitOutCube extends Command {
 	
 	//Until Set
-	Solenoid rightSolenoid = new Solenoid(1); 
+	//Solenoid rightSolenoid = new Solenoid(1); 
 
     public SpitOutCube() {
         // Use requires() here to declare subsystem dependencies
@@ -21,8 +21,8 @@ public class SpitOutCube extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	if (rightSolenoid.get() == true)
-			rightSolenoid.set(false);
+    	//if (rightSolenoid.get() == true)
+			//rightSolenoid.set(false);
     	
     	RobotMap.leftCollectorMotor.set(-0.5);
     	RobotMap.rightCollectorMotor.set(0.5);
