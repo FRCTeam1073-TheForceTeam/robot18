@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc1073.robot18.Bling;
 import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.subsystems.*;
 import edu.wpi.cscore.CvSink;
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
     public static Preferences robotPreferences;
 
 	public static OI oi;
+	public static Bling bling;
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
 	public static robotCollector collector;
@@ -73,6 +75,10 @@ public class Robot extends IterativeRobot {
 		conveyor = new robotConveyor();
 		oi = new OI();
 		
+		//Instantiating Bling Class for smartbling on Robot.
+        bling = new Bling();
+        bling.sendRobotInit();
+        
 		FMS = "";
 
 		/* Chooser Objects */
