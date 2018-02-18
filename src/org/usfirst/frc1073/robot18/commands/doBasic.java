@@ -3,6 +3,7 @@ package org.usfirst.frc1073.robot18.commands;
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -13,9 +14,15 @@ public class doBasic extends Command {
 	toBeTraveled1, toBeTraveled2, toBeTraveled3, inch, leftEncDif1, leftEncDif2, leftEncDif3, 
 	rightEncDif1, rightEncDif2, rightEncDif3, startleftEncDif1, startleftEncDif2, startleftEncDif3,
 	percentComplete1, percentComplete2, percentComplete3, avgEncDif1, avgEncDif2, avgEncDif3,
-	startrightEncDif1, startrightEncDif2, startrightEncDif3, originalDegrees, n;
+	startrightEncDif1, startrightEncDif2, startrightEncDif3, originalDegrees, n, v;
 	private String direction;
 	private boolean fin1, fin2, fin3, fin4, oneMove, turn1, turn1s, turn2, turn2s;
+	
+	edu.wpi.first.networktables.NetworkTable netTable;
+	NetworkTableInstance netTableInst;
+	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir;
+	public String dir;
+	public boolean fullDir;
 	
 	private double slowdownDistance = 11;
 	private double slowdownValue = .5;
@@ -62,6 +69,9 @@ public class doBasic extends Command {
 		this.dist2 = dist2;
 		this.speed3 = speed3;
 		this.dist3 = dist3;
+
+		netTableInst = NetworkTableInstance.getDefault();
+        netTable = netTableInst.getTable("TurretTable");
 	}
 
 	protected void initialize() {
@@ -79,6 +89,10 @@ public class doBasic extends Command {
 		toBeTraveled1 = (dist1 * inch * 1.045);
 		toBeTraveled2 = (dist2 * inch * 1.045);
 		toBeTraveled3 = (dist3 * inch * 1.045);
+		
+		driveDir = 0;
+		dir = "not set";
+		fullDir = false;
 
 		n = 0;
 		fin1 = false;
@@ -97,28 +111,33 @@ public class doBasic extends Command {
 			rightEncDif1 = Math.abs(startrightEncDif1 - RobotMap.rightMotor1.getSelectedSensorPosition(0));
 			SmartDashboard.putNumber("Left Encoder", leftEncDif1);
 			SmartDashboard.putNumber("Right Encoder", rightEncDif1);
+			SmartDashboard.putString("Step: ", "1");
 		}
 		if (fin1 == true && fin2 == false && fin3 == false && fin4 == false && turn1 == true && turn2 == false) {
 			startleftEncDif2 = RobotMap.leftMotor1.getSelectedSensorPosition(0);
 			startrightEncDif2 = RobotMap.rightMotor1.getSelectedSensorPosition(0);
 			fin2 = true;
+			SmartDashboard.putString("Step: ", "2");
 		}
 		if (fin1 == true && fin2 == true && fin3 == false && fin4 == false && turn1 == true && turn2 == false) {
 			leftEncDif2 = Math.abs(startleftEncDif2 - RobotMap.leftMotor1.getSelectedSensorPosition(0));
 			rightEncDif2 = Math.abs(startrightEncDif2 - RobotMap.rightMotor1.getSelectedSensorPosition(0));
 			SmartDashboard.putNumber("Left Encoder", leftEncDif1);
 			SmartDashboard.putNumber("Right Encoder", rightEncDif1);
+			SmartDashboard.putString("Step: ", "3");
 		}
 		if (fin1 == true && fin2 == true && fin3 == true && fin4 == false && turn1 == true && turn2 == true) {
 			startleftEncDif3 = RobotMap.leftMotor1.getSelectedSensorPosition(0);
 			startrightEncDif3 = RobotMap.rightMotor1.getSelectedSensorPosition(0);
 			fin4 = true;
+			SmartDashboard.putString("Step: ", "4");
 		}
 		if (fin1 == true && fin2 == true && fin3 == true && fin4 == true && turn1 == true && turn2 == true) {
 			leftEncDif3 = Math.abs(startleftEncDif3 - RobotMap.leftMotor1.getSelectedSensorPosition(0));
 			rightEncDif3 = Math.abs(startrightEncDif3 - RobotMap.rightMotor1.getSelectedSensorPosition(0));
 			SmartDashboard.putNumber("Left Encoder", leftEncDif1);
 			SmartDashboard.putNumber("Right Encoder", rightEncDif1);
+			SmartDashboard.putString("Step: ", "5");
 		}
 
 		avgEncDif1 = (leftEncDif1 + rightEncDif1) / 2;
@@ -133,6 +152,7 @@ public class doBasic extends Command {
 			if (turn1s == false) {
 				originalDegrees = RobotMap.headingGyro.getAngle();
 				turn1s = true;
+				SmartDashboard.putString("Step: ", "turn1");
 			}
 			else if (turn1s == true && turn1 == false) {
 		    	double right = speedTurn, left = speedTurn;
@@ -178,6 +198,7 @@ public class doBasic extends Command {
 			if (turn2s == false) {
 				originalDegrees = RobotMap.headingGyro.getAngle();
 				turn2s = true;
+				SmartDashboard.putString("Step: ", "turn2");
 			}
 			else if (turn2s == true && turn2 == false) {
 		    	double right = speedTurn, left = speedTurn;
@@ -236,7 +257,7 @@ public class doBasic extends Command {
 
 			if (percentComplete1 < 1) {
 				if (percentComplete1 > .90) {
-					currentSpeed1 = currentSpeed1 / 20;
+					currentSpeed1 = currentSpeed1 / 1.25;
 				}
 			}
 
@@ -260,7 +281,7 @@ public class doBasic extends Command {
 
 			if (percentComplete2 < 1) {
 				if (percentComplete2 > .90) {
-					currentSpeed2 = currentSpeed2 / 20;
+					currentSpeed2 = currentSpeed2 / 1.25;
 				}
 			}
 
@@ -290,6 +311,122 @@ public class doBasic extends Command {
 
 			Robot.drivetrain.difDrive.tankDrive(-currentSpeed3 * currentSpeedL, -currentSpeed3 * currentSpeedR);
 		}
+		if (percentComplete1 >= .99 && percentComplete2 >= .99 && percentComplete3 >= .99
+				&& fin1 == true && fin2 == true && fin3 == true && fin4 == true) {
+			// Pulls variables from Network Tables
+			xDelta = netTable.getEntry("centerDistX").getDouble(0);
+			xWidth = netTable.getEntry("AverageWidth").getDouble(0);
+			yDelta = netTable.getEntry("centerDistY").getDouble(0);
+			yWidth = netTable.getEntry("AverageHeight").getDouble(0);
+			blockCount = netTable.getEntry("Blocks").getDouble(0);
+
+		// Defines speed and slow down markers
+			double speed = 0.22;
+			double side = 50; // Marks the reasonable area around the center	
+
+		// Puts variables from Network Tables on SmartDashboard
+			SmartDashboard.putNumber("xDelta", xDelta);
+			SmartDashboard.putNumber("xWidth", xWidth);
+			SmartDashboard.putNumber("yDelta", yDelta);
+			SmartDashboard.putNumber("yWidth", yWidth);
+			SmartDashboard.putNumber("Block Count", blockCount);
+
+		// BLockCount asks the Pixy how many things it sees
+		// when it sees something, we track it
+			if (blockCount > 0) {
+				SmartDashboard.putString("Current State", "Targeting (" + blockCount + ")");
+
+		// This code handles the left and right motion of the bot
+		// based on the Pixy's values
+				if (xDelta > side) {
+					dir = "Right";
+					SmartDashboard.putString("Target", "Right");
+				}
+				else if (xDelta < -(side)) {
+					dir = "Left";
+					SmartDashboard.putString("Target", "Left");
+				}
+				else {
+					dir = "Center";
+					SmartDashboard.putString("Target", "Centered");
+				}
+				
+				if (Math.abs(xDelta) > 115) {
+					fullDir = true;
+				}
+				else {
+					fullDir = false;
+				}
+					
+		// If block is far away: sets motor directions
+				if (xWidth < 100) {
+					if (xWidth < 90) {
+						if (xWidth < 75) {
+							if (xWidth < 50) {
+								if (xWidth < 35) {
+									driveDir = 4;
+								}
+								else {
+									driveDir = 3;
+								}
+							}
+							else {
+								driveDir = 2;
+							}
+						}
+						else {
+							driveDir = 1.5;	
+						}
+					}
+					else {
+						driveDir = 1;
+					}
+				}
+				else if (xWidth > 130) {
+					if (xWidth > 180) {
+						driveDir = -2;
+					}
+					else {
+						driveDir = -1;
+					}
+				}
+				else {
+					driveDir = 0;
+					n++;
+				}
+				if (dir.equals("Right") && driveDir >= 0) {
+					if (fullDir == true) {
+						speed = speed;
+						Robot.drivetrain.basicDrive(-speed * driveDir, -speed * driveDir);
+					}
+					else {
+						speed = speed / 1.3;
+						Robot.drivetrain.basicDrive(-speed * driveDir, 0);
+					}
+				}
+				else if (dir.equals("Left") && driveDir >= 0) {
+					if (fullDir == true) {
+						speed = speed;
+						Robot.drivetrain.basicDrive(speed * driveDir, speed * driveDir);
+					}
+					else {
+						speed = speed / 1.3;
+						Robot.drivetrain.basicDrive(0, speed * driveDir);
+					}
+				}
+				else if (dir.equals("Center")) {
+					Robot.drivetrain.basicDrive(-speed * driveDir, speed * driveDir);
+				}
+			}
+
+		// When no blocks are seen, we strafe back and forth, and up and down,
+		// while the bot looks for the target
+			else {
+				SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
+				Robot.drivetrain.basicDrive(0, 0);
+				v++;
+			}
+		}
 	}
 
 	protected boolean isFinished() {
@@ -300,7 +437,7 @@ public class doBasic extends Command {
 			}
 		}
 		else if (percentComplete1 >= .99 && percentComplete2 >= .99 && percentComplete3 >= .99
-				&& fin1 == true && fin2 == true && fin3 == true && fin4 == true || Robot.oi.cancel.get() == true) {
+				&& fin1 == true && fin2 == true && fin3 == true && fin4 == true && ( n > 10 || v > 10) || Robot.oi.cancel.get() == true) {
 			isFinished = true;
 		}
 		return isFinished;
