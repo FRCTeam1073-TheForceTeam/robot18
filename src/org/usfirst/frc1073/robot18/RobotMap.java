@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.hal.PDPJNI;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -22,14 +22,16 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * floating around.
  */
 public class RobotMap {
-    public static PDPJNI pdp;
+    public static PowerDistributionPanel pdp;
+    
 	public static WPI_VictorSPX rightMotor2;
     public static WPI_TalonSRX rightMotor1;
     public static WPI_VictorSPX leftMotor2;
     public static WPI_TalonSRX leftMotor1;
-    public static WPI_TalonSRX liftMotor;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
+    
+    public static WPI_TalonSRX liftMotor;
     public static Encoder liftEncoder;
     public static DigitalInput liftSwitchBottom;
     public static DigitalInput liftSwitchTop;
@@ -41,12 +43,11 @@ public class RobotMap {
     
     public static ADXRS450_Gyro headingGyro;
     
-	public static Encoder CollectorEncoder;
+	public static Encoder collectorEncoder;
 	public static WPI_TalonSRX leftCollectorMotor;
 	public static WPI_TalonSRX rightCollectorMotor;
-	public static DigitalInput CollectorSwitchBottom;
-	public static WPI_TalonSRX liftMotor1;
-	public static WPI_TalonSRX ConveyorMotor;
+	public static DigitalInput collectorSwitchBottom;
+	public static WPI_TalonSRX conveyorMotor;
     
     public static void init() {
     // Motor init
@@ -78,8 +79,10 @@ public class RobotMap {
     // Gyro
         headingGyro = new ADXRS450_Gyro();
         LiveWindow.addSensor("DriveTrain", "headingGyro", headingGyro);
-    // Conveyor Motor 
-     
+        
+    // Conveyor Motor
+        conveyorMotor = new WPI_TalonSRX(10);
+        
     // Collector Motors
         leftCollectorMotor = new WPI_TalonSRX(7);
         rightCollectorMotor = new WPI_TalonSRX(4);

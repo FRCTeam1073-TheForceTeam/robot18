@@ -3,6 +3,7 @@ package org.usfirst.frc1073.robot18;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -31,10 +32,13 @@ import org.opencv.imgproc.Imgproc;
 public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
+    public static Preferences robotPreferences;
 
 	public static OI oi;
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
+	public static robotCollector collector;
+	public static robotConveyor conveyor;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
 
@@ -53,6 +57,7 @@ public class Robot extends IterativeRobot {
 	public static String othersScale;
 	public static String switchSide;
 	public static String scaleSide;
+	public static String robotName;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -61,8 +66,11 @@ public class Robot extends IterativeRobot {
 		
 		RobotMap.init();
 		RobotMap.headingGyro.reset();
+		robotPreferences = Preferences.getInstance();
+    	robotName = robotPreferences.getString("robotName", "unknown");
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
+		conveyor = new robotConveyor();
 		oi = new OI();
 		
 		FMS = "";
@@ -199,7 +207,14 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-
+		double total = 0;
+		for (int i = 0; i < 10; i++) {
+			voltage = RobotMap.frontSensor.getVoltage();
+			distance = (Robot.voltage - 0.0399)/0.0234;  
+			total += distance;
+		}
+		total = total/10;
+		SmartDashboard.putNumber("Ultrasonic Distance", total );
 	}
 
 	public void autonomousInit() {
@@ -222,10 +237,6 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = new Auto1Chooser();
 		
 		if (autonomousCommand != null) autonomousCommand.start();
-		
-		voltage = RobotMap.frontSensor.getVoltage();
-		distance = (voltage - 0.0399)/0.0234;  
-		SmartDashboard.putNumber("Ultrasonic Distance", distance);
 	}
 	
 
@@ -234,7 +245,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
 	}
 
 	public void teleopInit() {

@@ -31,12 +31,20 @@ public class DriveWithPID extends Command {
 	double d = 0;
 	
 	/** Drive Command that moves an exact distance with PID
-	 * @param target Exact distance you want to go in revolutions
-	 * @author sreekar and anderson
+	 * @param inches Exact distance you want to go in inches
+	 * @author Sreekar Chilakapati and Anderson Steckler
 	 * @category Drive Command
 	 */
-    public DriveWithPID(double target) {
-    	this.target = target*1440;
+    public DriveWithPID(double inches) {
+    	this.target = (inches/(Math.PI*3.9))*1440;
+    	//this.target += RobotMap.leftMotor1.getSelectedSensorPosition(0);
+    	
+        /* use the low level API to set the quad encoder signal */
+        RobotMap.leftMotor1.setSelectedSensorPosition(0, 0, 0);
+        RobotMap.rightMotor1.setSelectedSensorPosition(0, 0, 0);
+        
+        RobotMap.leftMotor1.set(ControlMode.PercentOutput, 0);
+        RobotMap.rightMotor1.set(ControlMode.PercentOutput, 0);
     }
     // Called just before this Command runs the first time
     protected void initialize() {   
@@ -46,27 +54,28 @@ public class DriveWithPID extends Command {
     	SmartDashboard.putNumber("D", d);
     	
     	/*config left side*/
+     	
     	
     	/* lets grab the 360 degree position of the MagEncoder's absolute position */
-		int absolutePosition = RobotMap.leftMotor1.getSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+		//int absolutePosition = RobotMap.leftMotor1.getSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
         /* use the low level API to set the quad encoder signal */
-        RobotMap.leftMotor1.setSelectedSensorPosition(absolutePosition, 0, 10);
+        RobotMap.leftMotor1.setSelectedSensorPosition(0, 0, 10);
         
-        /* choose the sensor and sensor direction */
+//        /* choose the sensor and sensor direction */
         RobotMap.leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-        RobotMap.leftMotor1.setSensorPhase(false);
-        
-        /* set the peak and nominal outputs, 12V means full */
+        RobotMap.leftMotor1.setSensorPhase(true);
+//        
+//        /* set the peak and nominal outputs, 12V means full */
         //RobotMap.leftMotor3E.configNominalOutputForward(0, 10);
         //RobotMap.leftMotor3E.configNominalOutputReverse(0, 10);
-        RobotMap.leftMotor1.configPeakOutputForward(8, 10);
-        RobotMap.leftMotor1.configPeakOutputReverse(8, 10);
-        /* set the allowable closed-loop error,
-         * Closed-Loop output will be neutral within this range.
-         * See Table in Section 17.2.1 for native units per rotation. 
-         */
-        RobotMap.leftMotor1.configAllowableClosedloopError(0, 0, 10); /* always servo */
-        /* set closed loop gains in slot0 */
+        RobotMap.leftMotor1.configPeakOutputForward(.9, 10);
+        RobotMap.leftMotor1.configPeakOutputReverse(-.9, 10);
+//        /* set the allowable closed-loop error,
+//         * Closed-Loop output will be neutral within this range.
+//         * See Table in Section 17.2.1 for native units per rotation. 
+//         */
+//        RobotMap.leftMotor1.configAllowableClosedloopError(0, 0, 10); /* always servo */
+//        /* set closed loop gains in slot0 */
         RobotMap.leftMotor1.config_kF(0, 0.0, 10);
         RobotMap.leftMotor1.config_kP(0, SmartDashboard.getNumber("P", 1), 10);
         RobotMap.leftMotor1.config_kI(0, SmartDashboard.getNumber("I", 0), 10);
@@ -75,9 +84,11 @@ public class DriveWithPID extends Command {
         /*config right side*/
     	
     	/* lets grab the 360 degree position of the MagEncoder's absolute position */
-		int absolutePosition1 = RobotMap.rightMotor1.getSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+		//int absolutePosition1 = RobotMap.rightMotor1.getSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
         /* use the low level API to set the quad encoder signal */
-        RobotMap.rightMotor1.setSelectedSensorPosition(absolutePosition1, 0, 10);
+        RobotMap.rightMotor1.setSelectedSensorPosition(0, 0, 10);
+        
+        RobotMap.rightMotor1.setSensorPhase(true);
         
         /* choose the sensor and sensor direction */
         RobotMap.rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
@@ -85,20 +96,26 @@ public class DriveWithPID extends Command {
         /* set the peak and nominal outputs, 12V means full */
         //RobotMap.rightMotor3E.configNominalOutputForward(0, 10);
         //RobotMap.rightMotor3E.configNominalOutputReverse(0, 10);
-        RobotMap.rightMotor1.configPeakOutputForward(8, 10);
-        RobotMap.rightMotor1.configPeakOutputReverse(8, 10);
+        RobotMap.rightMotor1.configPeakOutputForward(.9, 10);
+        RobotMap.rightMotor1.configPeakOutputReverse(-.9, 10);
         /* set the allowable closed-loop error,
          * Closed-Loop output will be neutral within this range.
          * See Table in Section 17.2.1 for native units per rotation. 
          */
-        //RobotMap.rightMotor3E.configAllowableClosedloopError(0, 0, 10); /* always servo */
+        RobotMap.rightMotor1.configAllowableClosedloopError(0, 0, 10); /* always servo */
         /* set closed loop gains in slot0 */
         
         RobotMap.rightMotor1.config_kF(0, 0.0, 10);
         RobotMap.rightMotor1.config_kP(0, SmartDashboard.getNumber("P", 1), 10);
         RobotMap.rightMotor1.config_kI(0, SmartDashboard.getNumber("I", 0), 10);
         RobotMap.rightMotor1.config_kD(0, SmartDashboard.getNumber("D", 0), 10);
-    	
+        
+        try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -126,12 +143,14 @@ public class DriveWithPID extends Command {
     	SmartDashboard.putNumber("Encoder Right", Eright);
     	SmartDashboard.putNumber("Encoder Left", Eleft);
     	
+    	SmartDashboard.putNumber("Left Voltage", RobotMap.leftMotor1.getMotorOutputVoltage());    	
+    	SmartDashboard.putNumber("Right Voltage", RobotMap.rightMotor1.getMotorOutputVoltage());   
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	boolean finish = false;
-		if(Math.abs(errorleft) < 100 || Math.abs(errorright) < 100 || Robot.oi.cancel.get() == true){
+		if(Math.abs(errorright) < 100 || Math.abs(errorleft) < 100 || Robot.oi.cancel.get() == true){
 	        RobotMap.leftMotor1.set(ControlMode.PercentOutput, 0);
 	        RobotMap.rightMotor1.set(ControlMode.PercentOutput, 0);
     		finish = true;
@@ -145,11 +164,11 @@ public class DriveWithPID extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	/* lets grab the 360 degree position of the MagEncoder's absolute position */
-		int absolutePosition = RobotMap.leftMotor1.getSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
+		//int absolutePosition = RobotMap.leftMotor1.getSelectedSensorPosition(0) & 0xFFF; /* mask out the bottom12 bits, we don't care about the wrap arounds */
 		
         /* use the low level API to set the quad encoder signal */
-        RobotMap.leftMotor1.setSelectedSensorPosition(absolutePosition, 0, 0);
-        RobotMap.rightMotor1.setSelectedSensorPosition(absolutePosition, 0, 0);
+        RobotMap.leftMotor1.setSelectedSensorPosition(0, 0, 0);
+        RobotMap.rightMotor1.setSelectedSensorPosition(0, 0, 0);
         
         RobotMap.leftMotor1.set(ControlMode.PercentOutput, 0);
         RobotMap.rightMotor1.set(ControlMode.PercentOutput, 0);

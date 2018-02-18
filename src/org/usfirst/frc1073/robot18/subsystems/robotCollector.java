@@ -11,8 +11,8 @@ public class robotCollector extends Subsystem {
 	
     private final WPI_TalonSRX rightCollectorMotor = RobotMap.rightCollectorMotor;
     private final WPI_TalonSRX leftCollectorMotor = RobotMap.leftCollectorMotor;
-    private final Encoder CollectorEncoder = RobotMap.CollectorEncoder;
-    private final DigitalInput CollectorSwitchBottom = RobotMap.CollectorSwitchBottom;
+    private final Encoder collectorEncoder = RobotMap.collectorEncoder;
+    private final DigitalInput collectorSwitchBottom = RobotMap.collectorSwitchBottom;
     
     public void initDefaultCommand() {
     	

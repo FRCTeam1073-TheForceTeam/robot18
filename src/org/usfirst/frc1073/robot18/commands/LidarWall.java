@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LidarAlignWallRight extends Command {
+public class LidarWall extends Command {
 
 
 	NetworkTable lidarSendTable;
@@ -28,7 +28,7 @@ public class LidarAlignWallRight extends Command {
 	//Variable for button used in isFinished
 	boolean isPressed = false;
 
-	public LidarAlignWallRight() {
+	public LidarWall() {
 
 		requires(Robot.drivetrain);
 
@@ -56,7 +56,7 @@ public class LidarAlignWallRight extends Command {
 		left = lidarSendTable.getNumber("left", 99);
 		right = lidarSendTable.getNumber("right", 99);
 		degrees = lidarSendTable.getNumber("degrees",99);
-		String turn = lidarSendTable.getString("Turn","turn");
+		Inches = lidarSendTable.getNumber("Inches", 1073);
 		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
 
 
@@ -68,23 +68,23 @@ public class LidarAlignWallRight extends Command {
 		SmartDashboard.putNumber("Robot Speed", robotSpeed);
 		SmartDashboard.putNumber("left", left);
 		SmartDashboard.putNumber("right", right);
-
-		Robot.drivetrain.difDrive.tankDrive(-1*left, right);
-		
-		lidarSendTable.putString("Turn", "right");
-		
-			
-			
-	} 
-
+		if (Inches>=25){
+		Robot.drivetrain.basicDrive(-1*left, right);
+		}
 		
 
 
-	
+
+
+	}
 
 	protected boolean isFinished() {
-		boolean is_finished = false;
-		return is_finished;
+		if (Inches<25){
+			return true;
+		}
+		else{
+			return false;
+		}
 
 		//SmartDashboard.putString("lidar info", "isFinished");
 
@@ -100,13 +100,13 @@ public class LidarAlignWallRight extends Command {
 
 	protected void end() {
 		//Stops motors and sets bling
-		Robot.drivetrain.difDrive.tankDrive(0, 0);
+		Robot.drivetrain.basicDrive(0, 0);
 		//Robot.bling.sendRemoveGear();
 	}
 
 	protected void interrupted() {
 		//Stops motors and sets bling
-		Robot.drivetrain.difDrive.tankDrive(0, 0);
+		Robot.drivetrain.basicDrive(0, 0);
 		SmartDashboard.putString("lidar info", "Interrupted");
 		//Robot.bling.sendRemoveGear();
 	}

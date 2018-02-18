@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LidarAlignWallRight extends Command {
+public class LidarWallwObstacles extends Command {
 
 
 	NetworkTable lidarSendTable;
@@ -24,11 +24,14 @@ public class LidarAlignWallRight extends Command {
 	double left;
 	double right;
 	double Inches;
+	double center;
+	double rightSide;
+	double leftSide;
 
 	//Variable for button used in isFinished
 	boolean isPressed = false;
 
-	public LidarAlignWallRight() {
+	public LidarWallwObstacles() {
 
 		requires(Robot.drivetrain);
 
@@ -56,7 +59,7 @@ public class LidarAlignWallRight extends Command {
 		left = lidarSendTable.getNumber("left", 99);
 		right = lidarSendTable.getNumber("right", 99);
 		degrees = lidarSendTable.getNumber("degrees",99);
-		String turn = lidarSendTable.getString("Turn","turn");
+		Inches = lidarSendTable.getNumber("Inches", 1073);
 		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
 
 
@@ -68,23 +71,34 @@ public class LidarAlignWallRight extends Command {
 		SmartDashboard.putNumber("Robot Speed", robotSpeed);
 		SmartDashboard.putNumber("left", left);
 		SmartDashboard.putNumber("right", right);
-
+		if (Inches>=25){
 		Robot.drivetrain.difDrive.tankDrive(-1*left, right);
-		
-		lidarSendTable.putString("Turn", "right");
-		
-			
-			
-	} 
+		}
+		if (center <=25 && rightSide <=28){
+			new TurnWithGyro(1, 90, "counterclockwise");
+		}
+		else if (center <=25 && leftSide <=28){
+			new TurnWithGyro(1, 90, "clockwise");
+		}
+		else if (center <= 25 && rightSide <= 28 && leftSide <= 28){
+			Robot.drivetrain.difDrive.tankDrive(0, 0);
+		}
+		else{
+			Robot.drivetrain.difDrive.tankDrive(-1*left, right);
+		}
 
-		
 
 
-	
+
+	}
 
 	protected boolean isFinished() {
-		boolean is_finished = false;
-		return is_finished;
+		if (Inches<25){
+			return false;
+		}
+		else{
+			return false;
+		}
 
 		//SmartDashboard.putString("lidar info", "isFinished");
 
@@ -100,13 +114,13 @@ public class LidarAlignWallRight extends Command {
 
 	protected void end() {
 		//Stops motors and sets bling
-		Robot.drivetrain.difDrive.tankDrive(0, 0);
+		Robot.drivetrain.basicDrive(0, 0);
 		//Robot.bling.sendRemoveGear();
 	}
 
 	protected void interrupted() {
 		//Stops motors and sets bling
-		Robot.drivetrain.difDrive.tankDrive(0, 0);
+		Robot.drivetrain.basicDrive(0, 0);
 		SmartDashboard.putString("lidar info", "Interrupted");
 		//Robot.bling.sendRemoveGear();
 	}
