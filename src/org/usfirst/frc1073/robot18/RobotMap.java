@@ -37,10 +37,11 @@ public class RobotMap {
     public static WPI_TalonSRX rightMotor1;
     public static WPI_VictorSPX leftMotor2;
     public static WPI_TalonSRX leftMotor1;
+    public static WPI_TalonSRX elevatorMotorRight;
+    public static WPI_TalonSRX elevatorMotorLeft;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
     
-    public static WPI_TalonSRX liftMotor;
     public static Encoder liftEncoder;
     public static DigitalInput liftSwitchBottom;
     public static DigitalInput liftSwitchTop;
@@ -78,6 +79,11 @@ public class RobotMap {
         leftEnc.setDistancePerPulse(1.0);
         leftEnc.setPIDSourceType(PIDSourceType.kRate);
         LiveWindow.addSensor("DriveTrain", "leftEnc", leftEnc);
+        //Lift Encoder
+        liftEncoder = new Encoder(4, 5, false, EncodingType.k4X);
+        liftEncoder.setDistancePerPulse(1.0);
+        liftEncoder.setPIDSourceType(PIDSourceType.kRate);
+        LiveWindow.addSensor("Elevator", "liftEncoder", liftEncoder);
         
     // Solenoids
         leftWrist = new Solenoid (1, 2);
@@ -104,5 +110,14 @@ public class RobotMap {
     // Collector Motors
         leftCollectorMotor = new WPI_TalonSRX(7);
         rightCollectorMotor = new WPI_TalonSRX(4);
+        
+     // Elevator Motors
+        elevatorMotorRight = new WPI_TalonSRX(4);
+        elevatorMotorLeft = new WPI_TalonSRX(5);
+        
+     //Lift Switches
+        //liftSwitchBottom = new DigitalInput(1);
+        //liftSwitchTop = new DigitalInput(0);
         }
+    
 }

@@ -116,6 +116,7 @@ public class OI {
         SmartDashboard.putData("HighLift", new highGearLift());
         SmartDashboard.putData("LowLift", new lowGearLift());
         SmartDashboard.putData("ClawUp", new collectorUp());
+        SmartDashboard.putData("Lift Motor", new LiftElevatorTo4FtScale());
 
     }
 }
