@@ -46,7 +46,7 @@ public class VisionCubeTracker extends Command{
 		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
 	// Defines speed and slow down markers
-		double speed = 0.75;
+		double speed = .5;
 		double side = 50; // Marks the reasonable area around the center	
 
 	// Puts variables from Network Tables on SmartDashboard

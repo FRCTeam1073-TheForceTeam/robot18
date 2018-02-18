@@ -206,6 +206,8 @@ public class Robot extends IterativeRobot {
 	 * You can use it to reset subsystems before shutting down.
 	 */
 	public void disabledInit(){
+		
+		
 
 	}
 
@@ -221,6 +223,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
+		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
+		
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		Scheduler.getInstance().run();
 		new LidarMiniMap();
@@ -257,6 +262,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		new LidarMiniMap();
 		if (autonomousCommand != null) autonomousCommand.cancel();
+		RobotMap.leftMotor1.configOpenloopRamp(.25, 10);
+		RobotMap.rightMotor1.configOpenloopRamp(.25, 10);
 	}
 
 	/**

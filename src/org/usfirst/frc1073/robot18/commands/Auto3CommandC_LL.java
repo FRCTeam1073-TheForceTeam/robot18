@@ -13,7 +13,7 @@ public class Auto3CommandC_LL extends CommandGroup {
 		addSequential(new TurnWithGyro(.75, 75, "clockwise"));
 		addSequential(new AdvancedDrive(1, 25));
 		addSequential(new VisionCubeTracker());
-		addSequential(new SuckInCube(500));
+		addParallel(new SuckInCube(1000));
 		addSequential(new closeClaw());
 	}
 }
