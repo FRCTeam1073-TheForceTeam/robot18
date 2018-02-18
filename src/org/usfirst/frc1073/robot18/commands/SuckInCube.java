@@ -11,9 +11,14 @@ import org.usfirst.frc1073.robot18.RobotMap;
  */
 public class SuckInCube extends Command {
 
+	private long time;
+	
     public SuckInCube() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	this.time = 1000;
+    }
+    
+    public SuckInCube(long time) {
+    	this.time = time;
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +26,7 @@ public class SuckInCube extends Command {
     	RobotMap.leftCollectorMotor.set(0.5);
     	RobotMap.rightCollectorMotor.set(0.5);
     	try {
-			Thread.sleep(1000);
+			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -89,7 +89,8 @@ public class Robot extends IterativeRobot {
 
 		/* The Chooser */
 		autonomousChooser = new SendableChooser<AutoObject>();
-		autonomousChooser.addDefault("Left", left);
+		autonomousChooser.addDefault("None", null);
+		autonomousChooser.addObject("Left", left);
 		autonomousChooser.addObject("Center", center);
 		autonomousChooser.addObject("Right", right);
 		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
