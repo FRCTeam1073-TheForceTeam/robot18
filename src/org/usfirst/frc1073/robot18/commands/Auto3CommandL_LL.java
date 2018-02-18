@@ -7,5 +7,6 @@ public class Auto3CommandL_LL extends CommandGroup {
 	/** If Chooser is set to Left and FMS is LLL */
 	public Auto3CommandL_LL(){
 		SmartDashboard.putString("CurrentCommand", "L_LL is running");
+		addSequential(new AutoSwitchScale());
 	}
 }
