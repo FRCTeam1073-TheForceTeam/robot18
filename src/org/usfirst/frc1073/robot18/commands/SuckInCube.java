@@ -26,7 +26,7 @@ public class SuckInCube extends Command {
 			rightSolenoid.set(true);
     	
     	RobotMap.leftCollectorMotor.set(0.5);
-    	RobotMap.rightCollectorMotor.set(0.5);
+    	RobotMap.rightCollectorMotor.set(-0.5);
     	try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {

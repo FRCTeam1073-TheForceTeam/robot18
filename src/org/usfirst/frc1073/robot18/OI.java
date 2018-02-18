@@ -27,6 +27,9 @@ public class OI {
 	public JoystickButton cancel;
 	public JoystickButton conveyorRight;
 	public JoystickButton conveyorLeft;
+	public JoystickButton suckInButton;
+	public JoystickButton suckOutButton;
+	public boolean cancelPushed;
 	
     public OI() {
     	
@@ -48,8 +51,12 @@ public class OI {
     	conveyorLeft = driverControl.leftBumper;
     	conveyorLeft.whenPressed(new Dropoff(dropoffSpeed));
     	conveyorLeft.whenReleased(new Dropoff(0));
+    	suckInButton = operatorControl.a;
+    	suckInButton.whenPressed(new SuckInCube());
     	
     	operatorControl = new XboxController(1);
+    	suckOutButton = operatorControl.b;
+    	suckOutButton.whenPressed(new SpitOutCube());
     	
         // SmartDashboard Buttons
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
