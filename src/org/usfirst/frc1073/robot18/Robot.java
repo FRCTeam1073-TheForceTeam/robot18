@@ -43,6 +43,7 @@ public class Robot extends IterativeRobot {
 	public static robotConveyor conveyor;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
+    public static pneumatic pneumatic;
 
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousChooser;
@@ -73,6 +74,7 @@ public class Robot extends IterativeRobot {
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		conveyor = new robotConveyor();
+        pneumatic = new pneumatic();
 		oi = new OI();
 		
 		//Instantiating Bling Class for smartbling on Robot.

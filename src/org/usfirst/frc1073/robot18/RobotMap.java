@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -24,6 +25,14 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class RobotMap {
     public static PowerDistributionPanel pdp;
     
+    public static Solenoid leftWrist;
+    public static Solenoid rightWrist;
+    public static Solenoid liftHigh;
+    public static Solenoid liftLow;
+    public static Solenoid gearHigh;
+    public static Solenoid gearLow;
+    public static Solenoid collectorUpDown;
+
 	public static WPI_VictorSPX rightMotor2;
     public static WPI_TalonSRX rightMotor1;
     public static WPI_VictorSPX leftMotor2;
@@ -72,6 +81,15 @@ public class RobotMap {
         leftEnc.setPIDSourceType(PIDSourceType.kRate);
         LiveWindow.addSensor("DriveTrain", "leftEnc", leftEnc);
         
+    // Solenoids
+        leftWrist = new Solenoid (1, 2);
+        rightWrist = new Solenoid (1, 4);
+        liftHigh = new Solenoid (1, 1);
+        liftLow = new Solenoid (1, 3);
+        gearHigh = new Solenoid (1, 0);
+        gearLow = new Solenoid (1, 6);
+        collectorUpDown = new Solenoid (1, 5);
+
     // Proximity Sensors
         leftSensor = new AnalogInput(0);
         rightSensor = new AnalogInput(1);
