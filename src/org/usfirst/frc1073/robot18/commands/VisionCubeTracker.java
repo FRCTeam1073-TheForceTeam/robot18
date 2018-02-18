@@ -30,10 +30,10 @@ public class VisionCubeTracker extends Command{
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
 		driveDir = 0;
 		dir = "not set";
 		fullDir = false;
+		v = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -55,6 +55,9 @@ public class VisionCubeTracker extends Command{
 		SmartDashboard.putNumber("yDelta", yDelta);
 		SmartDashboard.putNumber("yWidth", yWidth);
 		SmartDashboard.putNumber("Block Count", blockCount);
+		
+		// Stop stuff
+		SmartDashboard.putNumber("v", v);
 
 		// BLockCount asks the Pixy how many things it sees
 		// when it sees something, we track it
@@ -84,7 +87,7 @@ public class VisionCubeTracker extends Command{
 			}
 
 			// If block is far away: sets motor directions
-			if (xWidth < 100) {
+			if (xWidth < 250) {
 				if (xWidth < 90) {
 					if (xWidth < 75) {
 						if (xWidth < 50) {
@@ -107,33 +110,33 @@ public class VisionCubeTracker extends Command{
 					driveDir = 1;
 				}
 			}
-		}
-		else if (xWidth > 290) {
-			driveDir = 0;
-			v++;
-		}
-		if (dir.equals("Right") && driveDir >= 0) {
-			if (fullDir == true) {
-				speed = speed;
-				Robot.drivetrain.basicDrive(-speed * driveDir, -speed * driveDir);
-			}
 			else {
-				speed = speed / 1.3;
-				Robot.drivetrain.basicDrive(-speed * driveDir, 0);
+				driveDir = 0;
+				v++;
 			}
-		}
-		else if (dir.equals("Left") && driveDir >= 0) {
-			if (fullDir == true) {
-				speed = speed;
-				Robot.drivetrain.basicDrive(speed * driveDir, speed * driveDir);
+			if (dir.equals("Right") && driveDir >= 0) {
+				if (fullDir == true) {
+					speed = speed;
+					Robot.drivetrain.basicDrive(-speed * driveDir, -speed * driveDir);
+				}
+				else {
+					speed = speed / 1.3;
+					Robot.drivetrain.basicDrive(-speed * driveDir, 0);
+				}
 			}
-			else {
-				speed = speed / 1.3;
-				Robot.drivetrain.basicDrive(0, speed * driveDir);
+			else if (dir.equals("Left") && driveDir >= 0) {
+				if (fullDir == true) {
+					speed = speed;
+					Robot.drivetrain.basicDrive(speed * driveDir, speed * driveDir);
+				}
+				else {
+					speed = speed / 1.3;
+					Robot.drivetrain.basicDrive(0, speed * driveDir);
+				}
 			}
-		}
-		else if (dir.equals("Center")) {
-			Robot.drivetrain.basicDrive(-speed * driveDir, speed * driveDir);
+			else if (dir.equals("Center")) {
+				Robot.drivetrain.basicDrive(-speed * driveDir, speed * driveDir);
+			}
 		}
 
 
@@ -143,6 +146,7 @@ public class VisionCubeTracker extends Command{
 			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
 			Robot.drivetrain.basicDrive(0, 0);
 		}
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
