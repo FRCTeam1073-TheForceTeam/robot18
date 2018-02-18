@@ -97,7 +97,7 @@ public class OI {
     	highGearLift = operatorControl.rightJoyButton;
     	highGearLift.whenPressed(new highGearLift());
     	
-    	
+    	//nothing
         // SmartDashboard Buttons
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
         SmartDashboard.putData("Lidar Align", new LidarAlignAuto());
