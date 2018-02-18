@@ -40,7 +40,6 @@ public class Robot extends IterativeRobot {
 	public static robotCollector collector;
 	public static robotConveyor conveyor;
 	public static CameraServer cameraSwitcher;
-	public static pneumatic pneumatic;
 	public static boolean selectedCamera;
 
 	public static String FMS;
@@ -69,7 +68,6 @@ public class Robot extends IterativeRobot {
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
     	robotName = robotPreferences.getString("robotName", "unknown");
-    	pneumatic = new pneumatic();
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		conveyor = new robotConveyor();
