@@ -23,21 +23,18 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class RobotMap {
     public static PowerDistributionPanel pdp;
+    
 	public static WPI_VictorSPX rightMotor2;
     public static WPI_TalonSRX rightMotor1;
     public static WPI_VictorSPX leftMotor2;
     public static WPI_TalonSRX leftMotor1;
-    public static WPI_TalonSRX liftMotor;
     public static Encoder rightEnc;
     public static Encoder leftEnc;
+    
+    public static WPI_TalonSRX liftMotor;
     public static Encoder liftEncoder;
     public static DigitalInput liftSwitchBottom;
     public static DigitalInput liftSwitchTop;
-    public static WPI_TalonSRX rightCollectorMotor;
-    public static WPI_TalonSRX leftCollectorMotor;
-    public static Encoder CollectorEncoder;
-    public static DigitalInput CollectorSwitchBottom;
-    
     
     public static AnalogInput leftSensor;
     public static AnalogInput rightSensor;
