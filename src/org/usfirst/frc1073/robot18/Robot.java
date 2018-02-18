@@ -73,6 +73,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new robotDrivetrain();
 		conveyor = new robotConveyor();
         pneumatic = new pneumatic();
+        collector = new robotCollector();
 		oi = new OI();
 		
 		FMS = "";
