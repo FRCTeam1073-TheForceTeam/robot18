@@ -48,6 +48,5 @@ public class openClaw extends Command {
 	}
 
 	protected void interrupted() {
-		end();
 	}
 }
