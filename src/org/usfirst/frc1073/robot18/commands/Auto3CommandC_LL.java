@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandC_LL extends CommandGroup {
 	/** If Chooser is set to Center and FMS is LLL */
 	public Auto3CommandC_LL(){
-		SmartDashboard.putString("CurrentCommand", "C_LL is running");
 		addSequential(new AdvancedDrive(1, 100));
 		addSequential(new TurnWithGyro(1, 90, "counterclockwise"));
+		addSequential(new AdvancedDrive(1, 50));
+		addSequential(new TurnWithGyro(1, 90, "clockwise"));
+		addSequential(new AdvancedDrive(1, 50));
 	}
 }
