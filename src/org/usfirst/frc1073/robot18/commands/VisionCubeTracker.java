@@ -49,7 +49,7 @@ public class VisionCubeTracker extends Command{
 		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
 	// Defines speed and slow down markers
-		double speed = .4;
+		double speed = .65;
 		double side = 25; // Marks the reasonable area around the center	
 
 	// Puts variables from Network Tables on SmartDashboard
@@ -80,7 +80,7 @@ public class VisionCubeTracker extends Command{
 			}
 			
 			if (Math.abs(xDelta) > 120) {
-				fullDir = true;
+				fullDir = false;
 			}
 			else {
 				fullDir = false;
@@ -116,34 +116,29 @@ public class VisionCubeTracker extends Command{
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
 				if (fullDir == true) {
-					speed = speed;
-					Robot.drivetrain.basicDrive(-speed * driveDir, -speed * driveDir);
+					Robot.drivetrain.difDrive.tankDrive(-speed * driveDir, speed * driveDir / 5);
 				}
 				else {
-					speed = speed / 1.2;
-					Robot.drivetrain.basicDrive(-speed * driveDir, 0);
+					Robot.drivetrain.difDrive.tankDrive(-speed * driveDir, 0);
 				}
 			}
 			else if (dir.equals("Left") && driveDir >= 0) {
 				if (fullDir == true) {
-					speed = speed;
-					Robot.drivetrain.basicDrive(speed * driveDir, speed * driveDir);
+					Robot.drivetrain.difDrive.tankDrive(speed * driveDir / 5, -speed * driveDir );
 				}
 				else {
-					speed = speed / 1.2;
-					Robot.drivetrain.basicDrive(0, speed * driveDir);
+					Robot.drivetrain.difDrive.tankDrive(0, -speed * driveDir);
 				}
 			}
 			else if (dir.equals("Center")) {
-				Robot.drivetrain.basicDrive(-speed * driveDir, speed * driveDir);
+				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir * 1.5, -speed * driveDir * 1.5);
 			}
 		}
-
 	// When no blocks are seen, we strafe back and forth, and up and down,
 	// while the bot looks for the target
 		else {
 			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
-			Robot.drivetrain.basicDrive(0, 0);
+			Robot.drivetrain.difDrive.tankDrive(0, 0);
 		}
 	}
 

@@ -49,6 +49,7 @@ public class RobotMap {
     public static AnalogInput rightSensor;
     public static AnalogInput frontSensor;
     public static AnalogInput backSensor;
+    public static AnalogInput clawSensor;
     
     public static ADXRS450_Gyro headingGyro;
     
@@ -100,7 +101,10 @@ public class RobotMap {
         leftSensor = new AnalogInput(0);
         rightSensor = new AnalogInput(1);
         frontSensor = new AnalogInput(2);
-        backSensor = new AnalogInput(3);
+        backSensor = new AnalogInput(99);
+        
+    // IR Sensors
+        clawSensor = new AnalogInput(3);
             
     // Gyro
         headingGyro = new ADXRS450_Gyro();
