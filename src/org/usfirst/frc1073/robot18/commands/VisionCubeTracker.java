@@ -7,13 +7,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.OI;
 import org.usfirst.frc1073.robot18.Robot;
+import org.usfirst.frc1073.robot18.RobotMap;
 
 @SuppressWarnings("deprecation")
 public class VisionCubeTracker extends Command{
 	
 	edu.wpi.first.networktables.NetworkTable netTable;
 	NetworkTableInstance netTableInst;
-	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir;
+	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir, v;
 	public String dir;
 	public boolean fullDir;
 
@@ -30,10 +31,12 @@ public class VisionCubeTracker extends Command{
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
+		v = 0;
 		driveDir = 0;
 		dir = "not set";
 		fullDir = false;
+		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
+		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -46,8 +49,8 @@ public class VisionCubeTracker extends Command{
 		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
 	// Defines speed and slow down markers
-		double speed = 0.22;
-		double side = 50; // Marks the reasonable area around the center	
+		double speed = .4;
+		double side = 25; // Marks the reasonable area around the center	
 
 	// Puts variables from Network Tables on SmartDashboard
 		SmartDashboard.putNumber("xDelta", xDelta);
@@ -76,7 +79,7 @@ public class VisionCubeTracker extends Command{
 				SmartDashboard.putString("Target", "Centered");
 			}
 			
-			if (Math.abs(xDelta) > 115) {
+			if (Math.abs(xDelta) > 120) {
 				fullDir = true;
 			}
 			else {
@@ -84,7 +87,7 @@ public class VisionCubeTracker extends Command{
 			}
 				
 	// If block is far away: sets motor directions
-			if (xWidth < 100) {
+			if (xWidth < 250) {
 				if (xWidth < 90) {
 					if (xWidth < 75) {
 						if (xWidth < 50) {
@@ -107,16 +110,9 @@ public class VisionCubeTracker extends Command{
 					driveDir = 1;
 				}
 			}
-			else if (xWidth > 130) {
-				if (xWidth > 180) {
-					driveDir = -2;
-				}
-				else {
-					driveDir = -1;
-				}
-			}
 			else {
 				driveDir = 0;
+				v++;
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
 				if (fullDir == true) {
@@ -124,7 +120,7 @@ public class VisionCubeTracker extends Command{
 					Robot.drivetrain.basicDrive(-speed * driveDir, -speed * driveDir);
 				}
 				else {
-					speed = speed / 1.3;
+					speed = speed / 1.2;
 					Robot.drivetrain.basicDrive(-speed * driveDir, 0);
 				}
 			}
@@ -134,7 +130,7 @@ public class VisionCubeTracker extends Command{
 					Robot.drivetrain.basicDrive(speed * driveDir, speed * driveDir);
 				}
 				else {
-					speed = speed / 1.3;
+					speed = speed / 1.2;
 					Robot.drivetrain.basicDrive(0, speed * driveDir);
 				}
 			}
@@ -153,7 +149,12 @@ public class VisionCubeTracker extends Command{
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		boolean finished = Robot.oi.cancel.get();
+		boolean finished = false;
+		if (Robot.oi.cancel.get() == true || v > 10) {
+			RobotMap.leftMotor1.configOpenloopRamp(0.25, 10);
+			RobotMap.rightMotor1.configOpenloopRamp(0.25, 10);
+			finished = true;
+		}
 		return finished;
 	}
 

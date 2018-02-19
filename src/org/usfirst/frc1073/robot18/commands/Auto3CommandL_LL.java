@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandL_LL extends CommandGroup {
 	/** If Chooser is set to Left and FMS is LLL */
 	public Auto3CommandL_LL(){
-		SmartDashboard.putString("CurrentCommand", "L_LL is running");
+		addParallel(new OpenClaw());
+		addSequential(new VisionCubeTracker());
+		addParallel(new SuckInCube(1000));
+		addSequential(new CloseClaw());
 	}
 }

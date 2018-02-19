@@ -39,7 +39,7 @@ public class AdvancedDrive extends Command {
     	double circumference = 12.25221134900019363000430919479;
     	inch = 117.52980412939963256779108679819;
     	
-    	toBeTraveled = dist * inch;
+    	toBeTraveled = (dist * inch * 1.045);
     	
     	n = 0;
     	fin = false;
@@ -50,14 +50,14 @@ public class AdvancedDrive extends Command {
 		rightEncDif = Math.abs(startrightEncDif - RobotMap.rightMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Left Encoder", leftEncDif);
 		SmartDashboard.putNumber("Right Encoder", rightEncDif);
-		/*
-		if (leftEncDif < (rightEncDif * 1.1)) {
+		
+		if (leftEncDif > (rightEncDif * 1.005)) {
 			currentSpeedL = .90;
 		}
 		else {
 			currentSpeedL = 1;
 		}
-		if (rightEncDif < (leftEncDif * 1.1)) {
+		if (rightEncDif > (leftEncDif * 1.005)) {
 			currentSpeedR = .90;
 		}
 		else {
@@ -69,22 +69,24 @@ public class AdvancedDrive extends Command {
 		percentComplete = avgEncDif/toBeTraveled;
 		
 		if (percentComplete < 1) {
-			if (percentComplete > .75) {
-				currentSpeed = currentSpeed * .45;
+			if (percentComplete > .90) {
+				currentSpeed = currentSpeed / 20;
 			}
     	}
-		*/
-	//	Robot.drivetrain.basicDrive(-currentSpeed /* * currentSpeedL*/, currentSpeed /* currentSpeedR*/);
+		
+		Robot.drivetrain.difDrive.tankDrive(-currentSpeed * currentSpeedL, -currentSpeed * currentSpeedR);
+		
+		/*
 		Robot.drivetrain.basicDrive(-speed, speed);
 		SmartDashboard.putNumber("toBeTraveled", n);
-		n++;
+		n++; 
+		*/
 	}
 
 	protected boolean isFinished() {
 		boolean isFinished = false;
-    	if (Robot.oi.cancel.get() == true || percentComplete >= .95 || n >= dist) {
+    	if (Robot.oi.cancel.get() == true || percentComplete >= .99) {
     		isFinished = true;
-    		Robot.drivetrain.basicDrive(0, 0);
     	}
 		return isFinished;
 	}

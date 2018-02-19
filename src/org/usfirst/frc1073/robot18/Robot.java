@@ -1,8 +1,10 @@
 package org.usfirst.frc1073.robot18;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -31,18 +33,24 @@ import org.opencv.imgproc.Imgproc;
 public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
+    public static Preferences robotPreferences;
 
 	public static OI oi;
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
+	public static robotCollector collector;
+	public static robotConveyor conveyor;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
+    public static robotPneumatic pneumatic;
 
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousChooser;
 	public AutoObject left;
 	public AutoObject center;
 	public AutoObject right;
+	
+	public DigitalInput liftSwitchBottom;
 	
 	public static double voltage;
 	public static double distance;
@@ -53,6 +61,7 @@ public class Robot extends IterativeRobot {
 	public static String othersScale;
 	public static String switchSide;
 	public static String scaleSide;
+	public static String robotName;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -61,8 +70,13 @@ public class Robot extends IterativeRobot {
 		
 		RobotMap.init();
 		RobotMap.headingGyro.reset();
+		robotPreferences = Preferences.getInstance();
+    	robotName = robotPreferences.getString("robotName", "unknown");
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
+		conveyor = new robotConveyor();
+        pneumatic = new robotPneumatic();
+        collector = new robotCollector();
 		oi = new OI();
 		
 		FMS = "";
@@ -79,12 +93,11 @@ public class Robot extends IterativeRobot {
 
 		/* The Chooser */
 		autonomousChooser = new SendableChooser<AutoObject>();
-		autonomousChooser.addDefault("Left", left);
+		autonomousChooser.addDefault("None", null);
+		autonomousChooser.addObject("Left", left);
 		autonomousChooser.addObject("Center", center);
 		autonomousChooser.addObject("Right", right);
 		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
-
-		
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {
@@ -195,6 +208,8 @@ public class Robot extends IterativeRobot {
 	 * You can use it to reset subsystems before shutting down.
 	 */
 	public void disabledInit(){
+		
+		
 
 	}
 
@@ -210,6 +225,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
+		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
+		
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		Scheduler.getInstance().run();
 		new LidarMiniMap();
@@ -246,6 +264,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		new LidarMiniMap();
 		if (autonomousCommand != null) autonomousCommand.cancel();
+		RobotMap.leftMotor1.configOpenloopRamp(.25, 10);
+		RobotMap.rightMotor1.configOpenloopRamp(.25, 10);
 	}
 
 	/**
