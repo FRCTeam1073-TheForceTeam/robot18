@@ -47,8 +47,6 @@ public class LiftElevator extends Command {
     	else {
     		RobotMap.elevatorMotorLeft.set(0);
     	}
-    	
-    	RobotMap.elevatorMotorLeft.set(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
