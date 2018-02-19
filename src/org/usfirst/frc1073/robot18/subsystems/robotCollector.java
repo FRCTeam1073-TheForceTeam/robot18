@@ -21,6 +21,7 @@ public class robotCollector extends Subsystem {
     
     public DifferentialDrive collectDrive;
     
+    
     public robotCollector() {
     	rightCollectorMotor.setSafetyEnabled(false);
     	leftCollectorMotor.setSafetyEnabled(false);

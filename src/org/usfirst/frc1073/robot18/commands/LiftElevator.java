@@ -40,7 +40,7 @@ public class LiftElevator extends Command {
 //    		}
 //    	}
     	
-    	RobotMap.elevatorMotorLeft.set(speed/2);
+    	RobotMap.elevatorMotorLeft.set(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
