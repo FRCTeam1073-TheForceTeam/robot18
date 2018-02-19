@@ -32,7 +32,7 @@ public class WasteTime extends Command {
 
 	protected boolean isFinished() {
 		boolean finished = false;
-		if (timeBool = true) {
+		if (timeBool) {
 			if (timer > timeEnd) {
 				finished = true;
 			}
