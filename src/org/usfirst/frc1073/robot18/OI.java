@@ -15,7 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
 	
 	public double dropoffSpeed = Robot.robotPreferences.getDouble("Dropoff Speed", 1);
-    public double isDone = 0;
+    //public double collectorSpeed = Robot.robotPreferences.getDouble("Collector Speed", 1);
+	public double isDone = 0;
     public double isDoneLift = 0;
 	
 	public boolean cancelPushed;
@@ -29,14 +30,20 @@ public class OI {
 	public JoystickButton cancel;
 	public JoystickButton conveyorRight;
 	public JoystickButton conveyorLeft;
+	public JoystickButton intake;
+	public JoystickButton purge;
 	public JoystickButton suckInButton;
 	public JoystickButton suckOutButton;
     public JoystickButton highGearDT;
     public JoystickButton lowGearDT;
     public JoystickButton clawOpen;
     public JoystickButton collectorUD;
-    public JoystickButton highGearLift;
-    public JoystickButton liftControl;
+    public double highGearLift;
+    public double lowGearLift;
+    public double collectorIntake;
+    public double collectorPurge;
+    public double conveyorLeftLeft;
+    public double conveyorRightRight;
 	
     public OI() {
     	
@@ -45,7 +52,7 @@ public class OI {
     	RobotTeleInit = driverControl.start;
     	
     	visionButton = driverControl.b;
-    	visionButton.whenPressed(new VisionCubeTracker());
+    	visionButton.whileHeld(new CubeGetterSupremeExtreme9000());
     	
     	lidarButton = driverControl.y;
     	lidarButton.whenPressed(new LidarAlign());
@@ -67,6 +74,16 @@ public class OI {
     	conveyorLeft.whenPressed(new Dropoff(dropoffSpeed));
     	conveyorLeft.whenReleased(new Dropoff(0));
     	
+        //right conveyor
+    	conveyorRightRight = driverControl.getRightTrigger();
+    	if (conveyorRightRight >0) {
+    		Robot.conveyor.teleDropoff(conveyorRightRight);
+    	}
+    	//left conveyor
+    	conveyorLeftLeft = driverControl.getLeftTrigger();
+    	if (conveyorLeftLeft >0) {
+    		Robot.conveyor.teleDropoff(conveyorLeftLeft);
+    	}
     	operatorControl = new XboxController(1);
     	
         //opens and closes the claw
@@ -85,20 +102,19 @@ public class OI {
         if (isDone%2 == 0 && collectorUD.equals(1)) {
             collectorUD.whenPressed(new collectorUp());
         }
-        //Changes the gear of the lift
-        liftControl = operatorControl.leftJoyButton;
-        if (liftControl.equals(1)) {
-            isDoneLift =+ 1;
-        }
-        if (isDoneLift%2 == 1 && liftControl.equals(1)) {
-            liftControl.whenPressed(new lowGearLift());
-        }
-        if (isDoneLift%2 == 0 && collectorUD.equals(1)) {
-            liftControl.whenPressed(new highGearLift());
-        }
-        //automatically shifts lift to high gear if pressed
-        highGearLift = operatorControl.rightJoyButton;
-        highGearLift.whenPressed(new highGearLift());
+        //low gear lift
+        
+        //high gear lift
+
+        
+        
+        //intake = operatorControl.rightBumper;
+    	//intake.whenPressed(new SpinCollectorTelev2());
+    	
+    	//purge = operatorControl.leftBumper;
+    	//purge.whenPressed(new SpinCollectorTelev3());
+    	
+
 
         // SmartDashboard Buttons
         SmartDashboard.putData("Drive", new ControllerDifferentialDrive());
@@ -116,7 +132,6 @@ public class OI {
         SmartDashboard.putData("HighLift", new highGearLift());
         SmartDashboard.putData("LowLift", new lowGearLift());
         SmartDashboard.putData("ClawUp", new collectorUp());
-        SmartDashboard.putData("Lift Motor", new LiftElevatorTo4FtScale());
 
     }
 }
