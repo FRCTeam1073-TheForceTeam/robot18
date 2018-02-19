@@ -31,19 +31,23 @@ public class LidarWall extends Command {
 	public LidarWall() {
 
 		requires(Robot.drivetrain);
+		
 
 		//Sets the correct Network Table to pull from the Pixy
 		lidarSendTable = NetworkTable.getTable("LidarSendTable");
+		
 	}
 
 	protected void initialize() {
 		SmartDashboard.putString("lidar info", "init");
 		SmartDashboard.putString("hello_world", "x");
+		boolean lidarState = lidarSendTable.putNumber("lidarState", 1);
 
 	}
 
 	protected void execute() {
 		SmartDashboard.putString("lidar info", "execute");
+		
 		//These are the variables that get manipulated in the code
 
 		double mmToIn = 1.0;
@@ -70,16 +74,18 @@ public class LidarWall extends Command {
 		SmartDashboard.putNumber("right", right);
 		if (Inches>=25){
 		Robot.drivetrain.basicDrive(-1*left, right);
+		
 		}
 		
-
-
-
+		
+		
 
 	}
 
 	protected boolean isFinished() {
 		if (Inches<25){
+			
+			
 			return true;
 		}
 		else{
