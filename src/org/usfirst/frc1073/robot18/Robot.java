@@ -1,6 +1,7 @@
 package org.usfirst.frc1073.robot18;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -49,6 +50,8 @@ public class Robot extends IterativeRobot {
 	public AutoObject center;
 	public AutoObject right;
 	
+	public DigitalInput liftSwitchBottom;
+	
 	public static double voltage;
 	public static double distance;
 
@@ -94,8 +97,6 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Center", center);
 		autonomousChooser.addObject("Right", right);
 		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
-
-		
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {

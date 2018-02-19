@@ -3,6 +3,7 @@ package org.usfirst.frc1073.robot18.commands;
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 import org.usfirst.frc1073.robot18.subsystems.robotCollector;
+import org.usfirst.frc1073.robot18.subsystems.robotElevator;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -39,8 +40,13 @@ public class LiftElevator extends Command {
 //    			speed = 0;
 //    		}
 //    	}
-    	
-    	RobotMap.elevatorMotorLeft.set(speed/2);
+    	if(RobotMap.liftSwitchBottom.get() || speed < 0)
+    	{
+    		RobotMap.elevatorMotorLeft.set(speed/2);
+    	}
+    	else {
+    		RobotMap.elevatorMotorLeft.set(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

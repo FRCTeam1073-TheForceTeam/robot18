@@ -60,6 +60,9 @@ public class RobotMap {
 	public static WPI_TalonSRX conveyorMotor;
     
     public static void init() {
+    	liftSwitchBottom = new DigitalInput(1);
+    	LiveWindow.addSensor("Elevator", "switchBottom", liftSwitchBottom);
+    	
     // Motor init
     	// Right
         rightMotor2 = new WPI_VictorSPX(2);
@@ -68,23 +71,23 @@ public class RobotMap {
         leftMotor2 = new WPI_VictorSPX(9);
         leftMotor1 = new WPI_TalonSRX(8);
     
-    // Encoder init
-        // Right
-        rightEnc = new Encoder(2, 3, false, EncodingType.k4X);
-        rightEnc.setDistancePerPulse(1.0);
-        rightEnc.setPIDSourceType(PIDSourceType.kRate);
-        LiveWindow.addSensor("DriveTrain", "rightEnc", rightEnc);
-        // Left
-        leftEnc = new Encoder(0, 1, false, EncodingType.k4X);
-        leftEnc.setDistancePerPulse(1.0);
-        leftEnc.setPIDSourceType(PIDSourceType.kRate);
-        LiveWindow.addSensor("DriveTrain", "leftEnc", leftEnc);
-        //Lift Encoder
-        liftEncoder = new Encoder(4, 5, false, EncodingType.k4X);
-        liftEncoder.setDistancePerPulse(1.0);
-        liftEncoder.setPIDSourceType(PIDSourceType.kRate);
-        LiveWindow.addSensor("Elevator", "liftEncoder", liftEncoder);
-        
+//    // Encoder init
+//        // Right
+//        rightEnc = new Encoder(2, 3, false, EncodingType.k4X);
+//        rightEnc.setDistancePerPulse(1.0);
+//        rightEnc.setPIDSourceType(PIDSourceType.kRate);
+//        LiveWindow.addSensor("DriveTrain", "rightEnc", rightEnc);
+//        // Left
+//        leftEnc = new Encoder(0, 1, false, EncodingType.k4X);
+//        leftEnc.setDistancePerPulse(1.0);
+//        leftEnc.setPIDSourceType(PIDSourceType.kRate);
+//        LiveWindow.addSensor("DriveTrain", "leftEnc", leftEnc);
+//        // Lift Encoder
+//        liftEncoder = new Encoder(4, 5, false, EncodingType.k4X);
+//        liftEncoder.setDistancePerPulse(1.0);
+//        liftEncoder.setPIDSourceType(PIDSourceType.kRate);
+//        LiveWindow.addSensor("Elevator", "liftEncoder", liftEncoder);
+//        
     // Solenoids
         leftWrist = new Solenoid (1, 2);
         rightWrist = new Solenoid (1, 4);

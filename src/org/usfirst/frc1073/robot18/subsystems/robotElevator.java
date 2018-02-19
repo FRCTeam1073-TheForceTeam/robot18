@@ -20,6 +20,7 @@ public class robotElevator extends Subsystem {
     
 	public robotElevator() {
 		rightMotor.follow(leftMotor);
+		
 	}
 
 	@Override
