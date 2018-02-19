@@ -13,12 +13,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LidarAlign extends Command {
+public class LidarWallFollow extends Command {
 
 
 	NetworkTable lidarSendTable;
 	double lidarDegrees;
-	
 	double ultimateMeasurement;
 	double robotSpeed;
 	double degrees;
@@ -29,22 +28,26 @@ public class LidarAlign extends Command {
 	//Variable for button used in isFinished
 	boolean isPressed = false;
 
-	public LidarAlign() {
+	public LidarWallFollow() {
 
 		requires(Robot.drivetrain);
+		
 
 		//Sets the correct Network Table to pull from the Pixy
 		lidarSendTable = NetworkTable.getTable("LidarSendTable");
+		
 	}
 
 	protected void initialize() {
 		SmartDashboard.putString("lidar info", "init");
 		SmartDashboard.putString("hello_world", "x");
+		boolean lidarState = lidarSendTable.putNumber("lidarState", 1);
 
 	}
 
 	protected void execute() {
 		SmartDashboard.putString("lidar info", "execute");
+		
 		//These are the variables that get manipulated in the code
 
 		double mmToIn = 1.0;
@@ -57,6 +60,7 @@ public class LidarAlign extends Command {
 		left = lidarSendTable.getNumber("left", 99);
 		right = lidarSendTable.getNumber("right", 99);
 		degrees = lidarSendTable.getNumber("degrees",99);
+		Inches = lidarSendTable.getNumber("Inches", 1073);
 		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
 
 
@@ -68,20 +72,25 @@ public class LidarAlign extends Command {
 		SmartDashboard.putNumber("Robot Speed", robotSpeed);
 		SmartDashboard.putNumber("left", left);
 		SmartDashboard.putNumber("right", right);
-
+		if (Inches>=25){
 		Robot.drivetrain.basicDrive(-1*left, right);
-
-
-
+		
+		}
+		
+		
+		
 
 	}
 
 	protected boolean isFinished() {
-		boolean finished = false;
-		if (Robot.oi.cancel.get() == true) {
-			finished = true;
+		if (Inches<25){
+			
+			
+			return true;
 		}
-		return finished;
+		else{
+			return false;
+		}
 
 		//SmartDashboard.putString("lidar info", "isFinished");
 

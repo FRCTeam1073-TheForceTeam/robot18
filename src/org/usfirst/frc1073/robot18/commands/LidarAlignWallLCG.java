@@ -12,12 +12,17 @@ public class LidarAlignWallLCG extends CommandGroup {
 	NetworkTable lidarSendTable;
 	public LidarAlignWallLCG(){
 		lidarSendTable = NetworkTable.getTable("LidarSendTable");
+		double piState = lidarSendTable.getNumber("piState", 0.0);
+		piState = 1.0;
 		addSequential(new LidarWall());
 		SmartDashboard.putString("Stat", "wall");
 		addSequential(new TurnWithGyro(1, 85, "counterclockwise"));
 		SmartDashboard.putString("Stat", "gyro");
 		lidarSendTable.putString("Turn", "left");
+		piState = 2.0;
 		addSequential (new LidarWall());
+		piState = 3.0;
 		addSequential(new LidarWallwObstacles());
+		
 	}
 }
