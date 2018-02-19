@@ -1,4 +1,3 @@
-
 package org.usfirst.frc1073.robot18.subsystems;
 
 import org.usfirst.frc1073.robot18.RobotMap;

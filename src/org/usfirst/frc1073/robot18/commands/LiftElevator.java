@@ -40,7 +40,6 @@ public class LiftElevator extends Command {
 //    			speed = 0;
 //    		}
 //    	}
-<<<<<<< HEAD
     	if(RobotMap.liftSwitchBottom.get() || speed < 0)
     	{
     		RobotMap.elevatorMotorLeft.set(speed/2);
@@ -48,10 +47,8 @@ public class LiftElevator extends Command {
     	else {
     		RobotMap.elevatorMotorLeft.set(0);
     	}
-=======
     	
     	RobotMap.elevatorMotorLeft.set(speed);
->>>>>>> 5bc5cd8d758910d66955e9ce64c950cbbc7a4315
     }
 
     // Make this return true when this Command no longer needs to run execute()

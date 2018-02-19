@@ -23,16 +23,13 @@ public class robotElevator extends Subsystem {
     
     public DifferentialDrive elevatorDrive;
 	public robotElevator() {
-<<<<<<< HEAD
 		rightMotor.follow(leftMotor);
 		
-=======
 		rightMotor.setSafetyEnabled(false);
 		leftMotor.setSafetyEnabled(false);
 		
 		elevatorDrive = new DifferentialDrive(RobotMap.elevatorMotorLeft, RobotMap.elevatorMotorRight);
 		//rightMotor.follow(leftMotor);
->>>>>>> 5bc5cd8d758910d66955e9ce64c950cbbc7a4315
 	}
 
 	@Override

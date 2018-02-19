@@ -9,5 +9,4 @@ public class CubeGetter extends CommandGroup {
 		addSequential(new VisionCubeTracker());
 		addSequential(new SuckInCube(2));
 	}
-
 }

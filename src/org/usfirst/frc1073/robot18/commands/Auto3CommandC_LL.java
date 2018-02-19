@@ -11,9 +11,9 @@ public class Auto3CommandC_LL extends CommandGroup {
 		addSequential(new AdvancedDrive(-.9, 50));
 		addSequential(new TurnWithGyro(.9, 75, "clockwise"));
 		addSequential(new AdvancedDrive(-.9, 25));
-		addParallel(new SpitOutCube(.5, .5));
-		addSequential(new TurnWithGyro(.9, 75, "counterclockwise"));
-		addSequential(new TurnWithGyro(.9, 75, "clockwise"));
+		addParallel(new SpitOutCube(1, .75));
+		addSequential(new TurnWithGyro(1, 90, "counterclockwise"));
+		addSequential(new TurnWithGyro(1, 90, "clockwise"));
 		addSequential(new AdvancedDrive(-.9, 20));
 		addSequential(new VisionCubeTracker());
 		addSequential(new SuckInCube(.75));
