@@ -23,14 +23,14 @@ public class RunElevatorWithShifting extends Command {
 	protected void execute() {
 		
 		if (Robot.oi.operatorControl.getRawAxis(1) > 0.05 || Robot.oi.operatorControl.getRawAxis(1) < -0.05) {
-			if (highGear == true){
+			if (highGear){
 			Robot.pneumatic.liftLowGear();
 			}
 			speed = Robot.oi.operatorControl.getRawAxis(1);
 			highGear = false;
 		}
 		else if (Robot.oi.operatorControl.getRawAxis(5) > 0.05 || Robot.oi.operatorControl.getRawAxis(5) < -0.05) {
-			if (highGear == false) {
+			if (!highGear) {
 			Robot.pneumatic.liftHighGear();
 			}
 			speed = Robot.oi.operatorControl.getRawAxis(5);
@@ -41,7 +41,14 @@ public class RunElevatorWithShifting extends Command {
 		}
 		SmartDashboard.putBoolean("Gear High?", highGear);
 		//SmartDashboard.putNumber("collllet", speed);
-		Robot.elevator.elevatorDrive.tankDrive(speed, -speed);
+		
+		if(RobotMap.liftSwitchBottom.get() || speed < 0)
+    	{
+			Robot.elevator.elevatorDrive.tankDrive(speed, -speed);
+    	}
+    	else {
+    		Robot.elevator.elevatorDrive.tankDrive(0, 0);
+    	}
 		
 	}
 
