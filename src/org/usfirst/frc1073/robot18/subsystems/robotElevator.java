@@ -25,9 +25,9 @@ public class robotElevator extends Subsystem {
 	public robotElevator() {
 		rightMotor.setSafetyEnabled(false);
 		leftMotor.setSafetyEnabled(false);
-		elevatorDrive = new DifferentialDrive(RobotMap.elevatorMotorRight, RobotMap.elevatorMotorLeft);
-		//rightMotor.follow(leftMotor);
 		
+		elevatorDrive = new DifferentialDrive(RobotMap.elevatorMotorLeft, RobotMap.elevatorMotorRight);
+		//rightMotor.follow(leftMotor);
 	}
 
 	@Override

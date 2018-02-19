@@ -6,14 +6,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandC_LL extends CommandGroup {
 	/** If Chooser is set to Center and FMS is LLL */
 	public Auto3CommandC_LL(){
-		addParallel(new openClaw());
-		addSequential(new AdvancedDrive(1, 50));
-		addSequential(new TurnWithGyro(.75, 75, "counterclockwise"));
-		addSequential(new AdvancedDrive(1, 25));
-		addSequential(new TurnWithGyro(.75, 75, "clockwise"));
-		addSequential(new AdvancedDrive(1, 25));
+		addSequential(new AdvancedDrive(-.9, 100));
+		addSequential(new TurnWithGyro(.9, 75, "counterclockwise"));
+		addSequential(new AdvancedDrive(-.9, 50));
+		addSequential(new TurnWithGyro(.9, 75, "clockwise"));
+		addSequential(new AdvancedDrive(-.9, 25));
+		addParallel(new SpitOutCube(.5, .5));
+		addSequential(new TurnWithGyro(.9, 75, "counterclockwise"));
+		addSequential(new TurnWithGyro(.9, 75, "clockwise"));
+		addSequential(new AdvancedDrive(-.9, 20));
 		addSequential(new VisionCubeTracker());
-		addParallel(new SuckInCube(1000));
-		addSequential(new closeClaw());
+		addSequential(new SuckInCube(.75));
 	}
 }

@@ -28,7 +28,6 @@ public class SpinCollectorTele extends Command {
 		else {
 			speed = 0;
 		}
-		SmartDashboard.putNumber("collllet", speed);
 		Robot.collector.collectDrive.tankDrive(speed, speed);
 	}
 

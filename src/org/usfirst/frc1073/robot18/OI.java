@@ -52,7 +52,7 @@ public class OI {
     	RobotTeleInit = driverControl.start;
     	
     	visionButton = driverControl.b;
-    	visionButton.whenPressed(new VisionCubeTracker());
+    	visionButton.whileHeld(new CubeGetterSupremeExtreme9000());
     	
     	lidarButton = driverControl.y;
     	lidarButton.whenPressed(new LidarAlign());

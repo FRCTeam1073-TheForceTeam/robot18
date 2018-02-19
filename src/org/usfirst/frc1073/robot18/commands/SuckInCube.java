@@ -1,5 +1,6 @@
 package org.usfirst.frc1073.robot18.commands;
 
+import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,48 +12,64 @@ import org.usfirst.frc1073.robot18.RobotMap;
  */
 public class SuckInCube extends Command {
 
-	private long time;
-	
-    public SuckInCube() {
-    	this.time = 1000;
-    }
-    
-    public SuckInCube(long time) {
-    	this.time = time;
-    }
+	private double time, timer, timeEnd, delay, delayer, delayEnd;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	RobotMap.leftCollectorMotor.set(0.5);
-    	RobotMap.rightCollectorMotor.set(0.5);
-    	try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private boolean clawBool;
+
+	public SuckInCube() {
+		this.time = .5;
+		this.delay = 0;
+	}
+
+	public SuckInCube(double time) {
+		this.time = time;
+		this.delay = 0;
+	}
+
+	public SuckInCube(double time, double delay) {
+		this.time = time;
+		this.delay = delay;
+	}
+
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		clawBool = false;
+		
+		delayEnd = delay * 20;
+		delayer = 0;
+		timeEnd = time * 20;
+		timer = 0;
+	}
+
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		if (delayEnd <= delayer) {
+			if (clawBool == false) {
+				Robot.pneumatic.closeClaw();
+				clawBool = true;
+			}
+			Robot.collector.collectDrive.tankDrive(1, 1);
+			timer++;	
 		}
-    }
+		delayer++;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	//RobotMap.pdp.clearStickyFaults();
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		boolean finished = false;
+		if (timer > timeEnd) {
+			finished = true;
+			Robot.collector.collectDrive.tankDrive(0, 0);
+		}
+		return finished;
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	RobotMap.leftCollectorMotor.set(0);
-    	RobotMap.rightCollectorMotor.set(0);
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	RobotMap.leftCollectorMotor.set(0);
-    	RobotMap.rightCollectorMotor.set(0);
-    }
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }
