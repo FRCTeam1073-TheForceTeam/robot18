@@ -14,11 +14,11 @@ import org.usfirst.frc1073.robot18.subsystems.*;
 /**
  *
  */
-public class openClaw extends Command {
+public class HighGearDT extends Command {
 
 	protected void initialize() {
 	
-		Robot.pneumatic.openClaw();
+		Robot.pneumatic.driveTrainHighGear();
 
 	}
 
@@ -48,5 +48,6 @@ public class openClaw extends Command {
 	}
 
 	protected void interrupted() {
+		end();
 	}
 }

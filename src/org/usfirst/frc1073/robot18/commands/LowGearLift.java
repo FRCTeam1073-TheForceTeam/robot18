@@ -1,5 +1,6 @@
 
 package org.usfirst.frc1073.robot18.commands;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -13,10 +14,11 @@ import org.usfirst.frc1073.robot18.subsystems.*;
 /**
  *
  */
-public class closeClaw extends Command {
+public class LowGearLift extends Command {
 
 	protected void initialize() {
-	Robot.pneumatic.closeClaw();
+	
+		Robot.pneumatic.liftLowGear();
 
 	}
 

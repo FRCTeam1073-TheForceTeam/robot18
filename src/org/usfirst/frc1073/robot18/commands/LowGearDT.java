@@ -14,11 +14,11 @@ import org.usfirst.frc1073.robot18.subsystems.*;
 /**
  *
  */
-public class highGearDT extends Command {
+public class LowGearDT extends Command {
 
 	protected void initialize() {
 	
-		Robot.pneumatic.driveTrainHighGear();
+		Robot.pneumatic.driveTrainLowGear();
 
 	}
 

@@ -6,12 +6,12 @@ import org.usfirst.frc1073.robot18.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class runElevatorWithShifting extends Command {
+public class RunElevatorWithShifting extends Command {
 	
 	private double speed;
 	private boolean highGear;
 	
-	public runElevatorWithShifting() {
+	public RunElevatorWithShifting() {
 		requires(Robot.elevator);
 	}
 	

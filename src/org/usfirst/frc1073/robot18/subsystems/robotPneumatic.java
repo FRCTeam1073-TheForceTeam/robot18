@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
-public class pneumatic {
+public class robotPneumatic {
 	private final Solenoid rightWrist = RobotMap.rightWrist;
 	private final Solenoid leftWrist = RobotMap.leftWrist;
 	private final Solenoid liftHigh = RobotMap.liftHigh;

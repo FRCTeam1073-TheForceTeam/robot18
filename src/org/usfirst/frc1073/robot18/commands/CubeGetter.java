@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CubeGetter extends CommandGroup {
 	
 	public CubeGetter() {
-		addSequential(new openClaw());
+		addSequential(new OpenClaw());
 		addSequential(new VisionCubeTracker());
 		addSequential(new SuckInCube(2));
 	}

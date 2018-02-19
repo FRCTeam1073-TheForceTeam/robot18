@@ -61,11 +61,11 @@ public class OI {
     	
         //shifts drive train to high gear
         highGearDT = driverControl.leftBumper;
-        highGearDT.whenPressed(new highGearDT());
+        highGearDT.whenPressed(new HighGearDT());
 
         //shifts drive train to low gear
         lowGearDT = driverControl.rightBumper;
-        lowGearDT.whenPressed(new lowGearDT());
+        lowGearDT.whenPressed(new LowGearDT());
 
     	conveyorRight = driverControl.rightBumper;
     	conveyorRight.whenPressed(new Dropoff(-(dropoffSpeed)));
@@ -88,8 +88,8 @@ public class OI {
     	
         //opens and closes the claw
         clawOpen = operatorControl.leftBumper;
-        clawOpen.whileHeld(new openClaw());
-        clawOpen.whenReleased(new closeClaw());
+        clawOpen.whileHeld(new OpenClaw());
+        clawOpen.whenReleased(new CloseClaw());
 
         //Makes the collector go up or down
         collectorUD = operatorControl.rightBumper;
@@ -97,10 +97,10 @@ public class OI {
             isDone =+ 1;
         }
         if (isDone%2 == 1 && collectorUD.equals(1)) {
-            collectorUD.whenPressed(new collectorDown());
+            collectorUD.whenPressed(new CollectorDown());
         }
         if (isDone%2 == 0 && collectorUD.equals(1)) {
-            collectorUD.whenPressed(new collectorUp());
+            collectorUD.whenPressed(new CollectorUp());
         }
         //low gear lift
         
@@ -125,13 +125,13 @@ public class OI {
         SmartDashboard.putData("LidarMoveAway360", new LidarMoveAway360());
         SmartDashboard.putData("LidarWallTurnRight", new LidarAlignWallRCG());
         SmartDashboard.putData("LidarWallTurnLeft", new LidarAlignWallLCG());
-        SmartDashboard.putData("openClaw", new openClaw());
-        SmartDashboard.putData("closeClaw", new closeClaw());
-        SmartDashboard.putData("HighDT", new highGearDT());
-        SmartDashboard.putData("LowDT", new lowGearDT());
-        SmartDashboard.putData("HighLift", new highGearLift());
-        SmartDashboard.putData("LowLift", new lowGearLift());
-        SmartDashboard.putData("ClawUp", new collectorUp());
+        SmartDashboard.putData("openClaw", new OpenClaw());
+        SmartDashboard.putData("closeClaw", new CloseClaw());
+        SmartDashboard.putData("HighDT", new HighGearDT());
+        SmartDashboard.putData("LowDT", new LowGearDT());
+        SmartDashboard.putData("HighLift", new HighGearLift());
+        SmartDashboard.putData("LowLift", new LowGearLift());
+        SmartDashboard.putData("ClawUp", new CollectorUp());
 
     }
 }

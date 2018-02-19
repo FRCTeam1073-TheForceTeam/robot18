@@ -13,10 +13,10 @@ import org.usfirst.frc1073.robot18.subsystems.*;
 /**
  *
  */
-public class collectorUp extends Command {
+public class CollectorDown extends Command {
 
 	protected void initialize() {
-	Robot.pneumatic.collectorUp();
+	Robot.pneumatic.collectorDown();
 
 	}
 

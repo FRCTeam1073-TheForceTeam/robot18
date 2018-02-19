@@ -14,7 +14,7 @@ import org.usfirst.frc1073.robot18.subsystems.*;
 /**
  *
  */
-public class highGearLift extends Command {
+public class HighGearLift extends Command {
 
 	protected void initialize() {
 	

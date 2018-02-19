@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import org.usfirst.frc1073.robot18.RobotMap;
 import org.usfirst.frc1073.robot18.commands.ControllerDifferentialDrive;
 import org.usfirst.frc1073.robot18.commands.LiftElevator;
-import org.usfirst.frc1073.robot18.commands.runElevatorWithShifting;
+import org.usfirst.frc1073.robot18.commands.RunElevatorWithShifting;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -34,7 +34,7 @@ public class robotElevator extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new runElevatorWithShifting());
+		setDefaultCommand(new RunElevatorWithShifting());
 		
 	}
 	
