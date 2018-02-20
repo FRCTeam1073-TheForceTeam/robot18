@@ -81,6 +81,9 @@ public class Robot extends IterativeRobot {
 		
 		FMS = "";
 
+		//lift encoder set to 0
+		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
+		
 		/* Chooser Objects */
 		left = new AutoObject(1);
 		center = new AutoObject(2);
@@ -216,7 +219,7 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		double total = 0;
 		for (int i = 0; i < 10; i++) {
-			voltage = RobotMap.frontSensor.getVoltage();
+			voltage = RobotMap.leftSensor.getVoltage();
 			distance = (Robot.voltage - 0.0399)/0.0234;  
 			total += distance;
 		}

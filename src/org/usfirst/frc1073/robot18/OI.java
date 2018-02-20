@@ -38,6 +38,9 @@ public class OI {
     public JoystickButton lowGearDT;
     public JoystickButton clawOpen;
     public JoystickButton collectorUD;
+    public JoystickButton LiftTo4FtScale;
+    public JoystickButton LiftTo5FtScale;
+    public JoystickButton LiftTo6FtScale;
     public double highGearLift;
     public double lowGearLift;
     public double collectorIntake;
@@ -85,6 +88,16 @@ public class OI {
     		Robot.conveyor.teleDropoff(conveyorLeftLeft);
     	}
     	operatorControl = new XboxController(1);
+    	
+    	//lift buttons
+    	LiftTo4FtScale = operatorControl.x;
+    	LiftTo4FtScale.whenPressed(new LiftElevatorToDistanceScale(48.0));
+    	
+    	LiftTo5FtScale = operatorControl.b;
+    	LiftTo5FtScale.whenPressed(new LiftElevatorToDistanceScale(60.0));
+    	
+    	LiftTo6FtScale = operatorControl.y;
+    	LiftTo6FtScale.whenPressed(new LiftElevatorToDistanceScale(72.0));
     	
         //opens and closes the claw
         clawOpen = operatorControl.leftBumper;

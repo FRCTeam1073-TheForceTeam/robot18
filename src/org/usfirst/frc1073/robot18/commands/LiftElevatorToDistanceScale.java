@@ -12,13 +12,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LiftElevatorTo4FtScale extends Command {
+public class LiftElevatorToDistanceScale extends Command {
 	
 	double speed = 0;
 	double distance;
-	double startDistance;
+	double target;
+	double inches;
 	
-    public LiftElevatorTo4FtScale() {
+    public LiftElevatorToDistanceScale(double _inches) {
+    	inches = _inches;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.elevator);
@@ -27,8 +29,8 @@ public class LiftElevatorTo4FtScale extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-    	startDistance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
 
+    	target = (inches/9.42)*1440.0*2.0*(16.0/5.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,13 +39,14 @@ public class LiftElevatorTo4FtScale extends Command {
     	
     	RobotMap.elevatorMotorLeft.set(-.75);
     	
-    	SmartDashboard.putNumber("Distance", distance);
+    	SmartDashboard.putNumber("Distance", Math.abs(distance));
+    	SmartDashboard.putNumber("Target", target);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	boolean finish = false;
-    	if((Math.abs(distance-startDistance)) >= ((15/9.42)*1440*2*(16/5)*(15/20))){
+    	if((Math.abs(distance)) >= target){
     		finish = true;
     	}
     	
@@ -53,13 +56,11 @@ public class LiftElevatorTo4FtScale extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	RobotMap.elevatorMotorLeft.set(0);
-		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	RobotMap.elevatorMotorLeft.set(0);
-		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
     }
 }
