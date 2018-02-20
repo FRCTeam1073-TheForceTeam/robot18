@@ -232,8 +232,11 @@ public class Robot extends IterativeRobot {
 		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
 		
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
+		
 		Scheduler.getInstance().run();
+		
 		new LidarMiniMap();
+		
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L') {
 			switchSide = "left";
@@ -248,11 +251,9 @@ public class Robot extends IterativeRobot {
 		
 		/* instantiate the command used for the autonomous period */
 		autonomousCommand = new Auto1Chooser();
-		
 		if (autonomousCommand != null) autonomousCommand.start();
 	}
 	
-
 	/**
 	 * This function is called periodically during autonomous
 	 */
