@@ -18,6 +18,7 @@ public class LiftElevatorToDistanceScale extends Command {
 	double distance;
 	double target;
 	double inches;
+	boolean up;
 	
     public LiftElevatorToDistanceScale(double _inches) {
     	inches = _inches;
@@ -31,13 +32,25 @@ public class LiftElevatorToDistanceScale extends Command {
     	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
     	target = (inches/9.42)*1440.0*2.0*(16.0/5.0);
+    	
+    	if((Math.abs(distance)) >= target){
+    		up = false;
+    	}
+    	if((Math.abs(distance)) <= target){
+    		up = true;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
     	
-    	RobotMap.elevatorMotorLeft.set(-.75);
+    	if((Math.abs(distance)) >= target){
+    		RobotMap.elevatorMotorLeft.set(.75);
+    	}
+    	if((Math.abs(distance)) <= target){
+    		RobotMap.elevatorMotorLeft.set(-.75);
+    	}
     	
     	SmartDashboard.putNumber("Distance", Math.abs(distance));
     	SmartDashboard.putNumber("Target", target);
@@ -46,10 +59,17 @@ public class LiftElevatorToDistanceScale extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	boolean finish = false;
-    	if((Math.abs(distance)) >= target){
-    		finish = true;
+    	if(up == false){
+	    	if((Math.abs(distance)) <= target){
+	    		finish = true;
+	    	}
     	}
-    	
+    	if(up == true){
+	    	if((Math.abs(distance)) >= target){
+	    		finish = true;
+	    	}
+    	}
+
         return finish;
     }
 
