@@ -145,6 +145,7 @@ public class OI {
         SmartDashboard.putData("HighLift", new HighGearLift());
         SmartDashboard.putData("LowLift", new LowGearLift());
         SmartDashboard.putData("ClawUp", new CollectorUp());
+       // SmartDashboard.putString("Robot Name" , Robot.robotName.OK_Puzzles);
 
     }
 }

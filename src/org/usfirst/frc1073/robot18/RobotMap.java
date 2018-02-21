@@ -30,7 +30,8 @@ public class RobotMap {
     public static Solenoid liftLow;
     public static Solenoid gearHigh;
     public static Solenoid gearLow;
-    public static Solenoid collectorUpDown;
+    public static Solenoid collectorLeft;
+    public static Solenoid collectorRight;
 
 	public static WPI_VictorSPX rightMotor2;
     public static WPI_TalonSRX rightMotor1;
@@ -90,13 +91,21 @@ public class RobotMap {
 //        
     // Solenoids
         leftWrist = new Solenoid (1, 2);
+        //pneumatics on the left side of the claw
         rightWrist = new Solenoid (1, 4);
+        //pneumatics on the right side of the claw
         liftHigh = new Solenoid (1, 1);
+        //sets the lift to high gear
         liftLow = new Solenoid (1, 3);
+        //sets the lift to low gear
         gearHigh = new Solenoid (1, 0);
+        //sets the drive train to high gear
         gearLow = new Solenoid (1, 6);
-        collectorUpDown = new Solenoid (1, 5);
-
+        //sets the drive train to low gear
+        collectorLeft= new Solenoid (1, 5);
+        //sets the collector Up
+        collectorRight= new Solenoid (1, 7);
+        //sets the collector Down
     // Proximity Sensors
         leftSensor = new AnalogInput(0);
         rightSensor = new AnalogInput(1);

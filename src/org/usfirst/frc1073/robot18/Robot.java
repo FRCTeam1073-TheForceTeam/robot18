@@ -31,7 +31,9 @@ import org.opencv.imgproc.Imgproc;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
+	Preferences prefs;
+	String OK_Puzzles = "none";
+	
 	Command autonomousCommand;
     public static Preferences robotPreferences;
 
@@ -67,17 +69,20 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		prefs = Preferences.getInstance();
+		//OK_Puzzles = prefs.getString(OK_Puzzles, "Puzzles");
 		
 		RobotMap.init();
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
-    	robotName = robotPreferences.getString("robotName", "unknown");
+    	OK_Puzzles = robotPreferences.getString("robotName", "unknown");
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		conveyor = new robotConveyor();
         pneumatic = new robotPneumatic();
         collector = new robotCollector();
 		oi = new OI();
+
 		
 		FMS = "";
 
