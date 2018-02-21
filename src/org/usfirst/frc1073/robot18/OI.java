@@ -41,6 +41,7 @@ public class OI {
     public JoystickButton LiftTo4FtScale;
     public JoystickButton LiftTo5FtScale;
     public JoystickButton LiftTo6FtScale;
+    public JoystickButton LiftToStay;
     public double highGearLift;
     public double lowGearLift;
     public double collectorIntake;
@@ -98,6 +99,9 @@ public class OI {
     	
     	LiftTo6FtScale = operatorControl.y;
     	LiftTo6FtScale.whenPressed(new LiftElevatorToDistanceScale(72.0));
+    	
+    	LiftToStay = operatorControl.start;
+    	LiftToStay.whileHeld(new LiftSta3y());
     	
         //opens and closes the claw
         clawOpen = operatorControl.leftBumper;
