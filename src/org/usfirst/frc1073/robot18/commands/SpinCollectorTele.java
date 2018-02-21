@@ -25,6 +25,9 @@ public class SpinCollectorTele extends Command {
 		else if (Robot.oi.operatorControl.getLeftTrigger() > 0) {
 			speed = -Robot.oi.operatorControl.getLeftTrigger();
 		}
+		else if (RobotMap.clawSensor.getAverageVoltage() > 1 && Robot.oi.operatorControl.leftBumper.get() == true) {
+			speed = -0.5;
+		}
 		else {
 			speed = 0;
 		}
