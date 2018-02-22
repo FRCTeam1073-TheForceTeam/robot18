@@ -26,19 +26,33 @@ public class robotConveyor extends Subsystem {
     }
     public void autoDropoff(String direction) {
     	if(direction == "right") {
-    		encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
-    		while(encoderPosition>-(8640)) {
-    			encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
-    			conveyorMotor.set(-.5);
-    		}
-    	}else if(direction == "left") {
-    		encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
+    		/*encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
     		while(encoderPosition<(8640)) {
     			encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
-    			conveyorMotor.set(.5);
+    			conveyorMotor.set(-.5);*/
+    		conveyorMotor.set(-.5);
+    		try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		conveyorMotor.set(0);
     		}
-    	}
-    	conveyorMotor.set(0);
+    	else if(direction == "left") {
+    		/*encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
+    		while(encoderPosition>-(8640)) {
+    			encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
+    			conveyorMotor.set(.5);*/
+    		conveyorMotor.set(.5);
+    		try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		conveyorMotor.set(0);
+    		}
     }
     public void teleDropoff(double power){
     	conveyorMotor.set(power);
