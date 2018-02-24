@@ -6,6 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandL_RR extends CommandGroup {
 	/** If Chooser is set to Left and FMS is RRR */
 	public Auto3CommandL_RR(){
-		SmartDashboard.putString("CurrentCommand", "L_RR is running");
+		addSequential(new AdvancedDrive(1, 0));
 	}
 }
