@@ -113,7 +113,7 @@ public class VisionCubeTracker extends Command{
 				}
 			}
 			else {
-				if (Robot.clawBool == false) {
+				if (Robot.clawBool == true) {
 					driveDir = 0;
 					v++;
 				}
@@ -152,9 +152,12 @@ public class VisionCubeTracker extends Command{
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		boolean finished = false;
-		if (Robot.oi.cancel.get() == true || (v > 10 && Robot.clawBool)) {
+		if (v > 10 && Robot.clawBool == true) {
 			RobotMap.leftMotor1.configOpenloopRamp(0.25, 10);
 			RobotMap.rightMotor1.configOpenloopRamp(0.25, 10);
+			finished = true;
+		}
+		if (Robot.oi.cancel.get()) {
 			finished = true;
 		}
 		return finished;

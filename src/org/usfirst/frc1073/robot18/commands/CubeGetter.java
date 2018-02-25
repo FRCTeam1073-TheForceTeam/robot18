@@ -8,6 +8,6 @@ public class CubeGetter extends CommandGroup {
 		addSequential(new OpenClaw());
 		addParallel(new IsCubeIn());
 		addSequential(new VisionCubeTracker());
-		addSequential(new SuckInCube(2));
+		addSequential(new SuckInCube(1.5, .3));
 	}
 }

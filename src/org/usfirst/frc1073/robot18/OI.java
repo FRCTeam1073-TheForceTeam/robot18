@@ -75,13 +75,6 @@ public class OI {
         //shifts drive train to low gear
         lowGearDT = driverControl.rightBumper;
         lowGearDT.whenPressed(new LowGearDT());
-
-    	conveyorRight = driverControl.rightBumper;
-    	conveyorRight.whenPressed(new Dropoff(-(dropoffSpeed)));
-    	conveyorRight.whenReleased(new Dropoff(0));
-    	conveyorLeft = driverControl.leftBumper;
-    	conveyorLeft.whenPressed(new Dropoff(dropoffSpeed));
-    	conveyorLeft.whenReleased(new Dropoff(0));
     	
         //right conveyor
     	conveyorRightRight = driverControl.getRightTrigger();

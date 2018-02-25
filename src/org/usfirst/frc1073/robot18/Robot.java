@@ -244,6 +244,9 @@ public class Robot extends IterativeRobot {
 		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
 		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
 		
+		Robot.pneumatic.driveTrainHighGear();
+		Robot.pneumatic.liftHighGear();
+		
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		
 		Scheduler.getInstance().run();
@@ -272,6 +275,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+    	SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
 	}
 
 	public void teleopInit() {
@@ -290,6 +294,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+    	SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
 	}
 
 	/**

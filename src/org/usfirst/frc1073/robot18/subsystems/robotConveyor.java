@@ -30,9 +30,9 @@ public class robotConveyor extends Subsystem {
     		while(encoderPosition<(8640)) {
     			encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
     			conveyorMotor.set(-.5);*/
-    		conveyorMotor.set(-.5);
+    		conveyorMotor.set(-1);
     		try {
-				Thread.sleep(2000);
+				Thread.sleep(400);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -44,9 +44,9 @@ public class robotConveyor extends Subsystem {
     		while(encoderPosition>-(8640)) {
     			encoderPosition = conveyorMotor.getSelectedSensorPosition(0);
     			conveyorMotor.set(.5);*/
-    		conveyorMotor.set(.5);
+    		conveyorMotor.set(1);
     		try {
-				Thread.sleep(2000);
+				Thread.sleep(400);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
