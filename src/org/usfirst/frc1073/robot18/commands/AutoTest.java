@@ -12,9 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoTest extends CommandGroup {
 
     public AutoTest() {
-    	//meme
-    	//addSequential(new VariableCurvatureDrive (.5, .5, false));
-    	addSequential(new AdvancedDrive(.25, 10));	
-    	//addSequential(new TurnWithGyro(0,0,"clockwise"));
+    	addSequential(new AdvancedDrive(1, 50));
     }
 }

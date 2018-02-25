@@ -42,9 +42,11 @@ public class OI {
     public JoystickButton lowGearDT;
     public JoystickButton clawOpen;
     public JoystickButton collectorUD;
+    public JoystickButton LiftToSwitch;
     public JoystickButton LiftTo4FtScale;
     public JoystickButton LiftTo5FtScale;
     public JoystickButton LiftTo6FtScale;
+    public JoystickButton LiftToStay;
     public double highGearLift;
     public double lowGearLift;
     public double collectorIntake;
@@ -94,6 +96,9 @@ public class OI {
     	operatorControl = new XboxController(1);
     	
     	//lift buttons
+    	LiftToSwitch = operatorControl.a;
+    	LiftToSwitch.whenPressed(new LiftElevatorToDistanceScale(24.0));
+    	
     	LiftTo4FtScale = operatorControl.x;
     	LiftTo4FtScale.whenPressed(new LiftElevatorToDistanceScale(48.0));
     	
@@ -102,6 +107,9 @@ public class OI {
     	
     	LiftTo6FtScale = operatorControl.y;
     	LiftTo6FtScale.whenPressed(new LiftElevatorToDistanceScale(72.0));
+    	
+    	LiftToStay = operatorControl.start;
+    	LiftToStay.whileHeld(new LiftStay());
     	
         //opens and closes the claw
         clawOpen = operatorControl.leftBumper;

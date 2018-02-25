@@ -12,16 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LiftElevatorToDistanceScale extends Command {
+public class LiftStay extends Command {
 	
 	double speed = 0;
 	double distance;
 	double target;
 	double inches;
-	boolean up;
 	
-    public LiftElevatorToDistanceScale(double _inches) {
-    	inches = _inches;
+    public LiftStay() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.elevator);
@@ -30,63 +28,38 @@ public class LiftElevatorToDistanceScale extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-
-    	target = (inches/9.42)*1440.0*2.0*(16.0/5.0);
-    	
-    	if((Math.abs(distance)) >= target){
-    		up = false;
-    	}
-    	if((Math.abs(distance)) <= target){
-    		up = true;
-    	}
+    	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
     	
-    	if((Math.abs(distance)) >= target){
-    		RobotMap.elevatorMotorLeft.set(.75);
+    	if (RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) >= (distance + 100))
+    	{
+    		RobotMap.elevatorMotorLeft.set(0.25);
     	}
-    	if((Math.abs(distance)) <= target){
-    		RobotMap.elevatorMotorLeft.set(-.75);
-    	}
-    	if(RobotMap.liftSwitchBottom.get() == false){
-    		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
+    	else if (RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) <= (distance - 100))
+    	{
+    		RobotMap.elevatorMotorLeft.set(-0.25);
     	}
     	
-    	SmartDashboard.putNumber("Distance", Math.abs(distance));
-    	SmartDashboard.putNumber("Target", target);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	boolean finish = false;
-    	if(up == false){
-	    	if((Math.abs(distance)) <= target){
-	    		finish = true;
-	    	}
-    	}
-    	if(up == true){
-	    	if((Math.abs(distance)) >= target){
-	    		finish = true;
-	    	}
-    	}
-    	if(RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) <= 0){
-    		finish = true;
-    	}
-
-        return finish;
+    	
+    	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	RobotMap.elevatorMotorLeft.set(0);
+    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	RobotMap.elevatorMotorLeft.set(0);
+    	
     }
 }
