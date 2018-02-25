@@ -3,6 +3,8 @@ package org.usfirst.frc1073.robot18.commands;
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -10,6 +12,7 @@ public class RunElevatorWithShifting extends Command {
 	
 	private double speed;
 	private boolean highGear;
+	double distance;
 	
 	public RunElevatorWithShifting() {
 		requires(Robot.elevator);
@@ -18,6 +21,8 @@ public class RunElevatorWithShifting extends Command {
 	protected void initialize() {
 		speed = 0;
 		//highGear = false;
+    	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
 	}
 	
 	protected void execute() {
@@ -48,6 +53,17 @@ public class RunElevatorWithShifting extends Command {
     	}
     	else {
     		Robot.elevator.elevatorDrive.tankDrive(0, 0);
+    	}
+		
+    	if(speed > -.05 && speed < .05){
+        	if (RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) >= (distance + 100))
+        	{
+        		RobotMap.elevatorMotorLeft.set(0.25);
+        	}
+        	else if (RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) <= (distance - 100))
+        	{
+        		RobotMap.elevatorMotorLeft.set(-0.25);
+        	}
     	}
 		
 	}
