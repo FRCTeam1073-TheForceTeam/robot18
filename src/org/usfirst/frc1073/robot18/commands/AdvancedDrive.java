@@ -10,14 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AdvancedDrive extends Command {
 	
-	private double speed, currentSpeed, currentSpeedL, currentSpeedR, dist, toBeTraveled, inch, leftEncDif, rightEncDif, startleftEncDif, percentComplete, avgEncDif, startrightEncDif, originalDegrees, n;
+	private double speed, currentSpeed, finalSpeed, finalSpeedL, finalSpeedR, dist, toBeTraveled, inch, leftEncDif, rightEncDif, startleftEncDif, percentComplete, avgEncDif, startrightEncDif, originalDegrees, currentDegrees, n;
 	
 	private boolean fin;
 	
 	/** PID, but not because this actually works.
      * @author Nathaniel
-     * @param left speed
-     * @param right speed
+     * @param speed
      * @param dist in inches (must be positive)
      * @category Drive Command
      */
@@ -35,6 +34,8 @@ public class AdvancedDrive extends Command {
 		
 		currentSpeed = speed;
 		
+		originalDegrees = RobotMap.headingGyro.getAngle();
+		
 		double rotation = 1440;
     	double circumference = 12.25221134900019363000430919479;
     	inch = 117.52980412939963256779108679819;
@@ -51,7 +52,9 @@ public class AdvancedDrive extends Command {
 		SmartDashboard.putNumber("Left Encoder", leftEncDif);
 		SmartDashboard.putNumber("Right Encoder", rightEncDif);
 		
-		if (leftEncDif > (rightEncDif * 1.005)) {
+		currentDegrees = RobotMap.headingGyro.getAngle();
+		
+		/*if (leftEncDif > (rightEncDif * 1.005)) {
 			currentSpeedL = .90;
 		}
 		else {
@@ -62,19 +65,44 @@ public class AdvancedDrive extends Command {
 		}
 		else {
 			currentSpeedR = 1;
+		}*/
+		if (currentSpeed > 0) {
+			if (1 < originalDegrees - currentDegrees) {
+				finalSpeedL = 1;
+				finalSpeedR = .9;
+			}
+			else if (-1 > originalDegrees - currentDegrees) {
+				finalSpeedL = .9;
+				finalSpeedR = 1;
+			}
+			else {
+				finalSpeedL = 1;
+				finalSpeedR = 1;
+			}
 		}
+		if (currentSpeed < 0) {
+			if (1 < originalDegrees - currentDegrees) {
+				finalSpeedL = .9;
+				finalSpeedR = 1;
+			}
+			else if (-1 > originalDegrees - currentDegrees) {
+				finalSpeedL = 1;
+				finalSpeedR = .9;
+			}
+			else {
+				finalSpeedL = 1;
+				finalSpeedR = 1;
+			}
+		}
+		
+		finalSpeed = currentSpeed;
+		
 		
 		avgEncDif = (leftEncDif + rightEncDif) / 2;
 		
 		percentComplete = avgEncDif/toBeTraveled;
 		
-		if (percentComplete < 1) {
-			if (percentComplete > .90) {
-				currentSpeed = currentSpeed / 20;
-			}
-    	}
-		
-		Robot.drivetrain.difDrive.tankDrive(-currentSpeed * currentSpeedL, -currentSpeed * currentSpeedR);
+		Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
 		
 		/*
 		Robot.drivetrain.basicDrive(-speed, speed);
