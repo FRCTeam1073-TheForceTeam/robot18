@@ -12,14 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LiftSta3y extends Command {
+public class LiftStay extends Command {
 	
 	double speed = 0;
 	double distance;
 	double target;
 	double inches;
 	
-    public LiftSta3y() {
+    public LiftStay() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.elevator);
@@ -28,21 +28,19 @@ public class LiftSta3y extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-
-    	
+    	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
     	
-    	if (distance + 100 >= RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) )
-    	{
-    		RobotMap.elevatorMotorLeft.set(-0.25);
-    	}
-    	else if (distance - 100 <= RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0))
+    	if (RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) >= (distance + 100))
     	{
     		RobotMap.elevatorMotorLeft.set(0.25);
+    	}
+    	else if (RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) <= (distance - 100))
+    	{
+    		RobotMap.elevatorMotorLeft.set(-0.25);
     	}
     	
     	

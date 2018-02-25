@@ -51,6 +51,9 @@ public class LiftElevatorToDistanceScale extends Command {
     	if((Math.abs(distance)) <= target){
     		RobotMap.elevatorMotorLeft.set(-.75);
     	}
+    	if(RobotMap.liftSwitchBottom.get() == false){
+    		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
+    	}
     	
     	SmartDashboard.putNumber("Distance", Math.abs(distance));
     	SmartDashboard.putNumber("Target", target);
@@ -68,6 +71,9 @@ public class LiftElevatorToDistanceScale extends Command {
 	    	if((Math.abs(distance)) >= target){
 	    		finish = true;
 	    	}
+    	}
+    	if(RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) <= 0){
+    		finish = true;
     	}
 
         return finish;
