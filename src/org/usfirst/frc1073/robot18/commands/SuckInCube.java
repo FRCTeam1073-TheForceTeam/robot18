@@ -43,14 +43,15 @@ public class SuckInCube extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		Robot.collector.collectDrive.tankDrive(1, 1);
+		timer++;
+		
 		if (delayEnd <= delayer) {
 			if (clawBool == false) {
 				Robot.pneumatic.closeClaw();
 				clawBool = true;
 			}
 		}
-		Robot.collector.collectDrive.tankDrive(1, 1);
-		timer++;	
 		delayer++;
 	}
 

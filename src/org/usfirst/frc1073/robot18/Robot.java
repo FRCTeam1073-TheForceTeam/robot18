@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
 	public static String switchSide;
 	public static String scaleSide;
 	public static String robotName;
+	public static boolean clawBool;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.

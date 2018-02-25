@@ -11,7 +11,7 @@ import org.usfirst.frc1073.robot18.RobotMap;
 
 @SuppressWarnings("deprecation")
 public class VisionCubeTracker extends Command{
-	
+
 	edu.wpi.first.networktables.NetworkTable netTable;
 	NetworkTableInstance netTableInst;
 	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir, v;
@@ -25,7 +25,7 @@ public class VisionCubeTracker extends Command{
 	 */
 	public VisionCubeTracker() {
 		netTableInst = NetworkTableInstance.getDefault();
-        netTable = netTableInst.getTable("TurretTable");
+		netTable = netTableInst.getTable("TurretTable");
 		//netTable = NetworkTable.getTable("TurretTable");
 	}
 
@@ -48,26 +48,26 @@ public class VisionCubeTracker extends Command{
 		yWidth = netTable.getEntry("AverageHeight").getDouble(0);
 		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
-	// Defines speed and slow down markers
+		// Defines speed and slow down markers
 		double speed = .65;
 		double side = 25; // Marks the reasonable area around the center	
 
-	// Puts variables from Network Tables on SmartDashboard
+		// Puts variables from Network Tables on SmartDashboard
 		SmartDashboard.putNumber("xDelta", xDelta);
 		SmartDashboard.putNumber("xWidth", xWidth);
 		SmartDashboard.putNumber("yDelta", yDelta);
 		SmartDashboard.putNumber("yWidth", yWidth);
 		SmartDashboard.putNumber("Block Count", blockCount);
-		
+
 		SmartDashboard.putNumber("clawSensor", RobotMap.clawSensor.getValue());
 
-	// BlockCount asks the Pixy how many things it sees
-	// when it sees something, we track it
+		// BlockCount asks the Pixy how many things it sees
+		// when it sees something, we track it
 		if (blockCount > 0) {
 			SmartDashboard.putString("Current State", "Targeting (" + blockCount + ")");
 
-	// This code handles the left and right motion of the bot
-	// based on the Pixy's values
+			// This code handles the left and right motion of the bot
+			// based on the Pixy's values
 			if (xDelta > side) {
 				dir = "Right";
 				SmartDashboard.putString("Target", "Right");
@@ -80,15 +80,15 @@ public class VisionCubeTracker extends Command{
 				dir = "Center";
 				SmartDashboard.putString("Target", "Centered");
 			}
-			
+
 			if (Math.abs(xDelta) > 120) {
 				fullDir = false;
 			}
 			else {
 				fullDir = false;
 			}
-				
-	// If block is far away: sets motor directions
+
+			// If block is far away: sets motor directions
 			if (xWidth < 250) {
 				if (xWidth < 90) {
 					if (xWidth < 75) {
@@ -113,8 +113,13 @@ public class VisionCubeTracker extends Command{
 				}
 			}
 			else {
-				driveDir = 0;
-				v++;
+				if (Robot.clawBool == false) {
+					driveDir = 0;
+					v++;
+				}
+				else {
+					driveDir = 1;
+				}
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
 				if (fullDir == true) {
@@ -136,8 +141,8 @@ public class VisionCubeTracker extends Command{
 				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir * 1.5, -speed * driveDir * 1.5);
 			}
 		}
-	// When no blocks are seen, we strafe back and forth, and up and down,
-	// while the bot looks for the target
+		// When no blocks are seen, we strafe back and forth, and up and down,
+		// while the bot looks for the target
 		else {
 			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
 			Robot.drivetrain.difDrive.tankDrive(0, 0);
@@ -147,7 +152,7 @@ public class VisionCubeTracker extends Command{
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		boolean finished = false;
-		if (Robot.oi.cancel.get() == true || v > 10) {
+		if (Robot.oi.cancel.get() == true || (v > 10 && Robot.clawBool)) {
 			RobotMap.leftMotor1.configOpenloopRamp(0.25, 10);
 			RobotMap.rightMotor1.configOpenloopRamp(0.25, 10);
 			finished = true;
