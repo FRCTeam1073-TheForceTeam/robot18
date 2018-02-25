@@ -3,7 +3,7 @@ package org.usfirst.frc1073.robot18;
 
 import org.usfirst.frc1073.robot18.XboxController;
 import org.usfirst.frc1073.robot18.commands.*;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,8 +18,12 @@ public class OI {
     //public double collectorSpeed = Robot.robotPreferences.getDouble("Collector Speed", 1);
 	public double isDone = 0;
     public double isDoneLift = 0;
-	
+	public boolean turnRight;
+	public boolean turnLeft;
 	public boolean cancelPushed;
+	public boolean haveCube;
+	public boolean clawIsOpen;
+	public boolean collectorStatus;
 	
 	public XboxController driverControl;
 	public XboxController operatorControl;
@@ -145,7 +149,75 @@ public class OI {
         SmartDashboard.putData("HighLift", new HighGearLift());
         SmartDashboard.putData("LowLift", new LowGearLift());
         SmartDashboard.putData("ClawUp", new CollectorUp());
-       // SmartDashboard.putString("Robot Name" , Robot.robotName.OK_Puzzles);
+        SmartDashboard.putData("ClawDown", new CollectorDown());
+        SmartDashboard.putNumber("Left Motors", RobotMap.leftMotor1.get());
+        SmartDashboard.putNumber("Right Motors", RobotMap.rightMotor1.get());
+        if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
+        	turnRight = false;
+        	turnLeft = true;
+        }
+        else if (RobotMap.rightMotor1.get() > RobotMap.leftMotor1.get()) {
+        	turnRight = true;
+        	turnLeft = false;
+        }
+        else {
+        	turnRight = false;
+        	turnLeft = false;
+        }
+        SmartDashboard.putNumber("Lift Speed", RobotMap.elevatorMotorRight.get());
+        SmartDashboard.putBoolean("turn Left", turnLeft);
+        SmartDashboard.putBoolean("", turnRight);
+        if(RobotMap.clawSensor.getAverageVoltage() > 1) {
+        	haveCube = true;
+        }
+        else {
+        	haveCube = false;
+        }
+        SmartDashboard.putBoolean("Do you have a cube?", haveCube);
+        if(RobotMap.leftWrist.get() == true && RobotMap.rightWrist.get( )== false) {
+        	clawIsOpen = true;
+        }
+        else {
+        	clawIsOpen = false;
+        }
+        SmartDashboard.putBoolean("Claw Open?", clawIsOpen);
+        
+        if(RobotMap.collectorLeft.get() == false && RobotMap.collectorRight.get() == true) {
+        	collectorStatus = true;
+        	SmartDashboard.putString("Collector", "Up");
+        }
+        else {
+        	collectorStatus = false;
+        	SmartDashboard.putString("Collector", "Down");
+        }
+        SmartDashboard.putBoolean("Collector Up?", collectorStatus);
+        if (RobotMap.gearLow.get() == false && RobotMap.gearHigh.get() == true){
+        	SmartDashboard.putString("DT Gear", "High");
+	}
+        else if (RobotMap.gearLow.get() == true && RobotMap.gearHigh.get() == false){
+        	SmartDashboard.putString("DT Gear", "Low");
+	}
+        else {
+        	SmartDashboard.putString("DT Gear", "ERROR: PLEASE SHIFT NOW!");
+        }
+        
+        if (RobotMap.liftLow.get() == false && RobotMap.liftHigh.get() == true){
+        	SmartDashboard.putString("Lift Gear", "High");
+	}
+        else if (RobotMap.liftLow.get() == true && RobotMap.liftHigh.get() == false){
+        	SmartDashboard.putString("Lift Gear", "Low");
+	}
+        else {
+        	SmartDashboard.putString("Lift Gear", "ERROR: PLEASE SHIFT NOW!");
+        }
+        SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
+        SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
+        
+       // SmartDashboard.putNumber("Percent up",((RobotMap.liftEncoder.get()/9.42)/1440.0/2.0/(16.0/5.0)));
+        //NOTE: 72 is a rough estimate for inches that the lift can go up
+        
+        	//SmartDashboard.putNumber("left drivetrain", Robot.drivetrain.difDrive.arcadeDrive(xSpeed, zRotation);
+        	//SmartDashboard.putString("Robot Name" , Robot.robotName.OK_Puzzles);
 
     }
 }
