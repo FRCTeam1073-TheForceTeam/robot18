@@ -51,7 +51,7 @@ public class AdvancedDrive extends Command {
 		SmartDashboard.putNumber("Left Encoder", leftEncDif);
 		SmartDashboard.putNumber("Right Encoder", rightEncDif);
 		
-		/* if (leftEncDif > (rightEncDif * 1.005)) {
+		if (leftEncDif > (rightEncDif * 1.005)) {
 			currentSpeedL = .90;
 		}
 		else {
@@ -62,7 +62,7 @@ public class AdvancedDrive extends Command {
 		}
 		else {
 			currentSpeedR = 1;
-		} */
+		}
 		
 		avgEncDif = (leftEncDif + rightEncDif) / 2;
 		
@@ -74,7 +74,7 @@ public class AdvancedDrive extends Command {
 			}
     	}
 		
-		Robot.drivetrain.difDrive.arcadeDrive(currentSpeed, 0);
+		Robot.drivetrain.difDrive.tankDrive(-currentSpeed * currentSpeedL, -currentSpeed * currentSpeedR);
 		
 		/*
 		Robot.drivetrain.basicDrive(-speed, speed);
