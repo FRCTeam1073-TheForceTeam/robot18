@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc1073.robot18.Bling;
 import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.subsystems.*;
 import edu.wpi.cscore.CvSink;
@@ -31,7 +32,9 @@ import org.opencv.imgproc.Imgproc;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
+	Preferences prefs;
+	String OK_Puzzles = "none";
+	
 	Command autonomousCommand;
     public static Preferences robotPreferences;
 
@@ -43,6 +46,8 @@ public class Robot extends IterativeRobot {
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
     public static robotPneumatic pneumatic;
+    
+    public static Bling bling;
 
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousChooser;
@@ -67,20 +72,27 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		prefs = Preferences.getInstance();
+		//OK_Puzzles = prefs.getString(OK_Puzzles, "Puzzles");
 		
 		RobotMap.init();
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
-    	robotName = robotPreferences.getString("robotName", "unknown");
+    	OK_Puzzles = robotPreferences.getString("robotName", "unknown");
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		conveyor = new robotConveyor();
         pneumatic = new robotPneumatic();
         collector = new robotCollector();
 		oi = new OI();
+
 		
 		FMS = "";
 
+        //Instantiating Bling Class for smartbling on Robot.
+        bling = new Bling();
+        bling.sendRobotInit();
+        
 		//lift encoder set to 0
 		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
 		

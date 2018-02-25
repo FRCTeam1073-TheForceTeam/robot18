@@ -40,12 +40,12 @@ public class LiftElevator extends Command {
 //    			speed = 0;
 //    		}
 //    	}
-    	if(RobotMap.liftSwitchBottom.get() || speed < 0)
-    	{
+    	if(RobotMap.liftSwitchBottom.get() || speed < 0){
     		RobotMap.elevatorMotorLeft.set(speed/2);
     	}
     	else {
     		RobotMap.elevatorMotorLeft.set(0);
+    		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
     	}
     }
 

@@ -58,8 +58,10 @@ public class VisionCubeTracker extends Command{
 		SmartDashboard.putNumber("yDelta", yDelta);
 		SmartDashboard.putNumber("yWidth", yWidth);
 		SmartDashboard.putNumber("Block Count", blockCount);
+		
+		SmartDashboard.putNumber("clawSensor", RobotMap.clawSensor.getValue());
 
-	// BLockCount asks the Pixy how many things it sees
+	// BlockCount asks the Pixy how many things it sees
 	// when it sees something, we track it
 		if (blockCount > 0) {
 			SmartDashboard.putString("Current State", "Targeting (" + blockCount + ")");
