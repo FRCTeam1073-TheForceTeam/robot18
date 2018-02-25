@@ -37,7 +37,7 @@ public class SuckInCube extends Command {
 		
 		delayEnd = delay * 20;
 		delayer = 0;
-		timeEnd = time * 20;
+		timeEnd = (time * 20) + delayEnd;
 		timer = 0;
 	}
 
@@ -48,9 +48,9 @@ public class SuckInCube extends Command {
 				Robot.pneumatic.closeClaw();
 				clawBool = true;
 			}
-			Robot.collector.collectDrive.tankDrive(1, 1);
-			timer++;	
 		}
+		Robot.collector.collectDrive.tankDrive(1, 1);
+		timer++;	
 		delayer++;
 	}
 
