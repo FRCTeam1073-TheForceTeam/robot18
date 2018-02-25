@@ -43,11 +43,11 @@ public class robotPneumatic {
 		gearHigh.set(false);
 	}
 	public void collectorUp() {
-		collectorLeft.set(true);
+		collectorLeft.set(false);
 		collectorRight.set(true);
 	}
 	public void collectorDown() {
-		collectorLeft.set(false);
+		collectorLeft.set(true);
 		collectorRight.set(false);
 	}
 }
