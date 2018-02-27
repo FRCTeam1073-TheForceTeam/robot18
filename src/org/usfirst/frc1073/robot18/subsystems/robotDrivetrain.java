@@ -1,5 +1,6 @@
 package org.usfirst.frc1073.robot18.subsystems;
 
+import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 import org.usfirst.frc1073.robot18.commands.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -81,7 +82,7 @@ public class robotDrivetrain extends Subsystem {
     	if (right < -1) {
     		right = -1;
     	}
-    	
+    	Robot.bling.sendDrive();
     	rightMotor1.set(ControlMode.PercentOutput, right);
     	leftMotor1.set(ControlMode.PercentOutput, left);
     }

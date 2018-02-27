@@ -19,6 +19,7 @@ public class LowGearDT extends Command {
 	protected void initialize() {
 	
 		Robot.pneumatic.driveTrainLowGear();
+		Robot.bling.sendDriveTrainLowGear();
 
 	}
 

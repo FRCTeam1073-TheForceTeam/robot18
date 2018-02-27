@@ -49,6 +49,7 @@ public class SpitOutCube extends Command {
 				clawBool = true;
 			}
 			Robot.collector.collectDrive.tankDrive(-1, -1);
+			Robot.bling.sendDeliverCube();
 			timer++;	
 		}
 		delayer++;

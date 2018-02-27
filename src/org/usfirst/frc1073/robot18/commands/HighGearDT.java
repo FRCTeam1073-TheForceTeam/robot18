@@ -4,6 +4,7 @@ package org.usfirst.frc1073.robot18.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import org.usfirst.frc1073.robot18.Bling;
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
@@ -19,6 +20,7 @@ public class HighGearDT extends Command {
 	protected void initialize() {
 	
 		Robot.pneumatic.driveTrainHighGear();
+		Robot.bling.sendDriveTrainHighGear();
 
 	}
 

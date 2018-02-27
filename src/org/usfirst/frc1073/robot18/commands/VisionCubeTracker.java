@@ -31,6 +31,8 @@ public class VisionCubeTracker extends Command{
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		// Sees if the command is running 
+		Robot.bling.sendFindingCube();
 		v = 0;
 		driveDir = 0;
 		dir = "not set";
