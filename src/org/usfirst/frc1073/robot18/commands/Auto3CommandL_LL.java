@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandL_LL extends CommandGroup {
 	/** If Chooser is set to Left and FMS is LLL */
 	public Auto3CommandL_LL(){
-		addParallel(new LiftElevatorToDistanceScale(20.0));
+		SmartDashboard.putString("CurrentCommand", "L_LL is running");
+		addParallel(new LiftElevatorToDistanceScale(24.0));
 		addParallel(new OpenClaw());
 		addSequential(new AdvancedDrive(-.8, 125));
 		addParallel(new AutoDropoff("left"));
@@ -19,10 +20,5 @@ public class Auto3CommandL_LL extends CommandGroup {
 		addSequential(new TurnWithGyro(.8, 55, "counterclockwise"));
 		addSequential(new LiftElevatorToDistanceScale(65.0));
 		addSequential(new SpitOutCube(1, .1));
-		
-		/*addParallel(new OpenClaw());
-		addSequential(new VisionCubeTracker());
-		addParallel(new SuckInCube(1000));
-		addSequential(new CloseClaw());*/
 	}
 }

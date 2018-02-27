@@ -2,10 +2,21 @@ package org.usfirst.frc1073.robot18.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-/*** If Chooser is set to Right and FMS is RLR */
+
 public class Auto3CommandR_RL extends CommandGroup {
 	/** If Chooser is set to Right and FMS is RLR */
 	public Auto3CommandR_RL(){
 		SmartDashboard.putString("CurrentCommand", "R_RL is running");
+		addParallel(new LiftElevatorToDistanceScale(24.0));
+		addParallel(new OpenClaw());
+		addSequential(new AdvancedDrive(-.8, 125));
+		addParallel(new AutoDropoff("right"));
+		addParallel(new LiftElevatorToDistanceScale(0));
+		addParallel(new CloseClaw());
+		addSequential(new AdvancedDrive(-.8, 75));
+		addSequential(new TurnWithGyro(.8, 40, "clockwise"));
+		addSequential(new CubeGetter());
+		addSequential(new LiftElevatorToDistanceScale(24.0));
+		addSequential(new SpitOutCube(1, .1));
 	}
 }
