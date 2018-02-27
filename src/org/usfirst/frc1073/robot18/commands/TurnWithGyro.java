@@ -17,7 +17,7 @@ public class TurnWithGyro extends Command {
 	private double originalDegrees;
 	private double slowdownDistance = 11;
 	private double slowdownValue = .5;
-	private double slowdownMin = .3;
+	private double slowdownMin = .5;
 	
 	/** Uses basic drive to turn based on the gyro's position from the last time the gyro was reset
 	 * 
@@ -46,7 +46,7 @@ public class TurnWithGyro extends Command {
     protected void execute() {
     	double right = turnSpeed, left = turnSpeed;
     	
-    	SmartDashboard.putString("Is it there yet?", "yep");
+    	SmartDashboard.putString("TurnStatus", "running");
     	
  	   	
     	if(turnDirection.equals("clockwise")) {
@@ -64,30 +64,6 @@ public class TurnWithGyro extends Command {
  	   			Robot.drivetrain.difDrive.tankDrive(Double.max(left*(slowdownDistance - (originalDegrees - turnDegrees))*.01, slowdownMin), Double.min(right*(slowdownDistance - (originalDegrees - turnDegrees))*-.01, slowdownMin*-1));
  	   		}
  	   	}
-
-    	//This exists solely to push data values to Smart Dashboard!!!
-    	if(turnDirection.equals("clockwise")) {
- 	   		if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees + turnDegrees)) > slowdownDistance) {
- 	   			SmartDashboard.putNumber("Left Turn Value", left);
- 	   			SmartDashboard.putNumber("Right Turn Value", right);
- 	   		}
- 	   		else if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees + turnDegrees)) <= slowdownDistance) {
- 	   			SmartDashboard.putNumber("Left Turn Value", Double.max(left*(slowdownDistance - (originalDegrees + turnDegrees))*.01, slowdownMin));
- 	   			SmartDashboard.putNumber("Right Turn Value", Double.max(right*(slowdownDistance - (originalDegrees + turnDegrees))*.01, slowdownMin));
- 	   		}
- 	   	}else if(turnDirection.equals("counterclockwise")){
- 	   		if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees - turnDegrees)) > slowdownDistance) {
- 	   			SmartDashboard.putNumber("Left Turn Value", left);
- 	   			SmartDashboard.putNumber("Right Turn Value", right);
- 	   		}
- 	   		else if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees - turnDegrees)) <= slowdownDistance) {
- 	   			SmartDashboard.putNumber("Left Turn Value", Double.max(left*(slowdownDistance - (originalDegrees - turnDegrees))*.01, slowdownMin));
- 	   			SmartDashboard.putNumber("Right Turn Value", Double.max(right*(slowdownDistance - (originalDegrees - turnDegrees))*.01, slowdownMin));
- 	   		}
- 	   	}
-    	SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
-    	SmartDashboard.putNumber("Comparative Gyro", originalDegrees - RobotMap.headingGyro.getAngle());
-    	//This exists solely to push data values to Smart Dashboard!!!
     }
 
     // Make this return true when this Command no longer needs to run execute()

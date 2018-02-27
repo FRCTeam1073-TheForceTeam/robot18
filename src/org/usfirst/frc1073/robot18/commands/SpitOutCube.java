@@ -43,14 +43,15 @@ public class SpitOutCube extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		Robot.collector.collectDrive.tankDrive(-1, -1);
+		Robot.bling.sendDeliverCube();
+		timer++;
+		
 		if (delayEnd <= delayer) {
 			if (clawBool == false) {
 				Robot.pneumatic.openClaw();
 				clawBool = true;
 			}
-			Robot.collector.collectDrive.tankDrive(-1, -1);
-			Robot.bling.sendDeliverCube();
-			timer++;	
 		}
 		delayer++;
 	}

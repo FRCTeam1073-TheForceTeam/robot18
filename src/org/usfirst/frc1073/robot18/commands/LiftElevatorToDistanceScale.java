@@ -4,6 +4,7 @@ import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 import org.usfirst.frc1073.robot18.subsystems.robotCollector;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,9 +30,12 @@ public class LiftElevatorToDistanceScale extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.pneumatic.liftHighGear();
+    	
     	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
     	target = (inches/9.42)*1440.0*2.0*(16.0/5.0);
+    	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
     	
     	if((Math.abs(distance)) >= target){
     		up = false;
@@ -46,14 +50,12 @@ public class LiftElevatorToDistanceScale extends Command {
     	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
     	
     	if((Math.abs(distance)) >= target){
-    		RobotMap.elevatorMotorLeft.set(.75);
+			Robot.elevator.elevatorDrive.tankDrive(1, -1);
     	}
     	if((Math.abs(distance)) <= target){
-    		RobotMap.elevatorMotorLeft.set(-.75);
+			Robot.elevator.elevatorDrive.tankDrive(-1, 1);
     	}
-    	if(RobotMap.liftSwitchBottom.get() == false){
-    		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
-    	}
+
     	
     	SmartDashboard.putNumber("Distance", Math.abs(distance));
     	SmartDashboard.putNumber("Target", target);
@@ -72,21 +74,19 @@ public class LiftElevatorToDistanceScale extends Command {
 	    		finish = true;
 	    	}
     	}
-    	if(RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0) <= 0){
-    		finish = true;
-    	}
+    	if(inches == 0 && !RobotMap.liftSwitchBottom.get()) finish = true;
 
         return finish;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	RobotMap.elevatorMotorLeft.set(0);
+		Robot.elevator.elevatorDrive.tankDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	RobotMap.elevatorMotorLeft.set(0);
+		Robot.elevator.elevatorDrive.tankDrive(0, 0);
     }
 }
