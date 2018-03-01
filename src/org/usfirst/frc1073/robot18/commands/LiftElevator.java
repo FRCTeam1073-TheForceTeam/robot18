@@ -43,6 +43,9 @@ public class LiftElevator extends Command {
     	if(RobotMap.liftSwitchBottom.get() || speed < 0){
     		RobotMap.elevatorMotorLeft.set(speed/2);
     	}
+    	else if(RobotMap.liftSwitchTop.get() || speed > 0){
+    		RobotMap.elevatorMotorLeft.set(speed/2);
+    	}
     	else {
     		RobotMap.elevatorMotorLeft.set(0);
     		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);

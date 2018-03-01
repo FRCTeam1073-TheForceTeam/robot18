@@ -61,8 +61,10 @@ public class RobotMap {
 	public static WPI_TalonSRX conveyorMotor;
     
     public static void init() {
-    	liftSwitchBottom = new DigitalInput(1);
+    	liftSwitchBottom = new DigitalInput(0);
     	LiveWindow.addSensor("Elevator", "switchBottom", liftSwitchBottom);
+    	liftSwitchTop = new DigitalInput(1);
+    	LiveWindow.addSensor("Elevator", "switchTop", liftSwitchTop);
     	
     // Motor init
     	// Right
@@ -90,21 +92,29 @@ public class RobotMap {
 //        LiveWindow.addSensor("Elevator", "liftEncoder", liftEncoder);
 //        
     // Solenoids
-        leftWrist = new Solenoid (1, 2);
+        leftWrist = new Solenoid (1, 6);
+        //fixed
         //pneumatics on the left side of the claw
-        rightWrist = new Solenoid (1, 4);
+        rightWrist = new Solenoid (1, 0);
+        //fixed
         //pneumatics on the right side of the claw
-        liftHigh = new Solenoid (1, 1);
+        liftHigh = new Solenoid (1, 2);
+        //fixed
         //sets the lift to high gear
-        liftLow = new Solenoid (1, 3);
+        liftLow = new Solenoid (1, 4);
+        //fixed
         //sets the lift to low gear
-        gearHigh = new Solenoid (1, 0);
+        gearHigh = new Solenoid (1, 5);
+        //fixed
         //sets the drive train to high gear
-        gearLow = new Solenoid (1, 6);
+        gearLow = new Solenoid (1, 7);
+        //fixed
         //sets the drive train to low gear
-        collectorLeft= new Solenoid (1, 5);
+        collectorLeft= new Solenoid (1, 1);
+        //fixed
         //sets the collector Up
-        collectorRight= new Solenoid (1, 7);
+        collectorRight= new Solenoid (1, 3);
+        //fixed
         //sets the collector Down
     // Proximity Sensors
         leftSensor = new AnalogInput(0);

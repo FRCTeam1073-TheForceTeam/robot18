@@ -16,7 +16,7 @@ public class IsCubeIn extends Command {
 	
 	protected void initialize() {
 		Robot.clawBool = false;
-		stopVoltage = .55;
+		stopVoltage = .50;
 	}
 
 	protected void execute() {

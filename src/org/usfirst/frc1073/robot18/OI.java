@@ -105,12 +105,12 @@ public class OI {
     	LiftToStay.whileHeld(new LiftStay());
     	
         //opens and closes the claw
-        clawOpen = operatorControl.leftBumper;
+        clawOpen = operatorControl.rightBumper;
         clawOpen.whileHeld(new OpenClaw());
         clawOpen.whenReleased(new CloseClaw());
 
         //Makes the collector go up or down
-        collectorUD = operatorControl.rightBumper;
+        collectorUD = operatorControl.leftBumper;
         if (collectorUD.equals(1)) {
             isDone =+ 1;
         }
@@ -153,7 +153,7 @@ public class OI {
         SmartDashboard.putData("ClawDown", new CollectorDown());
         SmartDashboard.putNumber("Left Motors", RobotMap.leftMotor1.get());
         SmartDashboard.putNumber("Right Motors", RobotMap.rightMotor1.get());
-        if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
+     /*   if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;
         }
@@ -220,6 +220,7 @@ public class OI {
         	//SmartDashboard.putNumber("left drivetrain", Robot.drivetrain.difDrive.arcadeDrive(xSpeed, zRotation);
         	//SmartDashboard.putString("Robot Name" , Robot.robotName.OK_Puzzles);
 
-    }
+    }*/
+}
 }
 
