@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto2FMSL extends CommandGroup {
 	/** If Chooser is set to Left */
 	public Auto2FMSL() {
-		SmartDashboard.putString("CurrentCommand", "L is running");
 		switch(Robot.FMS) {
 		case "RRR":
 			addSequential(new Auto3CommandL_RR());
@@ -23,6 +22,7 @@ public class Auto2FMSL extends CommandGroup {
 			break;
 		default:
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
+			addSequential(new AdvancedDrive(1, 75));
 			break;
 		}
 	}

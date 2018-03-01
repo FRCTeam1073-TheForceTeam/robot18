@@ -6,7 +6,5 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandC_RL extends CommandGroup {
 	/** If Chooser is set to Center and FMS is RLR */
 	public Auto3CommandC_RL(){
-		SmartDashboard.putString("CurrentCommand", "C_RL is running");
-		addSequential(new AutoSwitchScale());
 	}
 }

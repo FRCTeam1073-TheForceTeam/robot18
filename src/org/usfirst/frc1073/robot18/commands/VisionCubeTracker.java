@@ -32,7 +32,7 @@ public class VisionCubeTracker extends Command{
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		// Sees if the command is running 
-		Robot.bling.sendFindingCube();
+		//Robot.bling.sendFindingCube();
 		v = 0;
 		driveDir = 0;
 		dir = "not set";
@@ -61,26 +61,20 @@ public class VisionCubeTracker extends Command{
 		SmartDashboard.putNumber("yWidth", yWidth);
 		SmartDashboard.putNumber("Block Count", blockCount);
 
-		SmartDashboard.putNumber("clawSensor", RobotMap.clawSensor.getValue());
-
 		// BlockCount asks the Pixy how many things it sees
 		// when it sees something, we track it
 		if (blockCount > 0) {
-			SmartDashboard.putString("Current State", "Targeting (" + blockCount + ")");
 
 			// This code handles the left and right motion of the bot
 			// based on the Pixy's values
 			if (xDelta > side) {
 				dir = "Right";
-				SmartDashboard.putString("Target", "Right");
 			}
 			else if (xDelta < -(side)) {
 				dir = "Left";
-				SmartDashboard.putString("Target", "Left");
 			}
 			else {
 				dir = "Center";
-				SmartDashboard.putString("Target", "Centered");
 			}
 
 			if (Math.abs(xDelta) > 120) {
@@ -146,7 +140,6 @@ public class VisionCubeTracker extends Command{
 		// When no blocks are seen, we strafe back and forth, and up and down,
 		// while the bot looks for the target
 		else {
-			SmartDashboard.putString("Current State", "Searching (" + blockCount + ")");
 			Robot.drivetrain.difDrive.tankDrive(0, 0);
 		}
 	}

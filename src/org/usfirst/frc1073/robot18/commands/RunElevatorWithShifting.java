@@ -42,8 +42,6 @@ public class RunElevatorWithShifting extends Command {
 		else {
 			speed = 0;
 		}
-		SmartDashboard.putBoolean("Gear High?", highGear);
-		//SmartDashboard.putNumber("collllet", speed);
 		
 		if(RobotMap.liftSwitchBottom.get() || speed < 0)
     	{

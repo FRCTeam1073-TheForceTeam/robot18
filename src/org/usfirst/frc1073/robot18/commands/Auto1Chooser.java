@@ -13,7 +13,6 @@ public class Auto1Chooser extends CommandGroup {
 
 	public Auto1Chooser() {
 		addSequential(new Auto1WhereAmI());
-		SmartDashboard.putString("CurrentCommand", "Chooser is running");
 		switch(Robot.autonomousChooser.getSelected().getString()) {
 		case "left":
 			addSequential(new Auto2FMSL());

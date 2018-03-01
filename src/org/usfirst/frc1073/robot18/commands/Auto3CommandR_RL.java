@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandR_RL extends CommandGroup {
 	/** If Chooser is set to Right and FMS is RLR */
 	public Auto3CommandR_RL(){
-		SmartDashboard.putString("CurrentCommand", "R_RL is running");
 		addParallel(new LiftElevatorToDistanceScale(24.0));
 		addParallel(new OpenClaw());
 		addSequential(new AdvancedDrive(-.8, 125));

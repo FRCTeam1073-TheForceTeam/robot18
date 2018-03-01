@@ -6,6 +6,5 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandR_LR extends CommandGroup {
 	/** If Chooser is set to Right and FMS is LRL */
 	public Auto3CommandR_LR(){
-		SmartDashboard.putString("CurrentCommand", "R_LR is running");
 	}
 }

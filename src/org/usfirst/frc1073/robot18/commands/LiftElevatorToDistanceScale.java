@@ -55,10 +55,6 @@ public class LiftElevatorToDistanceScale extends Command {
     	if((Math.abs(distance)) <= target){
 			Robot.elevator.elevatorDrive.tankDrive(-1, 1);
     	}
-
-    	
-    	SmartDashboard.putNumber("Distance", Math.abs(distance));
-    	SmartDashboard.putNumber("Target", target);
     }
 
     // Make this return true when this Command no longer needs to run execute()

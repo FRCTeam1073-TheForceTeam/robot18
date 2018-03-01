@@ -16,12 +16,11 @@ public class IsCubeIn extends Command {
 	
 	protected void initialize() {
 		Robot.clawBool = false;
-		stopVoltage = .8;
+		stopVoltage = .55;
 	}
 
 	protected void execute() {
-		voltage = RobotMap.clawSensor.getAverageVoltage();
-		SmartDashboard.putNumber("volts", voltage);
+		voltage = RobotMap.clawSensor.getVoltage();
 	}
 	
 	protected boolean isFinished() {

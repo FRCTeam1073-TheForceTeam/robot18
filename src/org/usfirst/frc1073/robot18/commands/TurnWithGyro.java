@@ -39,15 +39,11 @@ public class TurnWithGyro extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	originalDegrees = RobotMap.headingGyro.getAngle();
-    	SmartDashboard.putNumber("originalDegrees", originalDegrees);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double right = turnSpeed, left = turnSpeed;
-    	
-    	SmartDashboard.putString("TurnStatus", "running");
-    	
  	   	
     	if(turnDirection.equals("clockwise")) {
  	   		if(Math.abs(RobotMap.headingGyro.getAngle() - (originalDegrees + turnDegrees)) > slowdownDistance) {
@@ -82,14 +78,10 @@ public class TurnWithGyro extends Command {
     
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.basicDrive(0, 0);
-    	SmartDashboard.putString("TurnStatus", "done");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
-    	SmartDashboard.putString("TurnStatus", "interrupted");
     }
 }

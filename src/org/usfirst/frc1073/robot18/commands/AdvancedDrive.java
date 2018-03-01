@@ -49,23 +49,9 @@ public class AdvancedDrive extends Command {
 	protected void execute() {
 		leftEncDif = Math.abs(startleftEncDif - RobotMap.leftMotor1.getSelectedSensorPosition(0));
 		rightEncDif = Math.abs(startrightEncDif - RobotMap.rightMotor1.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Left Encoder", leftEncDif);
-		SmartDashboard.putNumber("Right Encoder", rightEncDif);
 		
 		currentDegrees = RobotMap.headingGyro.getAngle();
 		
-		/*if (leftEncDif > (rightEncDif * 1.005)) {
-			currentSpeedL = .90;
-		}
-		else {
-			currentSpeedL = 1;
-		}
-		if (rightEncDif > (leftEncDif * 1.005)) {
-			currentSpeedR = .90;
-		}
-		else {
-			currentSpeedR = 1;
-		}*/
 		if (currentSpeed > 0) {
 			if (1 < originalDegrees - currentDegrees) {
 				finalSpeedL = 1;
@@ -97,18 +83,11 @@ public class AdvancedDrive extends Command {
 		
 		finalSpeed = currentSpeed;
 		
-		
 		avgEncDif = (leftEncDif + rightEncDif) / 2;
 		
 		percentComplete = avgEncDif/toBeTraveled;
 		
 		Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
-		
-		/*
-		Robot.drivetrain.basicDrive(-speed, speed);
-		SmartDashboard.putNumber("toBeTraveled", n);
-		n++; 
-		*/
 	}
 
 	protected boolean isFinished() {

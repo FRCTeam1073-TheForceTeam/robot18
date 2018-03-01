@@ -6,7 +6,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandC_RR extends CommandGroup {
 	/** If Chooser is set to Center and FMS is RRR */
 	public Auto3CommandC_RR(){
-		addSequential(new AdvancedDrive(1, 100));
-		addSequential(new AdvancedDrive(-1, 100));
+		addSequential(new AdvancedDrive(-1, 70));
+		addSequential(new TurnWithGyro(.8, 90, "clockwise"));
+		addSequential(new AdvancedDrive(-1, 70));
+		addSequential(new TurnWithGyro(.8, 90, "counterclockwise"));
+		addSequential(new AdvancedDrive(-1, 45));
 	}
 }

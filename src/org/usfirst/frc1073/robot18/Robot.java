@@ -32,9 +32,6 @@ import org.opencv.imgproc.Imgproc;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	Preferences prefs;
-	String OK_Puzzles = "none";
-	
 	Command autonomousCommand;
     public static Preferences robotPreferences;
 
@@ -73,13 +70,9 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		prefs = Preferences.getInstance();
-		//OK_Puzzles = prefs.getString(OK_Puzzles, "Puzzles");
-		
 		RobotMap.init();
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
-    	OK_Puzzles = robotPreferences.getString("robotName", "unknown");
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		conveyor = new robotConveyor();
@@ -230,14 +223,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
-		double total = 0;
-		for (int i = 0; i < 10; i++) {
-			voltage = RobotMap.leftSensor.getVoltage();
-			distance = (Robot.voltage - 0.0399)/0.0234;  
-			total += distance;
-		}
-		total = total/10;
-		SmartDashboard.putNumber("Ultrasonic Distance", total );
 	}
 
 	public void autonomousInit() {
