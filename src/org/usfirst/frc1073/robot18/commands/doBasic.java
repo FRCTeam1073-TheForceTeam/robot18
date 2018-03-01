@@ -13,7 +13,7 @@ public class doBasic extends Command {
 	toBeTraveled1, toBeTraveled2, toBeTraveled3, inch, leftEncDif1, leftEncDif2, leftEncDif3, 
 	rightEncDif1, rightEncDif2, rightEncDif3, startleftEncDif1, startleftEncDif2, startleftEncDif3,
 	percentComplete1, percentComplete2, percentComplete3, avgEncDif1, avgEncDif2, avgEncDif3,
-	startrightEncDif1, startrightEncDif2, startrightEncDif3, originalDegrees, n;
+	startrightEncDif1, startrightEncDif2, startrightEncDif3, originalDegrees, currentDegrees, n;
 	private String direction;
 	private boolean fin1, fin2, fin3, fin4, oneMove, turn1, turn1s, turn2, turn2s;
 	
@@ -35,8 +35,10 @@ public class doBasic extends Command {
 		this.dist1 = dist1;
 		oneMove = setToTrue;
 	}
-	/** Runs through a basic move auto that goes straight, the turns,
+	/** Runs through a "basic" move auto that goes straight, the turns,
 	 *  then goes straight again, and then turns, and then goes straight one last time
+	 *  
+	 *  Truly a simple system of code. If you can't understand the following, then you aren't worthy.
 	 * 
 	 * @author Nathaniel
 	 * 
@@ -67,6 +69,8 @@ public class doBasic extends Command {
 	protected void initialize() {
 		startleftEncDif1 = RobotMap.leftMotor1.getSelectedSensorPosition(0);
 		startrightEncDif1 = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+		
+		originalDegrees = RobotMap.headingGyro.getAngle();
 
 		currentSpeed1 = speed1;
 		currentSpeed2 = speed2;
@@ -95,28 +99,33 @@ public class doBasic extends Command {
 		if (fin1 == false && fin2 == false && fin3 == false && fin4 == false && turn1 == false && turn2 == false) {
 			leftEncDif1 = Math.abs(startleftEncDif1 - RobotMap.leftMotor1.getSelectedSensorPosition(0));
 			rightEncDif1 = Math.abs(startrightEncDif1 - RobotMap.rightMotor1.getSelectedSensorPosition(0));
+			currentDegrees = RobotMap.headingGyro.getAngle();
 			SmartDashboard.putNumber("Left Encoder", leftEncDif1);
 			SmartDashboard.putNumber("Right Encoder", rightEncDif1);
 		}
 		if (fin1 == true && fin2 == false && fin3 == false && fin4 == false && turn1 == true && turn2 == false) {
 			startleftEncDif2 = RobotMap.leftMotor1.getSelectedSensorPosition(0);
 			startrightEncDif2 = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+			originalDegrees = RobotMap.headingGyro.getAngle();
 			fin2 = true;
 		}
 		if (fin1 == true && fin2 == true && fin3 == false && fin4 == false && turn1 == true && turn2 == false) {
 			leftEncDif2 = Math.abs(startleftEncDif2 - RobotMap.leftMotor1.getSelectedSensorPosition(0));
 			rightEncDif2 = Math.abs(startrightEncDif2 - RobotMap.rightMotor1.getSelectedSensorPosition(0));
+			currentDegrees = RobotMap.headingGyro.getAngle();
 			SmartDashboard.putNumber("Left Encoder", leftEncDif1);
 			SmartDashboard.putNumber("Right Encoder", rightEncDif1);
 		}
 		if (fin1 == true && fin2 == true && fin3 == true && fin4 == false && turn1 == true && turn2 == true) {
 			startleftEncDif3 = RobotMap.leftMotor1.getSelectedSensorPosition(0);
 			startrightEncDif3 = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+			originalDegrees = RobotMap.headingGyro.getAngle();
 			fin4 = true;
 		}
 		if (fin1 == true && fin2 == true && fin3 == true && fin4 == true && turn1 == true && turn2 == true) {
 			leftEncDif3 = Math.abs(startleftEncDif3 - RobotMap.leftMotor1.getSelectedSensorPosition(0));
 			rightEncDif3 = Math.abs(startrightEncDif3 - RobotMap.rightMotor1.getSelectedSensorPosition(0));
+			currentDegrees = RobotMap.headingGyro.getAngle();
 			SmartDashboard.putNumber("Left Encoder", leftEncDif1);
 			SmartDashboard.putNumber("Right Encoder", rightEncDif1);
 		}
@@ -221,17 +230,33 @@ public class doBasic extends Command {
 		}
 		if (percentComplete1 < .99) {
 
-			if (leftEncDif1 > (rightEncDif1 * 1.005)) {
-				currentSpeedL = .90;
+			if (currentSpeed1 > 0) {
+				if (1 < originalDegrees - currentDegrees) {
+					currentSpeedL = 1;
+					currentSpeedR = .9;
+				}
+				else if (-1 > originalDegrees - currentDegrees) {
+					currentSpeedL = .9;
+					currentSpeedR = 1;
+				}
+				else {
+					currentSpeedL = 1;
+					currentSpeedR = 1;
+				}
 			}
-			else {
-				currentSpeedL = 1;
-			}
-			if (rightEncDif1 > (leftEncDif1 * 1.005)) {
-				currentSpeedR = .90;
-			}
-			else {
-				currentSpeedR = 1;
+			if (currentSpeed1 < 0) {
+				if (1 < originalDegrees - currentDegrees) {
+					currentSpeedL = .9;
+					currentSpeedR = 1;
+				}
+				else if (-1 > originalDegrees - currentDegrees) {
+					currentSpeedL = 1;
+					currentSpeedR = .9;
+				}
+				else {
+					currentSpeedL = 1;
+					currentSpeedR = 1;
+				}
 			}
 
 			if (percentComplete1 < 1) {
@@ -245,17 +270,33 @@ public class doBasic extends Command {
 		else if (percentComplete1 >= .99 && percentComplete2 < .99
 				&& fin1 == true && fin2 == true && fin3 == false && fin4 == false) {
 
-			if (leftEncDif2 > (rightEncDif2 * 1.005)) {
-				currentSpeedL = .90;
+			if (currentSpeed2 > 0) {
+				if (1 < originalDegrees - currentDegrees) {
+					currentSpeedL = 1;
+					currentSpeedR = .9;
+				}
+				else if (-1 > originalDegrees - currentDegrees) {
+					currentSpeedL = .9;
+					currentSpeedR = 1;
+				}
+				else {
+					currentSpeedL = 1;
+					currentSpeedR = 1;
+				}
 			}
-			else {
-				currentSpeedL = 1;
-			}
-			if (rightEncDif2 > (leftEncDif2 * 1.005)) {
-				currentSpeedR = .90;
-			}
-			else {
-				currentSpeedR = 1;
+			if (currentSpeed2 < 0) {
+				if (1 < originalDegrees - currentDegrees) {
+					currentSpeedL = .9;
+					currentSpeedR = 1;
+				}
+				else if (-1 > originalDegrees - currentDegrees) {
+					currentSpeedL = 1;
+					currentSpeedR = .9;
+				}
+				else {
+					currentSpeedL = 1;
+					currentSpeedR = 1;
+				}
 			}
 
 			if (percentComplete2 < 1) {
@@ -269,17 +310,33 @@ public class doBasic extends Command {
 		else if (percentComplete1 >= .99 && percentComplete2 >= .99 && percentComplete3 < .99
 				&& fin1 == true && fin2 == true && fin3 == true && fin4 == true) {
 
-			if (leftEncDif3 > (rightEncDif3 * 1.005)) {
-				currentSpeedL = .90;
+			if (currentSpeed3 > 0) {
+				if (1 < originalDegrees - currentDegrees) {
+					currentSpeedL = 1;
+					currentSpeedR = .9;
+				}
+				else if (-1 > originalDegrees - currentDegrees) {
+					currentSpeedL = .9;
+					currentSpeedR = 1;
+				}
+				else {
+					currentSpeedL = 1;
+					currentSpeedR = 1;
+				}
 			}
-			else {
-				currentSpeedL = 1;
-			}
-			if (rightEncDif3 > (leftEncDif3 * 1.005)) {
-				currentSpeedR = .90;
-			}
-			else {
-				currentSpeedR = 1;
+			if (currentSpeed3 < 0) {
+				if (1 < originalDegrees - currentDegrees) {
+					currentSpeedL = .9;
+					currentSpeedR = 1;
+				}
+				else if (-1 > originalDegrees - currentDegrees) {
+					currentSpeedL = 1;
+					currentSpeedR = .9;
+				}
+				else {
+					currentSpeedL = 1;
+					currentSpeedR = 1;
+				}
 			}
 
 			if (percentComplete3 < 1) {
