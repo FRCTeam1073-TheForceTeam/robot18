@@ -153,7 +153,7 @@ public class OI {
         SmartDashboard.putData("ClawDown", new CollectorDown());
         SmartDashboard.putNumber("Left Motors", RobotMap.leftMotor1.get());
         SmartDashboard.putNumber("Right Motors", RobotMap.rightMotor1.get());
-     /*   if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
+        if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;
         }
@@ -220,7 +220,7 @@ public class OI {
         	//SmartDashboard.putNumber("left drivetrain", Robot.drivetrain.difDrive.arcadeDrive(xSpeed, zRotation);
         	//SmartDashboard.putString("Robot Name" , Robot.robotName.OK_Puzzles);
 
-    }*/
+    }
 }
-}
+
 
