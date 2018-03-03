@@ -34,7 +34,7 @@ import org.opencv.imgproc.Imgproc;
  */
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
-    public static Preferences robotPreferences;
+	public static Preferences robotPreferences;
 
 	public static OI oi;
 	public static robotElevator elevator;
@@ -43,9 +43,9 @@ public class Robot extends IterativeRobot {
 	public static robotConveyor conveyor;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
-    public static robotPneumatic pneumatic;
-    
-    public static Bling bling;
+	public static robotPneumatic pneumatic;
+
+	public static Bling bling;
 
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousChooser;
@@ -53,9 +53,9 @@ public class Robot extends IterativeRobot {
 	public AutoObject center;
 	public AutoObject right;
 	public AutoObject other;
-	
+
 	public DigitalInput liftSwitchBottom;
-	
+
 	public static double voltage;
 	public static double distance;
 
@@ -68,11 +68,11 @@ public class Robot extends IterativeRobot {
 	public static String robotName;
 	public static boolean clawBool;
 	public double highGearLift;
-    public double lowGearLift;
-    public double collectorIntake;
-    public double collectorPurge;
-    public double conveyorLeftLeft;
-    public double conveyorRightRight;
+	public double lowGearLift;
+	public double collectorIntake;
+	public double collectorPurge;
+	public double conveyorLeftLeft;
+	public double conveyorRightRight;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -84,20 +84,20 @@ public class Robot extends IterativeRobot {
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		conveyor = new robotConveyor();
-        pneumatic = new robotPneumatic();
-        collector = new robotCollector();
+		pneumatic = new robotPneumatic();
+		collector = new robotCollector();
 		oi = new OI();
 
-		
+
 		FMS = "";
 
-        //Instantiating Bling Class for smartbling on Robot.
-        bling = new Bling();
-        bling.sendRobotInit();
-        
+		//Instantiating Bling Class for smartbling on Robot.
+		bling = new Bling();
+		bling.sendRobotInit();
+
 		//lift encoder set to 0
 		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
-		
+
 		/* Chooser Objects */
 		left = new AutoObject(1);
 		center = new AutoObject(2);
@@ -220,6 +220,10 @@ public class Robot extends IterativeRobot {
 		camera1Thread.start();
 		camera2Thread.start();
 
+
+		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
+		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
+
 	}
 
 	/**
@@ -227,8 +231,8 @@ public class Robot extends IterativeRobot {
 	 * You can use it to reset subsystems before shutting down.
 	 */
 	public void disabledInit(){
-		
-		
+
+
 
 	}
 
@@ -236,18 +240,16 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
-		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
-		
+
 		Robot.pneumatic.driveTrainHighGear();
 		Robot.pneumatic.liftHighGear();
-		
+
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
-		
+
 		Scheduler.getInstance().run();
-		
+
 		new LidarMiniMap();
-		
+
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L') {
 			switchSide = "left";
@@ -259,18 +261,18 @@ public class Robot extends IterativeRobot {
 		}else {
 			scaleSide = "right";
 		}
-		
+
 		/* instantiate the command used for the autonomous period */
 		autonomousCommand = new Auto1Chooser();
 		if (autonomousCommand != null) autonomousCommand.start();
 	}
-	
+
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-    	SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
+		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
 	}
 
 	public void teleopInit() {
@@ -280,8 +282,6 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		new LidarMiniMap();
 		if (autonomousCommand != null) autonomousCommand.cancel();
-		RobotMap.leftMotor1.configOpenloopRamp(.25, 10);
-		RobotMap.rightMotor1.configOpenloopRamp(.25, 10);
 	}
 
 	/**
@@ -289,8 +289,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-    	SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
-    	
+		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
+		SmartDashboard.putNumber("Left", RobotMap.leftMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right", RobotMap.rightMotor1.getSelectedSensorPosition(0));
 	}
 
 	/**

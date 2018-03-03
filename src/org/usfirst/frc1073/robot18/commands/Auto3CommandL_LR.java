@@ -9,7 +9,7 @@ public class Auto3CommandL_LR extends CommandGroup {
 		addParallel(new LiftElevatorToDistanceScale(24.0));
 		addParallel(new OpenClaw());
 		addSequential(new AdvancedDrive(-.8, 125));
-		addParallel(new AutoDropoff("left"));
+		addParallel(new Dropoff(.5, "left"));
 		addParallel(new LiftElevatorToDistanceScale(0));
 		addParallel(new CloseClaw());
 		addSequential(new AdvancedDrive(-.8, 75));

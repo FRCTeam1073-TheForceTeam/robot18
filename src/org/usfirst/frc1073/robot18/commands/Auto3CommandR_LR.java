@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandR_LR extends CommandGroup {
 	/** If Chooser is set to Right and FMS is LRL */
 	public Auto3CommandR_LR(){
-		addParallel(new AutoDropoff("right"));
+		addParallel(new Dropoff(.5, "right"));
 		addSequential(new AdvancedDrive(-.8, 150));
 		addSequential(new CubeGetter());
 		addSequential(new AdvancedDrive(-.8, 50));

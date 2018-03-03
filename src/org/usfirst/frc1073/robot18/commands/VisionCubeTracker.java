@@ -37,8 +37,6 @@ public class VisionCubeTracker extends Command{
 		driveDir = 0;
 		dir = "not set";
 		fullDir = false;
-		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
-		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -148,8 +146,6 @@ public class VisionCubeTracker extends Command{
 	protected boolean isFinished() {
 		boolean finished = false;
 		if (v > 10 && Robot.clawBool == true) {
-			RobotMap.leftMotor1.configOpenloopRamp(0.25, 10);
-			RobotMap.rightMotor1.configOpenloopRamp(0.25, 10);
 			finished = true;
 		}
 		if (Robot.oi.cancel.get()) {

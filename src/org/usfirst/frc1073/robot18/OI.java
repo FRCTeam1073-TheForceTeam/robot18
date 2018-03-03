@@ -76,16 +76,6 @@ public class OI {
         lowGearDT = driverControl.rightBumper;
         lowGearDT.whenPressed(new LowGearDT());
     	
-        //right conveyor
-    	conveyorRightRight = driverControl.getRightTrigger();
-    	if (conveyorRightRight >0) {
-    		Robot.conveyor.teleDropoff(conveyorRightRight);
-    	}
-    	//left conveyor
-    	conveyorLeftLeft = driverControl.getLeftTrigger();
-    	if (conveyorLeftLeft >0) {
-    		Robot.conveyor.teleDropoff(conveyorLeftLeft);
-    	}
     	operatorControl = new XboxController(1);
     	
     	//lift buttons

@@ -8,7 +8,7 @@ public class Auto3CommandC_LR extends CommandGroup {
 	public Auto3CommandC_LR(){
 		addSequential(new AdvancedDrive(-1, 10));
 		addSequential(new TurnWithGyro(.65, 90, "counterclockwise"));
-		addSequential(new AutoDropoff("right"));
+		addSequential(new Dropoff(.5, "right"));
 		addSequential(new TurnWithGyro(.65, 90, "counterclockwise"));
 		addSequential(new CubeGetter());
 	}
