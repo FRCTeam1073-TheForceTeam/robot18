@@ -52,6 +52,7 @@ public class Robot extends IterativeRobot {
 	public AutoObject left;
 	public AutoObject center;
 	public AutoObject right;
+	public AutoObject other;
 	
 	public DigitalInput liftSwitchBottom;
 	
@@ -101,6 +102,7 @@ public class Robot extends IterativeRobot {
 		left = new AutoObject(1);
 		center = new AutoObject(2);
 		right = new AutoObject(3);
+		other = new AutoObject(4);
 
 		/* Jack's Auto Variables*/
 		position = (int) SmartDashboard.getNumber("Position", 1);
@@ -109,7 +111,7 @@ public class Robot extends IterativeRobot {
 
 		/* The Chooser */
 		autonomousChooser = new SendableChooser<AutoObject>();
-		autonomousChooser.addDefault("None", null);
+		autonomousChooser.addDefault("None", other);
 		autonomousChooser.addObject("Left", left);
 		autonomousChooser.addObject("Center", center);
 		autonomousChooser.addObject("Right", right);
@@ -367,6 +369,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
     	SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
+    	
 	}
 
 	/**

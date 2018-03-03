@@ -51,7 +51,7 @@ public class VisionCubeTracker extends Command{
 		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
 		// Defines speed and slow down markers
-		double speed = .65;
+		double speed = .7;
 		double side = 25; // Marks the reasonable area around the center	
 
 		// Puts variables from Network Tables on SmartDashboard
@@ -114,7 +114,7 @@ public class VisionCubeTracker extends Command{
 					v++;
 				}
 				else {
-					driveDir = 1;
+					driveDir = .5;
 				}
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
@@ -122,7 +122,7 @@ public class VisionCubeTracker extends Command{
 					Robot.drivetrain.difDrive.tankDrive(-speed * driveDir, speed * driveDir / 5);
 				}
 				else {
-					Robot.drivetrain.difDrive.tankDrive(-speed * driveDir, 0);
+					Robot.drivetrain.difDrive.tankDrive(-speed * driveDir / 2, 0);
 				}
 			}
 			else if (dir.equals("Left") && driveDir >= 0) {
@@ -130,7 +130,7 @@ public class VisionCubeTracker extends Command{
 					Robot.drivetrain.difDrive.tankDrive(speed * driveDir / 5, -speed * driveDir );
 				}
 				else {
-					Robot.drivetrain.difDrive.tankDrive(0, -speed * driveDir);
+					Robot.drivetrain.difDrive.tankDrive(0, -speed * driveDir / 2);
 				}
 			}
 			else if (dir.equals("Center")) {
