@@ -7,12 +7,12 @@ public class Auto3CommandL_RL extends CommandGroup {
 	/** If Chooser is set to Left and FMS is RLR */
 	public Auto3CommandL_RL(){
 		addParallel(new Dropoff(.5, "left"));
-		addSequential(new AdvancedDrive(-.8, 150));
+		addSequential(new AdvancedDrive(-.8, 150, 0));/*
 		addSequential(new CubeGetter());
 		addSequential(new AdvancedDrive(-.8, 50));
 		addSequential(new TurnWithGyro(.8, 105, "counterclockwise"));
 		addSequential(new LiftElevatorToDistanceScale(65.0));
 		addSequential(new AdvancedDrive(.75, 5));
-		addSequential(new SpitOutCube(.5, .1));
+		addSequential(new SpitOutCube(.5, .1));*/
 	}
 }

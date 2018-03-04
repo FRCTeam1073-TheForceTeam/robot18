@@ -9,49 +9,75 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AdvancedDrive extends Command {
-	
+
 	private double speed, currentSpeed, finalSpeed, finalSpeedL, finalSpeedR, dist, toBeTraveled, inch, leftEncDif, rightEncDif, startleftEncDif, percentComplete, avgEncDif, startrightEncDif, originalDegrees, currentDegrees, n;
-	
+	private double time, timer, timeEnd;
 	private boolean fin;
-	
+
 	/** PID, but not because this actually works.
-     * @author Nathaniel
-     * @param speed
-     * @param dist in inches (must be positive)
-     * @category Drive Command
-     */
+	 * @author Nathaniel
+	 * @param speed
+	 * @param dist in inches (must be positive)
+	 * @category Drive Command
+	 */
 	public AdvancedDrive(double speed, double dist) {
 		this.speed = speed;
 		this.dist = dist;
+		this.time = 9000;
 		RobotMap.leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		RobotMap.rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-		
+
 	}
-	
+	/** PID, but not because this actually works.
+	 * @author Nathaniel
+	 * @param speed
+	 * @param dist in inches (must be positive)
+	 * @category Drive Command
+	 */
+	public AdvancedDrive(double speed, double dist, double time) {
+		this.speed = speed;
+		this.dist = dist;
+		this.time = time;
+		RobotMap.leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		RobotMap.rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+
+	}
+
 	protected void initialize() {
+		if (time == 0) {
+			timeEnd = 80;
+		}
+		else if (time == 9000) {
+			timeEnd = 999999999;
+		}
+		else {
+			timeEnd = time;
+		}
+		timer = 0;
+
 		startleftEncDif = RobotMap.leftMotor1.getSelectedSensorPosition(0);
 		startrightEncDif = RobotMap.rightMotor1.getSelectedSensorPosition(0);
-		
+
 		currentSpeed = speed;
-		
+
 		originalDegrees = RobotMap.headingGyro.getAngle();
-		
+
 		double rotation = 1440;
-    	double circumference = 12.25221134900019363000430919479;
-    	inch = 117.52980412939963256779108679819;
-    	
-    	toBeTraveled = (dist * inch * 1.045);
-    	
-    	n = 0;
-    	fin = false;
+		double circumference = 12.25221134900019363000430919479;
+		inch = 117.52980412939963256779108679819;
+
+		toBeTraveled = (dist * inch * 1.045);
+
+		n = 0;
+		fin = false;
 	}
-	
+
 	protected void execute() {
 		leftEncDif = Math.abs(startleftEncDif - RobotMap.leftMotor1.getSelectedSensorPosition(0));
 		rightEncDif = Math.abs(startrightEncDif - RobotMap.rightMotor1.getSelectedSensorPosition(0));
-		
+
 		currentDegrees = RobotMap.headingGyro.getAngle();
-		
+
 		if (currentSpeed > 0) {
 			if (1 < originalDegrees - currentDegrees) {
 				finalSpeedL = 1;
@@ -80,21 +106,23 @@ public class AdvancedDrive extends Command {
 				finalSpeedR = 1;
 			}
 		}
-		
+
 		finalSpeed = currentSpeed;
-		
+
 		avgEncDif = (leftEncDif + rightEncDif) / 2;
-		
+
 		percentComplete = avgEncDif/toBeTraveled;
-		
+
 		Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
+
+		timer++;
 	}
 
 	protected boolean isFinished() {
 		boolean isFinished = false;
-    	if (Robot.oi.cancel.get() == true || percentComplete >= .99) {
-    		isFinished = true;
-    	}
+		if (Robot.oi.cancel.get() == true || percentComplete >= .99 || timer >= timeEnd) {
+			isFinished = true;
+		}
 		return isFinished;
 	}
 }

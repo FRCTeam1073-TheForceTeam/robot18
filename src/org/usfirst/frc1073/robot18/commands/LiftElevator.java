@@ -6,65 +6,44 @@ import org.usfirst.frc1073.robot18.subsystems.robotCollector;
 import org.usfirst.frc1073.robot18.subsystems.robotElevator;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * maybe ??
  */
 public class LiftElevator extends Command {
 	
 	double speed = 0;
-	
+	/** wHat is engLISH? !! ?>
+	 * 3
+	 * 7
+	 * 0
+	 * 1
+	 */
     public LiftElevator() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	requires(Robot.elevator);
     }
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
-  
-    }
-
-    // Called repeatedly when this Command is scheduled to run
+    
     protected void execute() {
     	
     	speed = Robot.oi.operatorControl.getRawAxis(1);
     	
-//    	if(RobotMap.liftSwitchTop.get() == true){
-//    		if(speed > 0){
-//    			speed = 0;
-//    		}
-//    	}
-//    	if(RobotMap.liftSwitchBottom.get() == true){
-//    		if(speed < 0){
-//    			speed = 0;
-//    		}
-//    	}
+    	SmartDashboard.putBoolean("high?!", !RobotMap.liftSwitchTop.get());
+    	
+    	if(!RobotMap.liftSwitchBottom.get()) RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
+    	
     	if(RobotMap.liftSwitchBottom.get() || speed < 0){
-    		RobotMap.elevatorMotorLeft.set(speed/2);
+    		RobotMap.elevatorMotorLeft.set(speed);
     	}
     	else if(RobotMap.liftSwitchTop.get() || speed > 0){
-    		RobotMap.elevatorMotorLeft.set(speed/2);
+    		RobotMap.elevatorMotorLeft.set(speed);
     	}
     	else {
     		RobotMap.elevatorMotorLeft.set(0);
-    		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
     	}
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    	RobotMap.elevatorMotorLeft.set(0);
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	RobotMap.elevatorMotorLeft.set(0);
     }
 }
