@@ -50,10 +50,10 @@ public class LiftElevatorToDistanceScale extends Command {
     	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
     	
     	if((Math.abs(distance)) >= target){
-			Robot.elevator.elevatorDrive.tankDrive(1, -1);
+			Robot.elevator.elevatorDrive.tankDrive(1, -1); //down
     	}
     	if((Math.abs(distance)) <= target){
-			Robot.elevator.elevatorDrive.tankDrive(-1, 1);
+			Robot.elevator.elevatorDrive.tankDrive(-1, 1); //up
     	}
     }
 
