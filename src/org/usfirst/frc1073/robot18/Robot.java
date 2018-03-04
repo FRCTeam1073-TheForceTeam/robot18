@@ -3,6 +3,7 @@ package org.usfirst.frc1073.robot18;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
@@ -46,6 +47,21 @@ public class Robot extends IterativeRobot {
 	public static robotPneumatic pneumatic;
 
 	public static Bling bling;
+	public double isDone = 0;
+    public double isDoneLift = 0;
+	public boolean turnRight;
+	public boolean turnLeft;
+	public boolean cancelPushed;
+	public boolean haveCube;
+	public boolean clawIsOpen;
+	public boolean collectorStatus;
+	public boolean s1;
+	public boolean s2;
+	public boolean s3;
+	public boolean s4;
+	public boolean s5;
+	public boolean s6;
+    public static Alliance alliance;
 
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousChooser;
@@ -265,7 +281,87 @@ public class Robot extends IterativeRobot {
 		/* instantiate the command used for the autonomous period */
 		autonomousCommand = new Auto1Chooser();
 		if (autonomousCommand != null) autonomousCommand.start();
-	}
+		  if (alliance == DriverStation.Alliance.Blue){
+	        	//true = blue, false = red
+	        	if (FMS == "RRR"){
+	        		s1 = true;
+	        		s2 = false;
+	        		s3 = true;
+	        		s4 = false;
+	        		s5 = true;
+	        		s6 = false;
+	        	}
+	        	else if (FMS == "LLL"){
+	        		s1 = false;
+	        		s2 = true;
+	        		s3 = false;
+	        		s4 = true;
+	        		s5 = false;
+	        		s6 = true;
+	        	}
+	        	else if (FMS == "LRL"){
+	        		s1 = false;
+	        		s2 = true;
+	        		s3 = true;
+	        		s4 = false;
+	        		s5 = false;
+	        		s6 = true;
+	        	}
+	        	else if (FMS == "RLR"){
+	        		s1 = true;
+	        		s2 = false;
+	        		s3 = false;
+	        		s4 = true;
+	        		s5 = true;
+	        		s6 = false;
+	        		
+	        	}
+	        	
+	        }
+	        else if (alliance == DriverStation.Alliance.Red){
+	        	if (FMS == "RRR"){
+	        		s1 = false;
+	        		s2 = true;
+	        		s3 = false;
+	        		s4 = true;
+	        		s5 = false;
+	        		s6 = true;
+	        	}
+	        	else if (FMS == "LLL"){
+	        		s1 = true;
+	        		s2 = false;
+	        		s3 = true;
+	        		s4 = false;
+	        		s5 = true;
+	        		s6 = false;
+	        	}
+	        	else if (FMS == "LRL"){
+	        		s1 = true;
+	        		s2 = false;
+	        		s3 = false;
+	        		s4 = true;
+	        		s5 = true;
+	        		s6 = false;
+	        	}
+	        	else if (FMS == "RLR"){
+	        		s1 = false;
+	        		s2 = true;
+	        		s3 = true;
+	        		s4 = false;
+	        		s5 = false;
+	        		s6 = true;
+	        		
+	        	}
+	        	
+	        }
+		SmartDashboard.putBoolean("s1", s1);
+		SmartDashboard.putBoolean("s2", s2);
+		SmartDashboard.putBoolean("s3", s3);
+		SmartDashboard.putBoolean("s4", s4);
+		SmartDashboard.putBoolean("s5", s5);
+		SmartDashboard.putBoolean("s6", s6);
+		}
+	
 
 	/**
 	 * This function is called periodically during autonomous
@@ -292,6 +388,77 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
 		SmartDashboard.putNumber("Left", RobotMap.leftMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right", RobotMap.rightMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
+    	FMS = DriverStation.getInstance().getGameSpecificMessage();
+		alliance = DriverStation.getInstance().getAlliance();
+		Scheduler.getInstance().run();
+		if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
+        	turnRight = false;
+        	turnLeft = true;
+        }
+        else if (RobotMap.rightMotor1.get() > RobotMap.leftMotor1.get()) {
+        	turnRight = true;
+        	turnLeft = false;
+        }
+        else {
+        	turnRight = false;
+        	turnLeft = false;
+        }
+        SmartDashboard.putNumber("Lift Speed", RobotMap.elevatorMotorRight.get());
+        SmartDashboard.putBoolean("turn Left", turnLeft);
+        SmartDashboard.putBoolean("", turnRight);
+        if(RobotMap.clawSensor.getAverageVoltage() > 1) {
+        	haveCube = true;
+        }
+        else {
+        	haveCube = false;
+        }
+        SmartDashboard.putBoolean("Do you have a cube?", haveCube);
+        if(RobotMap.leftWrist.get() == true && RobotMap.rightWrist.get( )== false) {
+        	clawIsOpen = true;
+        }
+        else {
+        	clawIsOpen = false;
+        }
+        SmartDashboard.putBoolean("Claw Open?", clawIsOpen);
+        
+        if(RobotMap.collectorLeft.get() == false && RobotMap.collectorRight.get() == true) {
+        	collectorStatus = true;
+        	SmartDashboard.putString("Collector", "Up");
+        }
+        else {
+        	collectorStatus = false;
+        	SmartDashboard.putString("Collector", "Down");
+        }
+        SmartDashboard.putBoolean("Collector Up?", collectorStatus);
+        if (RobotMap.gearLow.get() == false && RobotMap.gearHigh.get() == true){
+        	SmartDashboard.putString("DT Gear", "High");
+	}
+        else if (RobotMap.gearLow.get() == true && RobotMap.gearHigh.get() == false){
+        	SmartDashboard.putString("DT Gear", "Low");
+	}
+        else {
+        	SmartDashboard.putString("DT Gear", "ERROR: PLEASE SHIFT NOW!");
+        }
+        
+        if (RobotMap.liftLow.get() == false && RobotMap.liftHigh.get() == true){
+        	SmartDashboard.putString("Lift Gear", "High");
+	}
+        else if (RobotMap.liftLow.get() == true && RobotMap.liftHigh.get() == false){
+        	SmartDashboard.putString("Lift Gear", "Low");
+	}
+        else {
+        	SmartDashboard.putString("Lift Gear", "ERROR: PLEASE SHIFT NOW!");
+        }
+        SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
+        SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
+
+	SmartDashboard.putNumber("Elevator Enc enc", RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0));
+	SmartDashboard.putNumber("Right Enc", RobotMap.rightMotor1.getSelectedSensorPosition(0));
+	SmartDashboard.putNumber("Left Enc", RobotMap.leftMotor1.getSelectedSensorPosition(0));
+	SmartDashboard.putBoolean("Bottom Limit", RobotMap.liftSwitchBottom.get());
+	SmartDashboard.putBoolean("Top Limit", RobotMap.liftSwitchTop.get());
+	SmartDashboard.putNumber("IR Voltage", RobotMap.clawSensor.getVoltage());
 	}
 
 	/**

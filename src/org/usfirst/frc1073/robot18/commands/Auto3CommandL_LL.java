@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto3CommandL_LL extends CommandGroup {
 	/** If Chooser is set to Left and FMS is LLL */
 	public Auto3CommandL_LL(){
-		addParallel(new LiftElevatorToDistanceScale(30.0));
+		//addParallel(new LiftElevatorToDistanceScale(30.0));
 		addParallel(new OpenClaw());
 		addSequential(new AdvancedDrive(-.8, 125, 125));
 		addParallel(new Dropoff(.5, "left"));
