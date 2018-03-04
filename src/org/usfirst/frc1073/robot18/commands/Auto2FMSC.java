@@ -22,6 +22,9 @@ public class Auto2FMSC extends CommandGroup {
 			break;
 		default:
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
+			addSequential(new AdvancedDrive(-.8, 40, 40));
+			addSequential(new TurnWithGyro(.8, 65, "clockwise"));
+			addSequential(new AdvancedDrive(-.8, 60, 60));
 			break;
 		}
 	}

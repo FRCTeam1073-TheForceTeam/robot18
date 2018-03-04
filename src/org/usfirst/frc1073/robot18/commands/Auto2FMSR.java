@@ -22,6 +22,7 @@ public class Auto2FMSR extends CommandGroup {
 			break;
 		default:
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
+			addSequential(new AdvancedDrive(-.8, 75, 80));
 			break;
 		}
 	}
