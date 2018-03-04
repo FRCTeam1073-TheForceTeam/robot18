@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CubeGetter extends CommandGroup {
 	
 	public CubeGetter() {
+		addSequential(new EncoderCheck());
 		addParallel(new CollectorDown());
 		addSequential(new OpenClaw());
 		addParallel(new IsCubeIn());

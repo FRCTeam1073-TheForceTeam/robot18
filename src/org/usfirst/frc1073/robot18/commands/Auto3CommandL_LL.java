@@ -8,14 +8,14 @@ public class Auto3CommandL_LL extends CommandGroup {
 	public Auto3CommandL_LL(){
 		addParallel(new LiftElevatorToDistanceScale(30.0));
 		addParallel(new OpenClaw());
-		addSequential(new AdvancedDrive(-.8, 125));
+		addSequential(new AdvancedDrive(-.8, 125, 80));
 		addParallel(new Dropoff(.5, "left"));
 		addParallel(new LiftElevatorToDistanceScale(0));
 		addParallel(new CloseClaw());
-		addSequential(new AdvancedDrive(-.8, 75));
+		addSequential(new AdvancedDrive(-.8, 75, 0));
 		addSequential(new TurnWithGyro(.8, 40, "counterclockwise"));
 		addSequential(new CubeGetter());
-		addSequential(new AdvancedDrive(-.8, 70));
+		addSequential(new AdvancedDrive(-.8, 70, 0));
 		addSequential(new TurnWithGyro(.8, 55, "counterclockwise"));
 		addSequential(new LiftElevatorToDistanceScale(65.0));
 		addSequential(new SpitOutCube(1, .1));

@@ -12,6 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoTest extends CommandGroup {
 
     public AutoTest() {
-    	addSequential(new AdvancedDrive(1, 50));
+    	addSequential(new AdvancedDrive(1, 50, 0));
     }
 }
