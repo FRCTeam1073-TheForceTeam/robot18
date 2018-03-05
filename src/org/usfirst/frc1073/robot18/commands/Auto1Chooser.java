@@ -26,7 +26,7 @@ public class Auto1Chooser extends CommandGroup {
 			break;
 		default:
 			SmartDashboard.putString("Chooser", "!!!Chooser Not Set!!!");
-			addSequential(new AdvancedDrive(-1, 80, 80));
+			addSequential(new AdvancedDrive(-.8, 80, 80));
 			break;
 		}
 	}

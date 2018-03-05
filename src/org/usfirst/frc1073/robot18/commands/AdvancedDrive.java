@@ -2,19 +2,24 @@ package org.usfirst.frc1073.robot18.commands;
 
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/*** Straight drive command 
+ * @author Nathaniel 
+ */
 public class AdvancedDrive extends Command {
 
-	private double speed, currentSpeed, finalSpeed, finalSpeedL, finalSpeedR, dist, toBeTraveled, inch, leftEncDif, rightEncDif, startleftEncDif, percentComplete, avgEncDif, startrightEncDif, originalDegrees, currentDegrees, n;
+	/** Class wide variable declaration */
+	private double speed, currentSpeed, finalSpeed, finalSpeedL, finalSpeedR, 
+	dist, toBeTraveled, inch, leftEncDif, rightEncDif, startleftEncDif, percentComplete, 
+	avgEncDif, startrightEncDif, originalDegrees, currentDegrees, n;
+	/* Timer variables */
 	private double timeout, timer, timeEnd;
 	private boolean fin;
 
-	/** PID, but not because this actually works.
+	/** PID, but not because this actually works
 	 * @author Nathaniel
 	 * @param speed
 	 * @param dist in inches (must be positive)
@@ -62,6 +67,7 @@ public class AdvancedDrive extends Command {
 	}
 
 	protected void execute() {
+		/** Heading Checks */
 		/* Checks how far the robot has gone from the initial position */
 		leftEncDif = Math.abs(startleftEncDif - RobotMap.leftMotor1.getSelectedSensorPosition(0));
 		rightEncDif = Math.abs(startrightEncDif - RobotMap.rightMotor1.getSelectedSensorPosition(0));
@@ -70,13 +76,14 @@ public class AdvancedDrive extends Command {
 		currentDegrees = RobotMap.headingGyro.getAngle();
 
 		/** Code used to adjust the heading for straighter travel */
+		/* If going straight */
 		if (currentSpeed > 0) {
 			if (1 < originalDegrees - currentDegrees) {
 				finalSpeedL = 1;
-				finalSpeedR = .9;
+				finalSpeedR = .8;
 			}
 			else if (-1 > originalDegrees - currentDegrees) {
-				finalSpeedL = .9;
+				finalSpeedL = .8;
 				finalSpeedR = 1;
 			}
 			else {
@@ -84,14 +91,15 @@ public class AdvancedDrive extends Command {
 				finalSpeedR = 1;
 			}
 		}
+		/* If going backwards */
 		if (currentSpeed < 0) {
 			if (1 < originalDegrees - currentDegrees) {
-				finalSpeedL = .9;
+				finalSpeedL = .8;
 				finalSpeedR = 1;
 			}
 			else if (-1 > originalDegrees - currentDegrees) {
 				finalSpeedL = 1;
-				finalSpeedR = .9;
+				finalSpeedR = .8;
 			}
 			else {
 				finalSpeedL = 1;
@@ -99,6 +107,7 @@ public class AdvancedDrive extends Command {
 			}
 		}
 
+		/** Variable update code */
 		/* Sets up a final speed */
 		finalSpeed = currentSpeed;
 
@@ -109,6 +118,7 @@ public class AdvancedDrive extends Command {
 		percentComplete = avgEncDif/toBeTraveled;
 
 		/** Sets the motor with their respective offsets based on heading adjustment */
+		/* Uses drivetrain code to keep safety code happy */ 
 		Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
 
 		/* Timer step for if timed */
@@ -119,12 +129,16 @@ public class AdvancedDrive extends Command {
 		boolean isFinished = false;
 
 		/** Decides if code should use timeout */
+		/* If already set */
+		//Encoder not working
 		if (Robot.EncoderBoolSet == true && Robot.EncoderBool == false) {
 			if (Robot.oi.cancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBool = false;
 				isFinished = true;
 			}
 		}
+		/* If not set */
+		//Encoder not working
 		if (timer > 5 && avgEncDif == 0) { 
 			if (Robot.oi.cancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBoolSet = true;
@@ -132,6 +146,7 @@ public class AdvancedDrive extends Command {
 				isFinished = true;
 			}
 		}
+		//Encoder working
 		else if (timer > 5 && avgEncDif != 0) {
 			if (Robot.oi.cancel.get() == true || percentComplete >= .99) {
 				Robot.EncoderBoolSet = true;
@@ -139,6 +154,7 @@ public class AdvancedDrive extends Command {
 				isFinished = true;
 			}
 		}
+		//Cancel button
 		else if (Robot.oi.cancel.get() == true) {
 			isFinished = true;
 		}

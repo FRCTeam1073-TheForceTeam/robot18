@@ -49,7 +49,7 @@ public class Dropoff extends Command {
 
 	protected boolean isFinished() {
 		boolean finished = false;
-		if (timer <= endTime) {
+		if (timer >= endTime) {
 			Robot.conveyor.conveyorDrive.tankDrive(0, 0);
 			finished = true;
 		}
