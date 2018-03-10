@@ -18,11 +18,11 @@ public class CubeGetter extends CommandGroup {
 	 * @see VisionCubeTracker()
 	 */
 	public CubeGetter() {
-		addSequential(new EncoderCheck());
+		addSequential(new EncoderCheck()); //Checks encoders before running
 		addParallel(new CollectorDown());
-		addSequential(new OpenClaw());
+		addSequential(new OpenClaw()); //Puts collector in optimal cube collecting position
 		addParallel(new IsCubeIn());
-		addSequential(new VisionCubeTracker());
-		addSequential(new SuckInCube(1.5, .3));
+		addSequential(new VisionCubeTracker()); //Tracks cube until it is inside the collector
+		addSequential(new SuckInCube(1.5, .3)); //Pulls in and clamps onto cube
 	}
 }

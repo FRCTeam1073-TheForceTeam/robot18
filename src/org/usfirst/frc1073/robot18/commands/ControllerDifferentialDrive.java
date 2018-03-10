@@ -38,7 +38,7 @@ public class ControllerDifferentialDrive extends Command {
     	 **/
     	
     	double forward = Robot.oi.driverControl.getRawAxis(1);
-    	double turn = Robot.oi.driverControl.getRawAxis(4);
+    	double turn = Robot.oi.driverControl.getRawAxis(4); //Assigns joystick values to the forward and turn speed values
     	
     	
     	if((Robot.oi.driverControl.getRawAxis(1) < .05 && Robot.oi.driverControl.getRawAxis(1) > 0) 
@@ -51,7 +51,7 @@ public class ControllerDifferentialDrive extends Command {
     			|| (Robot.oi.driverControl.getRawAxis(4) > (-0.05) && Robot.oi.driverControl.getRawAxis(4) < 0))
     	{
     		turn = 0;
-    	}
+    	} //Adds deadzone under a joystick value of .05 for both forward and turn values
 
     	SmartDashboard.putNumber("forward", forward);
     	SmartDashboard.putNumber("turn", turn);

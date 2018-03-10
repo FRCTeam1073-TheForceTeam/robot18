@@ -7,6 +7,6 @@ public class Danktonomous extends CommandGroup {
 	
 	public Danktonomous() {
 		addSequential(new AdvancedDrive(-.8, 20, 20));
-		addSequential(new TurnWithGyro(.5, 999999, "clockwise"));
+		addSequential(new TurnWithGyro(.5, 999999, "clockwise")); //Just don't
 	}
 }
