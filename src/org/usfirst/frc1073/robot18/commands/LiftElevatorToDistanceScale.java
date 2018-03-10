@@ -70,6 +70,9 @@ public class LiftElevatorToDistanceScale extends Command {
 	    		finish = true;
 	    	}
     	}
+    	if(Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true){
+    		finish = true;
+    	}
     	if(inches == 0 && !RobotMap.liftSwitchBottom.get()) finish = true;
 
         return finish;

@@ -357,7 +357,7 @@ public class doBasic extends Command {
 			}
 		}
 		else if (percentComplete1 >= .99 && percentComplete2 >= .99 && percentComplete3 >= .99
-				&& fin1 == true && fin2 == true && fin3 == true && fin4 == true || Robot.oi.cancel.get() == true) {
+				&& fin1 == true && fin2 == true && fin3 == true && fin4 == true || Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			isFinished = true;
 		}
 		return isFinished;

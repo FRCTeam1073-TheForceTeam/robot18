@@ -72,6 +72,11 @@ public class TurnWithGyro extends Command {
     	} else {
     		finish = false;
     	}
+    	
+    	if(Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true){
+    		finish = true;
+    	}
+    	
     	return finish;
     }
   
