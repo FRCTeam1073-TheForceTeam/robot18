@@ -46,7 +46,6 @@ public class Robot extends IterativeRobot {
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
 	public static robotPneumatic pneumatic;
-
 	public static Bling bling;
 	public double isDone = 0;
 	public double isDoneLift = 0;

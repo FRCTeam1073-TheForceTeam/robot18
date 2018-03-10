@@ -66,10 +66,7 @@ public class OI {
     	visionButton = driverControl.b;
     	visionButton.whileHeld(new CubeGetterSupremeExtreme9000());
     	
-    	lidarButton = driverControl.y;
-    	lidarButton.whenPressed(new LidarAlign());
-    	
-    	driverCancel = driverControl.select;
+    	driverCancel = driverControl.a;
     	
         //shifts drive train to high gear
         highGearDT = driverControl.leftBumper;
