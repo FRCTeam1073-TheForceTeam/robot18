@@ -31,7 +31,8 @@ public class OI {
 	public JoystickButton RobotTeleInit;
 	public JoystickButton visionButton;
 	public JoystickButton lidarButton;
-	public JoystickButton cancel;
+	public JoystickButton driverCancel;
+	public JoystickButton operatorCancel;
 	public JoystickButton conveyorRight;
 	public JoystickButton conveyorLeft;
 	public JoystickButton intake;
@@ -65,10 +66,7 @@ public class OI {
     	visionButton = driverControl.b;
     	visionButton.whileHeld(new CubeGetterSupremeExtreme9000());
     	
-    	lidarButton = driverControl.y;
-    	lidarButton.whenPressed(new LidarAlign());
-    	
-    	cancel = driverControl.a;
+    	driverCancel = driverControl.a;
     	
         //shifts drive train to high gear
         highGearDT = driverControl.leftBumper;
@@ -103,6 +101,8 @@ public class OI {
     	
     	LiftToStay = operatorControl.start;
     	LiftToStay.whileHeld(new LiftStay());
+    	
+    	operatorCancel = operatorControl.select;
     	
         //opens and closes the claw
         clawOpen = operatorControl.rightBumper;

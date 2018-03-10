@@ -8,8 +8,8 @@ public class Auto3CommandC_LL extends CommandGroup {
 	public Auto3CommandC_LL(){
 		addSequential(new AdvancedDrive(-.8, 10, 20));
 		addSequential(new TurnWithGyro(.65, 90, "counterclockwise"));
-		addSequential(new Dropoff(.5, "right"));
+		addSequential(new Dropoff(.5, "right")); //Drops cube onto floor near exchange
 		addSequential(new TurnWithGyro(.65, 90, "counterclockwise"));
-		addSequential(new CubeGetter());
+		addSequential(new CubeGetter()); //Should cross auto line on way to grab cube
 	}
 }

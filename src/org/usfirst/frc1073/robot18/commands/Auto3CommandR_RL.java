@@ -9,13 +9,12 @@ public class Auto3CommandR_RL extends CommandGroup {
 	/** If Chooser is set to Right and FMS is RLR */
 	public Auto3CommandR_RL(){
 		addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistUp));
-		addParallel(new OpenClaw());
+		addParallel(new OpenClaw()); //Claw must be open to cross plane of switch
 		addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchAD1Distance, AutoVars.SwitchAD1Timeout));
 		addParallel(new Dropoff(AutoVars.DropoffTime, AutoVars.RightDropoff));
 		addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistDown));
-		addParallel(new CloseClaw());
 		addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchAD2Distance, AutoVars.SwitchAD2Timeout));
 		addSequential(new TurnWithGyro(AutoVars.SwitchVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.RightVisionTurn));
-		addSequential(new CubeGetter());
+		addSequential(new CubeGetter()); //Sets up for depositing on scale if we add it by grabbing a cube
 	}
 }

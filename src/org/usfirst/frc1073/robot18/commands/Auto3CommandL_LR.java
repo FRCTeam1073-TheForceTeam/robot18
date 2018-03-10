@@ -8,13 +8,12 @@ public class Auto3CommandL_LR extends CommandGroup {
 	/** If Chooser is set to Left and FMS is LRL */
 	public Auto3CommandL_LR(){
 		addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistUp));
-		addParallel(new OpenClaw());
+		addParallel(new OpenClaw()); //Claw must be open to cross plane of switch
 		addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchAD1Distance, AutoVars.SwitchAD1Timeout));
 		addParallel(new Dropoff(AutoVars.DropoffTime, AutoVars.LeftDropoff));
 		addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistDown));
-		addParallel(new CloseClaw());
 		addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchAD2Distance, AutoVars.SwitchAD2Timeout));
 		addSequential(new TurnWithGyro(AutoVars.SwitchVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.LeftVisionTurn));
-		addSequential(new CubeGetter());
+		addSequential(new CubeGetter()); //Sets up for depositing on scale if we add it by grabbing a cube
 	}
 }

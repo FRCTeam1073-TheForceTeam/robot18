@@ -78,7 +78,7 @@ public class LidarAlign extends Command {
 
 	protected boolean isFinished() {
 		boolean finished = false;
-		if (Robot.oi.cancel.get() == true) {
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			finished = true;
 		}
 		return finished;

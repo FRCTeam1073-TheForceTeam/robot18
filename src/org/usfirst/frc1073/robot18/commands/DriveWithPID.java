@@ -150,7 +150,7 @@ public class DriveWithPID extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	boolean finish = false;
-		if(Math.abs(errorright) < 100 || Math.abs(errorleft) < 100 || Robot.oi.cancel.get() == true){
+		if(Math.abs(errorright) < 100 || Math.abs(errorleft) < 100 || Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true){
 	        RobotMap.leftMotor1.set(ControlMode.PercentOutput, 0);
 	        RobotMap.rightMotor1.set(ControlMode.PercentOutput, 0);
     		finish = true;

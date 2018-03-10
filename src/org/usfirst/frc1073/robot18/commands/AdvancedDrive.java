@@ -124,20 +124,25 @@ public class AdvancedDrive extends Command {
 		else {
 			avgEncDif = 0;
 		}
-		
+
 		/** Variable update code */
 		/* Sets up a final speed */
 		finalSpeed = currentSpeed;
-		
+
 		/* Uses that average and the original distance to be traveled to make a percentage total completed */
 		percentComplete = avgEncDif/toBeTraveled;
 
-		/** Sets the motor with their respective offsets based on heading adjustment */
-		/* Uses drivetrain code to keep safety code happy */ 
-		Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
+		/** Uses lidar to check if path is clear */
+		if (Robot.notClear == false) {
+			/* Sets the motor with their respective offsets based on heading adjustment */ 
+			Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
 
-		/* Timer step for if timed */
-		timer++;
+			/* Timer step for if timed */
+			timer++;
+		}
+		else {
+			Robot.drivetrain.difDrive.tankDrive(0, 0);
+		}
 	}
 
 	protected boolean isFinished() {
@@ -147,7 +152,7 @@ public class AdvancedDrive extends Command {
 		/* If already set */
 		//Encoder not working
 		if (Robot.EncoderBoolSet == true && Robot.EncoderBool == false) {
-			if (Robot.oi.cancel.get() == true || timer >= timeEnd) {
+			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBool = false;
 				isFinished = true;
 			}
@@ -155,7 +160,7 @@ public class AdvancedDrive extends Command {
 		/* If not set */
 		//Encoder not working
 		if (timer > 5 && avgEncDif == 0) {
-			if (Robot.oi.cancel.get() == true || timer >= timeEnd) {
+			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = false;
 				isFinished = true;
@@ -163,14 +168,14 @@ public class AdvancedDrive extends Command {
 		}
 		//Encoder working
 		else if (timer > 5 && avgEncDif != 0) {
-			if (Robot.oi.cancel.get() == true || percentComplete >= .99) {
+			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || percentComplete >= .99) {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = true;
 				isFinished = true;
 			}
 		}
 		//Cancel button
-		else if (Robot.oi.cancel.get() == true) {
+		else if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			isFinished = true;
 		}
 		return isFinished;

@@ -11,6 +11,6 @@ public class Auto3CommandL_RL extends CommandGroup {
 		addParallel(new Dropoff(AutoVars.DropoffTime, AutoVars.LeftDropoff));
 		addSequential(new AdvancedDrive(AutoVars.ScaleADSpeed, AutoVars.ScaleAD1Distance, AutoVars.ScaleAD1Timeout));
 		addSequential(new TurnWithGyro(AutoVars.ScaleVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.LeftVisionTurn));
-		addSequential(new CubeGetter());
+		addSequential(new CubeGetter()); //Drops cube near exchange, then turns around and crosses auto line while aligning to a cube
 	}
 }

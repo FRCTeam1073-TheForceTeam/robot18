@@ -38,5 +38,4 @@ public class SpinConveyorTele extends Command {
 	protected boolean isFinished() {
 		return false;
 	}
-
 }
