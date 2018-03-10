@@ -10,6 +10,10 @@ public class SpinConveyorTele extends Command {
 	
 	private double speed;
 	
+	/**
+	 * Controller command for tele Conveyor spinning
+	 * @author Nathaniel
+	 */
 	public SpinConveyorTele() {
 		requires(Robot.conveyor);
 	}

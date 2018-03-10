@@ -22,7 +22,7 @@ public class AdvancedDrive extends Command {
 	/** PID, but not because this actually works
 	 * @author Nathaniel
 	 * @param speed
-	 * @param dist in inches (must be positive)
+	 * @param distance in inches (must be positive)
 	 * @param timeout in milliseconds (1000 in a second) 
 	 * Note: 0 = no timeout
 	 * Note: Minimum of 5 millisecond run time
@@ -107,13 +107,28 @@ public class AdvancedDrive extends Command {
 			}
 		}
 
+		/** Grabs a distance traveled based on the average of the two encoders */
+		/* Both are working */
+		if (leftEncDif != 0 && rightEncDif != 0) {
+			avgEncDif = (leftEncDif + rightEncDif) / 2;
+		}
+		/* Left is working */
+		else if (leftEncDif != 0 && rightEncDif == 0) {
+			avgEncDif = (leftEncDif);
+		}
+		/* Right is working */
+		else if (leftEncDif == 0 && rightEncDif != 0) {
+			avgEncDif = (rightEncDif);
+		}
+		/* Neither are working */
+		else {
+			avgEncDif = 0;
+		}
+		
 		/** Variable update code */
 		/* Sets up a final speed */
 		finalSpeed = currentSpeed;
-
-		/* Grabs a distance traveled based on the average of the two sides */
-		avgEncDif = (leftEncDif + rightEncDif) / 2;
-
+		
 		/* Uses that average and the original distance to be traveled to make a percentage total completed */
 		percentComplete = avgEncDif/toBeTraveled;
 
@@ -139,7 +154,7 @@ public class AdvancedDrive extends Command {
 		}
 		/* If not set */
 		//Encoder not working
-		if (timer > 5 && avgEncDif == 0) { 
+		if (timer > 5 && avgEncDif == 0) {
 			if (Robot.oi.cancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = false;

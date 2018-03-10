@@ -38,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public static Preferences robotPreferences;
 
 	public static OI oi;
+	public static AutoVars autoSetup;
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
 	public static robotCollector collector;
@@ -96,6 +97,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
+		System.out.println("I'm a dank boi who's ready to go.");
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
 		elevator = new robotElevator();
@@ -104,6 +106,7 @@ public class Robot extends IterativeRobot {
 		pneumatic = new robotPneumatic();
 		collector = new robotCollector();
 		oi = new OI();
+		autoSetup = new AutoVars();
 
 
 		FMS = "";

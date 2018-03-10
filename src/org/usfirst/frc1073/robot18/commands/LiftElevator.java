@@ -28,14 +28,10 @@ public class LiftElevator extends Command {
     	
     	speed = Robot.oi.operatorControl.getRawAxis(1);
     	
-    	SmartDashboard.putBoolean("high?!", !RobotMap.liftSwitchTop.get());
-    	
-    	if(!RobotMap.liftSwitchBottom.get()) RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
-    	
-    	if(RobotMap.liftSwitchBottom.get() || speed < 0){
+    	if (speed < 0){
     		RobotMap.elevatorMotorLeft.set(speed);
     	}
-    	else if(!RobotMap.liftSwitchTop.get() || speed > 0){
+    	else if (speed > 0){
     		RobotMap.elevatorMotorLeft.set(speed);
     	}
     	else {
