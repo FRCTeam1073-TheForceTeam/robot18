@@ -10,6 +10,10 @@ public class SpinCollectorTele extends Command {
 	
 	private double speed;
 	
+	/**
+	 * Controller command for tele collector spinning
+	 * @author Nathaniel
+	 */
 	public SpinCollectorTele() {
 		requires(Robot.collector);
 	}

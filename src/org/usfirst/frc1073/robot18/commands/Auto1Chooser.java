@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /***
  * Fully Autonomous Auto System
  * @author Nathaniel
- * @version 1.0.1
+ * @version 2.0.1
  */
 public class Auto1Chooser extends CommandGroup {
 

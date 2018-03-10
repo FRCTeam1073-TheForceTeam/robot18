@@ -3,7 +3,7 @@ package org.usfirst.frc1073.robot18.commands;
 import org.usfirst.frc1073.robot18.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+/*** If Chooser is set to Center */
 public class Auto2FMSC extends CommandGroup {
 	/** If Chooser is set to Center */
 	public Auto2FMSC() {
@@ -15,14 +15,14 @@ public class Auto2FMSC extends CommandGroup {
 			addSequential(new Auto3CommandC_RL());
 			break;
 		case "LLL":
-			if(SmartDashboard.getBoolean("Other Teams Want To Do Switch", false)){
-				addSequential(new Auto3CommandC_LL());
-			}else {
-				addSequential(new Auto3CommandC_LLAlt());
-			}
+			addSequential(new Auto3CommandC_LL());
 			break;
 		case "LRL":
 			addSequential(new Auto3CommandC_LR());
+			break;
+			/** Should never get used. Something is either very right or very wrong if this gets run */
+		case "DANK":
+			addSequential(new Danktonomous());
 			break;
 		default:
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
