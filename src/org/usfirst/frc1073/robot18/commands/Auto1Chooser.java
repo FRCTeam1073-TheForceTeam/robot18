@@ -1,19 +1,19 @@
 package org.usfirst.frc1073.robot18.commands;
 
 import org.usfirst.frc1073.robot18.Robot;
+import org.usfirst.frc1073.robot18.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /***
  * Fully Autonomous Auto System
  * @author Nathaniel
- * @version 1.0.0
+ * @version 2.0.1
  */
 public class Auto1Chooser extends CommandGroup {
 
 	public Auto1Chooser() {
 		addSequential(new Auto1WhereAmI());
-		SmartDashboard.putString("CurrentCommand", "Chooser is running");
 		switch(Robot.autonomousChooser.getSelected().getString()) {
 		case "left":
 			addSequential(new Auto2FMSL());
@@ -26,6 +26,7 @@ public class Auto1Chooser extends CommandGroup {
 			break;
 		default:
 			SmartDashboard.putString("Chooser", "!!!Chooser Not Set!!!");
+			addSequential(new AdvancedDrive(-.8, 80, 80));
 			break;
 		}
 	}

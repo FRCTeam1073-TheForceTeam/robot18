@@ -146,17 +146,17 @@ public class Bling {
 		send();
 	}
 	
-	public void sendBoilerTargeting() {
+	public void sendDeliverCube() {
 		setPattern("scanner", "Yellow", "all", "medium", 0, 100);
 		send();
 	}
 	
-	public void sendFuelLaunchReady() {
-		setPattern("solid", "Green", "all", "medium", 0, 100);
+	public void sendFindingCube() {
+		setPattern("blinking", "Green", "all", "medium", 0, 100);
 		send();
 	}
 	
-	public void sendFuelLaunching() {
+	public void sendDriveBy() {
 		setPattern("RainbowHalves", "rainbow", "all", "medium", 0, 100);
 		send();
 	}
@@ -164,4 +164,13 @@ public class Bling {
 		setPattern("blinking", "yellow", "all", "fast", 0, 100);
 		send();
 	}
+	public void sendDriveTrainLowGear() {
+		setPattern("solid", "blue", "all", "medium", 0, 100);
+		send();
+	}
+	public void sendDriveTrainHighGear() {
+		setPattern("solid", "green", "all", "medium", 0, 100);
+		send();
+	}
+	
 }

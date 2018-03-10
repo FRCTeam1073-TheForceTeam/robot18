@@ -3,8 +3,10 @@ package org.usfirst.frc1073.robot18;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -13,6 +15,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc1073.robot18.Bling;
 import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.subsystems.*;
 import edu.wpi.cscore.CvSink;
@@ -31,27 +34,45 @@ import org.opencv.imgproc.Imgproc;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	Command autonomousCommand;
-    public static Preferences robotPreferences;
+	public static Preferences robotPreferences;
 
 	public static OI oi;
+	public static AutoVars autoSetup;
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
 	public static robotCollector collector;
 	public static robotConveyor conveyor;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
-    public static robotPneumatic pneumatic;
+	public static robotPneumatic pneumatic;
+
+	public static Bling bling;
+	public double isDone = 0;
+	public double isDoneLift = 0;
+	public boolean turnRight;
+	public boolean turnLeft;
+	public boolean cancelPushed;
+	public boolean haveCube;
+	public boolean clawIsOpen;
+	public boolean collectorStatus;
+	public boolean s1;
+	public boolean s2;
+	public boolean s3;
+	public boolean s4;
+	public boolean s5;
+	public boolean s6;
+	public static Alliance alliance;
 
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousChooser;
 	public AutoObject left;
 	public AutoObject center;
 	public AutoObject right;
-	
+	public AutoObject other;
+
 	public DigitalInput liftSwitchBottom;
-	
+
 	public static double voltage;
 	public static double distance;
 
@@ -62,29 +83,48 @@ public class Robot extends IterativeRobot {
 	public static String switchSide;
 	public static String scaleSide;
 	public static String robotName;
+	public static boolean clawBool;
+	public static boolean EncoderBool, EncoderBoolSet;
+	public double highGearLift;
+	public double lowGearLift;
+	public double collectorIntake;
+	public double collectorPurge;
+	public double conveyorLeftLeft;
+	public double conveyorRightRight;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		
 		RobotMap.init();
+		System.out.println("I'm a dank boi who's ready to go.");
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
-    	robotName = robotPreferences.getString("robotName", "unknown");
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
 		conveyor = new robotConveyor();
-        pneumatic = new robotPneumatic();
-        collector = new robotCollector();
+		pneumatic = new robotPneumatic();
+		collector = new robotCollector();
 		oi = new OI();
-		
+		autoSetup = new AutoVars();
+
+
 		FMS = "";
+		EncoderBoolSet = false;
+		EncoderBool = false;
+
+		//Instantiating Bling Class for smartbling on Robot.
+		bling = new Bling();
+		bling.sendRobotInit();
+
+		//lift encoder set to 0
+		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
 
 		/* Chooser Objects */
 		left = new AutoObject(1);
 		center = new AutoObject(2);
 		right = new AutoObject(3);
+		other = new AutoObject(4);
 
 		/* Jack's Auto Variables*/
 		position = (int) SmartDashboard.getNumber("Position", 1);
@@ -93,7 +133,7 @@ public class Robot extends IterativeRobot {
 
 		/* The Chooser */
 		autonomousChooser = new SendableChooser<AutoObject>();
-		autonomousChooser.addDefault("None", null);
+		autonomousChooser.addDefault("None", other);
 		autonomousChooser.addObject("Left", left);
 		autonomousChooser.addObject("Center", center);
 		autonomousChooser.addObject("Right", right);
@@ -201,6 +241,11 @@ public class Robot extends IterativeRobot {
 		});
 		camera1Thread.start();
 		camera2Thread.start();
+
+
+		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
+		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
+
 	}
 
 	/**
@@ -208,29 +253,25 @@ public class Robot extends IterativeRobot {
 	 * You can use it to reset subsystems before shutting down.
 	 */
 	public void disabledInit(){
-		
-		
+
+
 
 	}
 
 	public void disabledPeriodic() {
-		double total = 0;
-		for (int i = 0; i < 10; i++) {
-			voltage = RobotMap.frontSensor.getVoltage();
-			distance = (Robot.voltage - 0.0399)/0.0234;  
-			total += distance;
-		}
-		total = total/10;
-		SmartDashboard.putNumber("Ultrasonic Distance", total );
 	}
 
 	public void autonomousInit() {
-		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
-		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
-		
+
+		Robot.pneumatic.driveTrainHighGear();
+		Robot.pneumatic.liftHighGear();
+
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
+
 		Scheduler.getInstance().run();
+
 		new LidarMiniMap();
+
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L') {
 			switchSide = "left";
@@ -242,19 +283,98 @@ public class Robot extends IterativeRobot {
 		}else {
 			scaleSide = "right";
 		}
-		
+
 		/* instantiate the command used for the autonomous period */
 		autonomousCommand = new Auto1Chooser();
-		
 		if (autonomousCommand != null) autonomousCommand.start();
+		if (alliance == DriverStation.Alliance.Blue){
+			//true = blue, false = red
+			if (FMS == "RRR"){
+				s1 = true;
+				s2 = false;
+				s3 = true;
+				s4 = false;
+				s5 = true;
+				s6 = false;
+			}
+			else if (FMS == "LLL"){
+				s1 = false;
+				s2 = true;
+				s3 = false;
+				s4 = true;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS == "LRL"){
+				s1 = false;
+				s2 = true;
+				s3 = true;
+				s4 = false;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS == "RLR"){
+				s1 = true;
+				s2 = false;
+				s3 = false;
+				s4 = true;
+				s5 = true;
+				s6 = false;
+
+			}
+
+		}
+		else if (alliance == DriverStation.Alliance.Red){
+			if (FMS == "RRR"){
+				s1 = false;
+				s2 = true;
+				s3 = false;
+				s4 = true;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS == "LLL"){
+				s1 = true;
+				s2 = false;
+				s3 = true;
+				s4 = false;
+				s5 = true;
+				s6 = false;
+			}
+			else if (FMS == "LRL"){
+				s1 = true;
+				s2 = false;
+				s3 = false;
+				s4 = true;
+				s5 = true;
+				s6 = false;
+			}
+			else if (FMS == "RLR"){
+				s1 = false;
+				s2 = true;
+				s3 = true;
+				s4 = false;
+				s5 = false;
+				s6 = true;
+
+			}
+
+		}
+		SmartDashboard.putBoolean("s1", s1);
+		SmartDashboard.putBoolean("s2", s2);
+		SmartDashboard.putBoolean("s3", s3);
+		SmartDashboard.putBoolean("s4", s4);
+		SmartDashboard.putBoolean("s5", s5);
+		SmartDashboard.putBoolean("s6", s6);
 	}
-	
+
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
 	}
 
 	public void teleopInit() {
@@ -264,8 +384,6 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		new LidarMiniMap();
 		if (autonomousCommand != null) autonomousCommand.cancel();
-		RobotMap.leftMotor1.configOpenloopRamp(.25, 10);
-		RobotMap.rightMotor1.configOpenloopRamp(.25, 10);
 	}
 
 	/**
@@ -273,6 +391,80 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
+		SmartDashboard.putNumber("Left", RobotMap.leftMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right", RobotMap.rightMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
+		FMS = DriverStation.getInstance().getGameSpecificMessage();
+		alliance = DriverStation.getInstance().getAlliance();
+		Scheduler.getInstance().run();
+		if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
+			turnRight = false;
+			turnLeft = true;
+		}
+		else if (RobotMap.rightMotor1.get() > RobotMap.leftMotor1.get()) {
+			turnRight = true;
+			turnLeft = false;
+		}
+		else {
+			turnRight = false;
+			turnLeft = false;
+		}
+		SmartDashboard.putNumber("Lift Speed", RobotMap.elevatorMotorRight.get());
+		SmartDashboard.putBoolean("turn Left", turnLeft);
+		SmartDashboard.putBoolean("", turnRight);
+		if(RobotMap.clawSensor.getAverageVoltage() > 1) {
+			haveCube = true;
+		}
+		else {
+			haveCube = false;
+		}
+		SmartDashboard.putBoolean("Do you have a cube?", haveCube);
+		if(RobotMap.leftWrist.get() == true && RobotMap.rightWrist.get( )== false) {
+			clawIsOpen = true;
+		}
+		else {
+			clawIsOpen = false;
+		}
+		SmartDashboard.putBoolean("Claw Open?", clawIsOpen);
+
+		if(RobotMap.collectorLeft.get() == false && RobotMap.collectorRight.get() == true) {
+			collectorStatus = true;
+			SmartDashboard.putString("Collector", "Up");
+		}
+		else {
+			collectorStatus = false;
+			SmartDashboard.putString("Collector", "Down");
+		}
+		SmartDashboard.putBoolean("Collector Up?", collectorStatus);
+		if (RobotMap.gearLow.get() == false && RobotMap.gearHigh.get() == true){
+			SmartDashboard.putString("DT Gear", "High");
+		}
+		else if (RobotMap.gearLow.get() == true && RobotMap.gearHigh.get() == false){
+			SmartDashboard.putString("DT Gear", "Low");
+		}
+		else {
+			SmartDashboard.putString("DT Gear", "ERROR: PLEASE SHIFT NOW!");
+		}
+
+		if (RobotMap.liftLow.get() == false && RobotMap.liftHigh.get() == true){
+			SmartDashboard.putString("Lift Gear", "High");
+		}
+		else if (RobotMap.liftLow.get() == true && RobotMap.liftHigh.get() == false){
+			SmartDashboard.putString("Lift Gear", "Low");
+		}
+		else {
+			SmartDashboard.putString("Lift Gear", "ERROR: PLEASE SHIFT NOW!");
+		}
+		SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
+		SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
+
+		SmartDashboard.putNumber("Elevator Enc enc", RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Enc", RobotMap.rightMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Left Enc", RobotMap.leftMotor1.getSelectedSensorPosition(0));
+		SmartDashboard.putBoolean("Bottom Limit", RobotMap.liftSwitchBottom.get());
+		SmartDashboard.putBoolean("Top Limit", RobotMap.liftSwitchTop.get());
+		SmartDashboard.putNumber("IR Voltage", RobotMap.clawSensor.getVoltage());
 	}
 
 	/**

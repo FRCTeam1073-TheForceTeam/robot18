@@ -36,7 +36,6 @@ public class DriveWithProx extends Command {
 			total += distance;
 		}
 		total = total/10;
-		SmartDashboard.putNumber("Ultrasonic Distance", total );
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto2FMSR extends CommandGroup {
 	/** If Chooser is set to Right */
 	public Auto2FMSR() {
-		SmartDashboard.putString("CurrentCommand", "R is running");
 		switch(Robot.FMS) {
 		case "RRR":
 			addSequential(new Auto3CommandR_RR());
@@ -21,8 +20,13 @@ public class Auto2FMSR extends CommandGroup {
 		case "LRL":
 			addSequential(new Auto3CommandR_LR());
 			break;
+			/** Should never get used. Something is either very right or very wrong if this gets run */
+		case "DANK":
+			addSequential(new Danktonomous());
+			break;
 		default:
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
+			addSequential(new AdvancedDrive(-.8, 75, 80));
 			break;
 		}
 	}

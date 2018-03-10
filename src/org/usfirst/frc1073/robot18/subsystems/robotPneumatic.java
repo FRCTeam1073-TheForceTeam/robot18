@@ -13,7 +13,8 @@ public class robotPneumatic {
 	private final Solenoid liftLow = RobotMap.liftLow;
 	private final Solenoid gearHigh = RobotMap.gearHigh;
 	private final Solenoid gearLow = RobotMap.gearLow;
-	private final Solenoid collectorUpDown = RobotMap.collectorUpDown;
+	private final Solenoid collectorLeft = RobotMap.collectorLeft;
+	private final Solenoid collectorRight = RobotMap.collectorRight;
 	//private final boolean out = false;
 	//private final boolean in = true;
 
@@ -42,9 +43,11 @@ public class robotPneumatic {
 		gearHigh.set(false);
 	}
 	public void collectorUp() {
-		collectorUpDown.set(true);
+		collectorLeft.set(false);
+		collectorRight.set(true);
 	}
 	public void collectorDown() {
-		collectorUpDown.set(false);
+		collectorLeft.set(true);
+		collectorRight.set(false);
 	}
 }

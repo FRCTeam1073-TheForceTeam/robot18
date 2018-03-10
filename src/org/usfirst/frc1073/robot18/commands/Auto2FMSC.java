@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Auto2FMSC extends CommandGroup {
 	/** If Chooser is set to Center */
 	public Auto2FMSC() {
-		SmartDashboard.putString("CurrentCommand", "C is running");
 		switch(Robot.FMS) {
 		case "RRR":
 			addSequential(new Auto3CommandC_RR());
@@ -16,14 +15,20 @@ public class Auto2FMSC extends CommandGroup {
 			addSequential(new Auto3CommandC_RL());
 			break;
 		case "LLL":
-			SmartDashboard.putString("CurrentCommand", "C Case LLL is running");
 			addSequential(new Auto3CommandC_LL());
 			break;
 		case "LRL":
 			addSequential(new Auto3CommandC_LR());
 			break;
+			/** Should never get used. Something is either very right or very wrong if this gets run */
+		case "DANK":
+			addSequential(new Danktonomous());
+			break;
 		default:
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
+			addSequential(new AdvancedDrive(-.8, 40, 40));
+			addSequential(new TurnWithGyro(.8, 65, "clockwise"));
+			addSequential(new AdvancedDrive(-.8, 60, 60));
 			break;
 		}
 	}

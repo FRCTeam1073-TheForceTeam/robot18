@@ -3,41 +3,56 @@ package org.usfirst.frc1073.robot18.commands;
 import org.usfirst.frc1073.robot18.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
+/*** Drops cube off side of conveyor at speed and direction set in params */
 public class Dropoff extends Command {
 
-	double dropoffPower;
-	
-    public Dropoff(double dropoffSpeed) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	
-    	dropoffPower = dropoffSpeed;
-    }
+	private double time, timer, endTime, dir;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	private String direction;
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.conveyor.teleDropoff(dropoffPower);
-    }
+	/** 
+	 * Drops cube off side of conveyor at speed and direction set in params
+	 * @author Jack
+	 * @param time in seconds
+	 * @param direction "left" or "right"
+	 * @category Auto Command
+	 */
+	public Dropoff(double time, String direction) {
+		this.time = time;
+		this.direction = direction;
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
+	protected void initialize() {
+		timer = 0;
+		endTime = time * 20;
+		if (direction.equals("right")) {
+			dir = 1;
+		}
+		else if (direction.equals("left")) {
+			dir = -1;
+		}
+		else {
+			dir = 0;
+			System.out.println("DropOff error: Called wrong...");
+			System.out.println("You typed: " + direction);
+		}
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	protected void execute() {
+		if (timer < endTime) {
+			Robot.conveyor.conveyorDrive.tankDrive(dir, dir);
+		}
+		timer++;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	protected boolean isFinished() {
+		boolean finished = false;
+		if (timer >= endTime) {
+			Robot.conveyor.conveyorDrive.tankDrive(0, 0);
+			finished = true;
+		}
+		return finished;
+	}
 }
