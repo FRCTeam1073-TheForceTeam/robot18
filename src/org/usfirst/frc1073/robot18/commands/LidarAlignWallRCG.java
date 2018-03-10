@@ -14,6 +14,7 @@ public class LidarAlignWallRCG extends CommandGroup {
 		lidarSendTable = NetworkTable.getTable("LidarSendTable");
 		double piState = lidarSendTable.getNumber("piState", 0.0);
 		boolean lidarWallFinished = lidarSendTable.getBoolean("lidarWallFinished", false);
+		lidarSendTable.putNumber("piState", 1.0);
 		addSequential (new LidarWall()); 
 		SmartDashboard.putString("Stat", "wall");
 		addSequential(new TurnWithGyro(1, 85, "clockwise"));

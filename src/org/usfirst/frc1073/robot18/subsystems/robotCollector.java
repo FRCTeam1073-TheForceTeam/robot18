@@ -26,6 +26,7 @@ public class robotCollector extends Subsystem {
     	leftCollectorMotor.setSafetyEnabled(false);
     	
     	collectDrive = new DifferentialDrive(RobotMap.leftCollectorMotor, RobotMap.rightCollectorMotor);
+    	
     }
     
     public void initDefaultCommand() {

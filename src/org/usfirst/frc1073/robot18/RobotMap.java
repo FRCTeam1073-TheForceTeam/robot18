@@ -101,7 +101,7 @@ public class RobotMap {
         leftSensor = new AnalogInput(0);
         rightSensor = new AnalogInput(1);
         frontSensor = new AnalogInput(2);
-        backSensor = new AnalogInput(99);
+      //  backSensor = new AnalogInput(99);
         
     // IR Sensors
         clawSensor = new AnalogInput(3);

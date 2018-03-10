@@ -4,6 +4,8 @@ package org.usfirst.frc1073.robot18.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import javax.management.timer.Timer;
+
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
@@ -19,10 +21,17 @@ public class OpenClaw extends Command {
 	protected void initialize() {
 	
 		Robot.pneumatic.openClaw();
-
+		if (RobotMap.clawSensor.getVoltage() > 2.00){
+			
+			RobotMap.leftCollectorMotor.set(1);
+			RobotMap.rightCollectorMotor.set(1);
+			
+			
+		}
 	}
 
 	protected void execute() {
+		
 
 	}
 

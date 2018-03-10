@@ -19,11 +19,13 @@ public class SpinCollectorTele extends Command {
 	}
 	
 	protected void execute() {
+        SmartDashboard.putNumber("Claw Prox", RobotMap.clawSensor.getAverageVoltage());
 		if (Robot.oi.operatorControl.getRightTrigger() > 0) {
 			speed = Robot.oi.operatorControl.getRightTrigger();
 		}
 		else if (Robot.oi.operatorControl.getLeftTrigger() > 0) {
 			speed = -Robot.oi.operatorControl.getLeftTrigger();
+		//	if (RobotMap.clawSensor.getVoltage() <=2);
 		}
 		else {
 			speed = 0;
