@@ -97,7 +97,7 @@ public class Bling {
 		send();
 	}
 	
-	public void advancedDrive() {
+	public void sendDrive() {
 		setPattern("solid", "blue", "all", "medium", 0, 100);
 		send();
 	}
