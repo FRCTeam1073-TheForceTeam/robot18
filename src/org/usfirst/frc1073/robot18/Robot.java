@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
 	public static String robotName;
 	public static boolean clawBool;
 	public static boolean EncoderBool, EncoderBoolSet;
+	public static boolean notClear;
 	public double highGearLift;
 	public double lowGearLift;
 	public double collectorIntake;
@@ -97,7 +98,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
-		System.out.println("I'm a dank boi who's ready to go.");
+		System.out.println("I'm a dank boi who's ready to go.m,n");
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
 		elevator = new robotElevator();
@@ -112,6 +113,7 @@ public class Robot extends IterativeRobot {
 		FMS = "";
 		EncoderBoolSet = false;
 		EncoderBool = false;
+		notClear = false;
 
 		//Instantiating Bling Class for smartbling on Robot.
 		bling = new Bling();

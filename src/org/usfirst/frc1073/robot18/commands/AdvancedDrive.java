@@ -124,20 +124,25 @@ public class AdvancedDrive extends Command {
 		else {
 			avgEncDif = 0;
 		}
-		
+
 		/** Variable update code */
 		/* Sets up a final speed */
 		finalSpeed = currentSpeed;
-		
+
 		/* Uses that average and the original distance to be traveled to make a percentage total completed */
 		percentComplete = avgEncDif/toBeTraveled;
 
-		/** Sets the motor with their respective offsets based on heading adjustment */
-		/* Uses drivetrain code to keep safety code happy */ 
-		Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
+		/** Uses lidar to check if path is clear */
+		if (Robot.notClear == false) {
+			/* Sets the motor with their respective offsets based on heading adjustment */ 
+			Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
 
-		/* Timer step for if timed */
-		timer++;
+			/* Timer step for if timed */
+			timer++;
+		}
+		else {
+			Robot.drivetrain.difDrive.tankDrive(0, 0);
+		}
 	}
 
 	protected boolean isFinished() {
