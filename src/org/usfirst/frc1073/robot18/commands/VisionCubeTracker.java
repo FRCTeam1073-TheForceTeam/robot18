@@ -148,7 +148,7 @@ public class VisionCubeTracker extends Command{
 		if (v > 10 && Robot.clawBool == true) {
 			finished = true;
 		}
-		if (Robot.oi.cancel.get()) {
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			finished = true;
 		}
 		return finished;

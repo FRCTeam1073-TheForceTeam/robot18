@@ -152,7 +152,7 @@ public class AdvancedDrive extends Command {
 		/* If already set */
 		//Encoder not working
 		if (Robot.EncoderBoolSet == true && Robot.EncoderBool == false) {
-			if (Robot.oi.cancel.get() == true || timer >= timeEnd) {
+			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBool = false;
 				isFinished = true;
 			}
@@ -160,7 +160,7 @@ public class AdvancedDrive extends Command {
 		/* If not set */
 		//Encoder not working
 		if (timer > 5 && avgEncDif == 0) {
-			if (Robot.oi.cancel.get() == true || timer >= timeEnd) {
+			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = false;
 				isFinished = true;
@@ -168,14 +168,14 @@ public class AdvancedDrive extends Command {
 		}
 		//Encoder working
 		else if (timer > 5 && avgEncDif != 0) {
-			if (Robot.oi.cancel.get() == true || percentComplete >= .99) {
+			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || percentComplete >= .99) {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = true;
 				isFinished = true;
 			}
 		}
 		//Cancel button
-		else if (Robot.oi.cancel.get() == true) {
+		else if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			isFinished = true;
 		}
 		return isFinished;
