@@ -3,7 +3,7 @@ package org.usfirst.frc1073.robot18.commands;
 import org.usfirst.frc1073.robot18.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-/*** If Chooser is set to Right */
+
 public class Auto2FMSR extends CommandGroup {
 	/** If Chooser is set to Right */
 	public Auto2FMSR() {

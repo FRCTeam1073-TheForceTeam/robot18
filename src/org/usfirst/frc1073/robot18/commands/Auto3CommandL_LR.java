@@ -13,7 +13,7 @@ public class Auto3CommandL_LR extends CommandGroup {
 		addParallel(new LiftElevatorToDistanceScale(0));
 		addParallel(new CloseClaw());
 		addSequential(new AdvancedDrive(-.8, 75, 0));
-		addSequential(new TurnWithGyro(.8, 20, "counterclockwise"));
+		addSequential(new TurnWithGyro(.8, 20, "clockwise"));
 		addSequential(new CubeGetter());
 	}
 }

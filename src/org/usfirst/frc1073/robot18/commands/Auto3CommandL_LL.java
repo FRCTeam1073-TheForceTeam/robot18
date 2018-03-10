@@ -15,5 +15,10 @@ public class Auto3CommandL_LL extends CommandGroup {
 		addSequential(new AdvancedDrive(-.8, 75, 0));
 		addSequential(new TurnWithGyro(.8, 20, "counterclockwise"));
 		addSequential(new CubeGetter());
+		/*addSequential(new AdvancedDrive(-.8, 70));
+		addSequential(new TurnWithGyro(.8, 55, "counterclockwise"));
+		addSequential(new LiftElevatorToDistanceScale(65.0));
+		addSequential(new CollectorUp());
+		addSequential(new SpitOutCube(1, .1));*/
 	}
 }
