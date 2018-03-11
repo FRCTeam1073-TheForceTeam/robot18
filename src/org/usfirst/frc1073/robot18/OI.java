@@ -153,6 +153,7 @@ public class OI {
         SmartDashboard.putData("ClawDown", new CollectorDown());
         SmartDashboard.putNumber("Left Motors", RobotMap.leftMotor1.get());
         SmartDashboard.putNumber("Right Motors", RobotMap.rightMotor1.get());
+        SmartDashboard.putData("SeeRobot?", new LidarSeeRobot());
         if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;
