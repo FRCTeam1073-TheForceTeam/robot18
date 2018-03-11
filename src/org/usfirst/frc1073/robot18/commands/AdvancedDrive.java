@@ -140,8 +140,10 @@ public class AdvancedDrive extends Command {
 			/* Timer step for if timed */
 			timer++;
 		}
-		else {
+		else if (Robot.notClear == true){
 			Robot.drivetrain.difDrive.tankDrive(0, 0);
+			
+			timer ++;
 		}
 	}
 

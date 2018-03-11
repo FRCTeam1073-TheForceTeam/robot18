@@ -11,11 +11,15 @@ public class Auto3CommandC_LL extends CommandGroup {
 		addSequential(new Dropoff(.5, "right")); //Drops cube onto floor near exchange
 		addSequential(new TurnWithGyro(.65, 90, "counterclockwise"));
 		addSequential(new CubeGetter()); //Should cross auto line on way to grab cube*/
+		addParallel(new LidarSeeRobot());
 		addSequential(new AdvancedDrive(-.8, 6, 0));
+		
 		addSequential(new TurnWithGyro(.8, 45, "counterclockwise"));
+		addParallel(new LidarSeeRobot());
 		addSequential(new AdvancedDrive(-.8, 160, 0));
 		addSequential(new TurnWithGyro(.8, 45, "clockwise"));
 		addParallel(new LiftElevatorToDistanceScale(30));
+		addParallel(new LidarSeeRobot());
 		addSequential(new AdvancedDrive(-.8, 160, 0));
 		addSequential(new TurnWithGyro(.6, 90, "counterclockwise"));
 		addSequential(new SpitOutCube(1, 1));

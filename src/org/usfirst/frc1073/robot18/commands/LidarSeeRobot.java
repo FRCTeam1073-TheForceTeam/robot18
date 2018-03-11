@@ -16,13 +16,13 @@ public class LidarSeeRobot extends Command {
 
 
 	NetworkTable lidarSendTable;
-	double lidarDegrees;
-	double ultimateMeasurement;
-	double robotSpeed;
-	double degrees;
-	double left;
-	double right;
-	double Inches;
+	//double lidarDegrees;
+	//double ultimateMeasurement;
+	//double robotSpeed;
+	//double degrees;
+	//double left;
+	//double right;
+	//double Inches;
 	boolean SeeObject = false;
 
 	//Variable for button used in isFinished
@@ -37,45 +37,52 @@ public class LidarSeeRobot extends Command {
 	}
 
 	protected void initialize() {
-		SmartDashboard.putString("lidar info", "init");
-		SmartDashboard.putString("hello_world", "x");
+		//SmartDashboard.putString("lidar info", "init");
+		//SmartDashboard.putString("hello_world", "x");
 
 	}
 
 	protected void execute() {
-		SmartDashboard.putString("lidar info", "execute");
+		//SmartDashboard.putString("lidar info", "execute");
 		//These are the variables that get manipulated in the code
 
-		double mmToIn = 1.0;
-		SmartDashboard.putNumber("ultimateMeasurement", ultimateMeasurement);
+		//double mmToIn = 1.0;
+		//SmartDashboard.putNumber("ultimateMeasurement", ultimateMeasurement);
 
 		//These are the variables for speed - start slow
 
 		//These are what the Pixy send us
-		robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
-		left = lidarSendTable.getNumber("left", 99);
-		right = lidarSendTable.getNumber("right", 99);
-		degrees = lidarSendTable.getNumber("degrees",99);
-		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
-		if(SeeObject == false) {
-			Robot.drivetrain.difDrive.arcadeDrive(.25, 0);
+		//robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
+		//left = lidarSendTable.getNumber("left", 99);
+		//right = lidarSendTable.getNumber("right", 99);
+		//degrees = lidarSendTable.getNumber("degrees",99);
+		//SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
+		SeeObject = lidarSendTable.getBoolean("Stop", false);
+		/*if(SeeObject == false) {
+			Robot.drivetrain.difDrive.arcadeDrive(-0.25, 0);
 			SmartDashboard.putBoolean("SeeRobot", false);
-		}
+		} */
+		//Robot.drivetrain.difDrive.arcadeDrive(.8, 0);
+		
 		if(SeeObject == true) {
+			Robot.notClear = true;
 			Robot.drivetrain.difDrive.arcadeDrive(0, 0);
 			SmartDashboard.putBoolean("SeeRobot", true);
+		}
+		else {
+			Robot.notClear = false;
 		}
 
 
 		//This code modifies the speed based on how close you are to the peg
-		SmartDashboard.putNumber("Lidar Distance" , ultimateMeasurement);
-		SmartDashboard.putNumber("Lidar Degrees" , degrees);
-		SmartDashboard.putNumber("Lidar To Inches", ultimateMeasurement/mmToIn);
-		SmartDashboard.putNumber("Robot Speed", robotSpeed);
-		SmartDashboard.putNumber("left", left);
-		SmartDashboard.putNumber("right", right);
+		//SmartDashboard.putNumber("Lidar Distance" , ultimateMeasurement);
+		//SmartDashboard.putNumber("Lidar Degrees" , degrees);
+		//SmartDashboard.putNumber("Lidar To Inches", ultimateMeasurement/mmToIn);
+		//SmartDashboard.putNumber("Robot Speed", robotSpeed);
+		//SmartDashboard.putNumber("left", left);
+		//SmartDashboard.putNumber("right", right);
 
-		Robot.drivetrain.basicDrive(-1*left, right);
+		//Robot.drivetrain.basicDrive(-1*left, right);
 
 
 
