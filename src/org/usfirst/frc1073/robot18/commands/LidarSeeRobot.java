@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LidarAlign360 extends Command {
+public class LidarSeeRobot extends Command {
 
 
 	NetworkTable lidarSendTable;
@@ -23,11 +23,12 @@ public class LidarAlign360 extends Command {
 	double left;
 	double right;
 	double Inches;
+	boolean SeeObject = false;
 
 	//Variable for button used in isFinished
 	boolean isPressed = false;
 
-	public LidarAlign360() {
+	public LidarSeeRobot() {
 
 		requires(Robot.drivetrain);
 
@@ -56,7 +57,14 @@ public class LidarAlign360 extends Command {
 		right = lidarSendTable.getNumber("right", 99);
 		degrees = lidarSendTable.getNumber("degrees",99);
 		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
-
+		if(SeeObject == false) {
+			Robot.drivetrain.difDrive.arcadeDrive(.25, 0);
+			SmartDashboard.putBoolean("SeeRobot", false);
+		}
+		if(SeeObject == true) {
+			Robot.drivetrain.difDrive.arcadeDrive(0, 0);
+			SmartDashboard.putBoolean("SeeRobot", true);
+		}
 
 
 		//This code modifies the speed based on how close you are to the peg
@@ -92,13 +100,13 @@ public class LidarAlign360 extends Command {
 
 	protected void end() {
 		//Stops motors and sets bling
-		Robot.drivetrain.basicDrive(0, 0);
+		Robot.drivetrain.difDrive.arcadeDrive(0, 0);
 		//Robot.bling.sendRemoveGear();
 	}
 
 	protected void interrupted() {
 		//Stops motors and sets bling
-		Robot.drivetrain.basicDrive(0, 0);
+		Robot.drivetrain.difDrive.arcadeDrive(0, 0);
 		SmartDashboard.putString("lidar info", "Interrupted");
 		//Robot.bling.sendRemoveGear();
 	}
