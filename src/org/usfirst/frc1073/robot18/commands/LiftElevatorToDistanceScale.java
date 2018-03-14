@@ -20,9 +20,11 @@ public class LiftElevatorToDistanceScale extends Command {
 	double target;
 	double inches;
 	boolean up;
+	double timeout; //DELETE THIS
 	
     public LiftElevatorToDistanceScale(double _inches) {
     	inches = _inches;
+    	timeout = 150;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.elevator);
@@ -48,6 +50,7 @@ public class LiftElevatorToDistanceScale extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
+    	SmartDashboard.putNumber("Elevator Encoder PLEASE DELETE", distance);
     	
     	if((Math.abs(distance)) >= target){
 			Robot.elevator.elevatorDrive.tankDrive(1, -1); //down
@@ -55,6 +58,7 @@ public class LiftElevatorToDistanceScale extends Command {
     	if((Math.abs(distance)) <= target){
 			Robot.elevator.elevatorDrive.tankDrive(-1, 1); //up
     	}
+    	timeout--;
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -74,6 +78,9 @@ public class LiftElevatorToDistanceScale extends Command {
     		finish = true;
     	}
     	if(inches == 0 && !RobotMap.liftSwitchBottom.get()) finish = true;
+    	if(timeout == 0) { //DELETE THIS
+    		finish = true; //DELETE THIS
+    	} //DELETE THIS
 
         return finish;
     }

@@ -37,17 +37,17 @@ public class LidarSeeRobot extends Command {
 	}
 
 	protected void initialize() {
-		SmartDashboard.putString("lidar info", "init");
-		SmartDashboard.putString("hello_world", "x");
+		//SmartDashboard.putString("lidar info", "init");
+		//SmartDashboard.putString("hello_world", "x");
 
 	}
 
 	protected void execute() {
-		SmartDashboard.putString("lidar info", "execute");
+		//SmartDashboard.putString("lidar info", "execute");
 		//These are the variables that get manipulated in the code
 
-		double mmToIn = 1.0;
-		SmartDashboard.putNumber("ultimateMeasurement", ultimateMeasurement);
+		//double mmToIn = 1.0;
+		//SmartDashboard.putNumber("ultimateMeasurement", ultimateMeasurement);
 
 		//These are the variables for speed - start slow
 
@@ -78,7 +78,6 @@ public class LidarSeeRobot extends Command {
 
 
 
-
 	}
 
 	protected boolean isFinished() {
@@ -99,13 +98,13 @@ public class LidarSeeRobot extends Command {
 
 	protected void end() {
 		//Stops motors and sets bling
-		Robot.drivetrain.basicDrive(0, 0);
+		Robot.drivetrain.difDrive.arcadeDrive(0, 0);
 		//Robot.bling.sendRemoveGear();
 	}
 
 	protected void interrupted() {
 		//Stops motors and sets bling
-		Robot.drivetrain.basicDrive(0, 0);
+		Robot.drivetrain.difDrive.arcadeDrive(0, 0);
 		SmartDashboard.putString("lidar info", "Interrupted");
 		//Robot.bling.sendRemoveGear();
 	}

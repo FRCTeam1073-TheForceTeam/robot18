@@ -14,64 +14,118 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ControllerDifferentialDrive extends Command {
 
-    public ControllerDifferentialDrive() {
-        requires(Robot.drivetrain);
 
-    }
-    
-    //DifferentialDrive difDrive;
-    
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	//difDrive = new DifferentialDrive(RobotMap.leftMotor3E, RobotMap.rightMotor3E);
-    }
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	/**RAWAXIS LIST
-    	 * 1 - Left X
-    	 * 2 - Left Y
-    	 * 3 - Triggers
-    	 * 4 - Right X
-    	 * 5 - Right Y
-    	 * 6 - DPad left/right
-    	 **/
-    	
-    	double forward = Robot.oi.driverControl.getRawAxis(1);
-    	double turn = Robot.oi.driverControl.getRawAxis(4); //Assigns joystick values to the forward and turn speed values
-    	
-    	
-    	if((Robot.oi.driverControl.getRawAxis(1) < .05 && Robot.oi.driverControl.getRawAxis(1) > 0) 
-    			|| (Robot.oi.driverControl.getRawAxis(1) > (-0.05) && Robot.oi.driverControl.getRawAxis(1) < 0))
-    	{
-    		forward = 0;
-    	}
-    	
-    	if((Robot.oi.driverControl.getRawAxis(4) < .05 && Robot.oi.driverControl.getRawAxis(4) > 0) 
-    			|| (Robot.oi.driverControl.getRawAxis(4) > (-0.05) && Robot.oi.driverControl.getRawAxis(4) < 0))
-    	{
-    		turn = 0;
-    	} //Adds deadzone under a joystick value of .05 for both forward and turn values
+	/* Ramp? */
+	private double axis, rampEnd, forward, forwardLast, forwardFinal, turn, lastSpeed, currentSpeed, hold, held; 
+	private int rampCurrent;
+	private boolean top, bottom, ramp, holdingUp, holdingDown;
+	private double[] ramps = {.2, .35, .5, .75, .95, 1};
 
-    	SmartDashboard.putNumber("forward", forward);
-    	SmartDashboard.putNumber("turn", turn);
-    	
-    	Robot.drivetrain.difDrive.arcadeDrive(forward, turn*-1);
-    	
-    	//Robot.drivetrain.arcadeDrive(forward, turn*-1);
-    
-    }
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	public ControllerDifferentialDrive() {
+		requires(Robot.drivetrain);
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		/* Ramp? */
+		rampCurrent = 0;
+		rampEnd = 2;
+		hold = 0;
+		held = 10;
+		top = false;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		/**RAWAXIS LIST
+		 * 1 - Left X
+		 * 2 - Left Y
+		 * 3 - Triggers
+		 * 4 - Right X
+		 * 5 - Right Y
+		 * 6 - DPad left/right
+		 **/
+
+		axis = Robot.oi.driverControl.getRawAxis(1) ;
+
+		//double forward = Robot.oi.driverControl.getRawAxis(1);
+		//double turn = Robot.oi.driverControl.getRawAxis(4); //Assigns joystick values to the forward and turn speed values
+
+		/** Deadzone */
+		if((Robot.oi.driverControl.getRawAxis(4) < .05 && Robot.oi.driverControl.getRawAxis(4) > 0) 
+				|| (Robot.oi.driverControl.getRawAxis(4) > (-0.05) && Robot.oi.driverControl.getRawAxis(4) < 0)) {
+			turn = 0;
+		}
+		if((axis < .05 && axis > 0) || (axis > (-.05) && axis < 0)) {
+			forward = 0;
+			hold = 0;
+		}
+		/** Ramp? */
+		else {
+			/* State of controller */
+			if (axis > .05) {
+				holdingUp = true;
+				holdingDown = false;
+			}
+			else if (axis < -.05) {
+				holdingUp = false;
+				holdingDown = true;
+			}
+			
+			/* Is long pressed? */
+			if (axis > .05) {
+				if (hold >= held) {
+					top = true;
+				}
+				else {
+					top = false;
+					hold++;
+				}
+			}
+			else if (axis < -.05) {
+				if (hold >= held) {
+					bottom = true;
+				}
+				else {
+					bottom = false;
+					hold++;
+				}
+			}
+			
+			/* Checks for ramp necessity */
+			if (top == true && axis < -.05) {
+				ramp = true;
+			}
+			else if (bottom == true && axis > .05) {
+				ramp = true;
+			}
+			
+			/* Set speed */
+			if (ramp == true && axis > .05) {
+				forwardFinal = ramps[rampCurrent] * axis;
+				rampCurrent++;
+			}
+			else if (ramp == true && axis < -.05) {
+				forwardFinal = ramps[rampCurrent] * axis;
+				rampCurrent++;
+			}
+			
+			/* Reset Ramp? */
+			if (rampCurrent == rampEnd) {
+				rampCurrent = 0;
+				ramp = false;
+			}
+		}
+		
+		/** Output */
+		SmartDashboard.putNumber("forward", forwardFinal);
+		SmartDashboard.putNumber("turn", turn);
+
+		Robot.drivetrain.difDrive.arcadeDrive(forwardFinal, turn * -1);
+	}
+
+	protected boolean isFinished() {
+		return false;
+	}
 }
