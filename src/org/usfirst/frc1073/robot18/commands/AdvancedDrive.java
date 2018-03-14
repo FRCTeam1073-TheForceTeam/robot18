@@ -15,6 +15,10 @@ public class AdvancedDrive extends Command {
 	private double speed, currentSpeed, finalSpeed, finalSpeedL, finalSpeedR, 
 	dist, toBeTraveled, inch, leftEncDif, rightEncDif, startleftEncDif, percentComplete, 
 	avgEncDif, startrightEncDif, originalDegrees, currentDegrees, n;
+
+	/* Ramp? */
+	private double ramp, rampStart, rampEnd;
+
 	/* Timer variables */
 	private double timeout, timer, timeEnd;
 	private boolean fin;
@@ -64,6 +68,11 @@ public class AdvancedDrive extends Command {
 		/* Extra variables */
 		n = 0;
 		fin = false;
+
+		/* Ramp? vars */
+		ramp = currentSpeed / 2;
+		rampStart = 0;
+		rampEnd = 2;
 	}
 
 	protected void execute() {
@@ -126,14 +135,26 @@ public class AdvancedDrive extends Command {
 		}
 
 		/** Variable update code */
-		/* Sets up a final speed */
-		finalSpeed = currentSpeed;
-
 		/* Uses that average and the original distance to be traveled to make a percentage total completed */
 		percentComplete = avgEncDif/toBeTraveled;
 
 		/** Uses lidar to check if path is clear */
 		if (Robot.notClear == false) {
+			/* Ramp? */
+			/* Sets up a final speed */
+			if (rampStart < rampEnd) {
+				if (rampStart < rampEnd / 2) {
+					finalSpeed = ramp / 2;
+				}
+				else {
+					finalSpeed = ramp;
+				}
+				rampStart++;
+			}
+			else {
+				finalSpeed = currentSpeed;
+			}
+
 			/* Sets the motor with their respective offsets based on heading adjustment */ 
 			Robot.drivetrain.difDrive.tankDrive(-finalSpeed * finalSpeedL, -finalSpeed * finalSpeedR);
 
@@ -141,7 +162,11 @@ public class AdvancedDrive extends Command {
 			timer++;
 		}
 		else {
+			/* Stops the robot */
 			Robot.drivetrain.difDrive.tankDrive(0, 0);
+
+			/* Resets Ramp? */
+			rampStart = 0;
 		}
 	}
 
