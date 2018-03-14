@@ -116,16 +116,13 @@ public class ControllerDifferentialDrive extends Command {
 				rampCurrent = 0;
 				ramp = false;
 			}
-			
-			/** Output */
-			SmartDashboard.putNumber("forward", forwardFinal);
-			SmartDashboard.putNumber("turn", turn);
-
-			Robot.drivetrain.difDrive.arcadeDrive(forwardFinal, turn * -1);
-
-			/* Memory */
-			forwardLast = forwardFinal;
 		}
+		
+		/** Output */
+		SmartDashboard.putNumber("forward", forwardFinal);
+		SmartDashboard.putNumber("turn", turn);
+
+		Robot.drivetrain.difDrive.arcadeDrive(forwardFinal, turn * -1);
 	}
 
 	protected boolean isFinished() {
