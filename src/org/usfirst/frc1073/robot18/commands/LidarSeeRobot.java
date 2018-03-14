@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class LidarAlign360 extends Command {
+public class LidarSeeRobot extends Command {
 
 
 	NetworkTable lidarSendTable;
@@ -23,11 +23,12 @@ public class LidarAlign360 extends Command {
 	double left;
 	double right;
 	double Inches;
+	boolean SeeObject = false;
 
 	//Variable for button used in isFinished
 	boolean isPressed = false;
 
-	public LidarAlign360() {
+	public LidarSeeRobot() {
 
 		requires(Robot.drivetrain);
 
@@ -52,10 +53,19 @@ public class LidarAlign360 extends Command {
 
 		//These are what the Pixy send us
 		robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
-		left = lidarSendTable.getNumber("left", 99);
-		right = lidarSendTable.getNumber("right", 99);
+		SeeObject = lidarSendTable.getBoolean("Stop", false);
 		degrees = lidarSendTable.getNumber("degrees",99);
 		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
+	
+		if(SeeObject == false){
+			Robot.drivetrain.difDrive.arcadeDrive(-0.25, 0);
+			SmartDashboard.putBoolean("SeeRobot", false);
+		}
+		
+		if(SeeObject == true){
+			Robot.drivetrain.difDrive.arcadeDrive(0, 0);
+			SmartDashboard.putBoolean("SeeRobot", true);
+		}
 
 
 
@@ -64,10 +74,7 @@ public class LidarAlign360 extends Command {
 		SmartDashboard.putNumber("Lidar Degrees" , degrees);
 		SmartDashboard.putNumber("Lidar To Inches", ultimateMeasurement/mmToIn);
 		SmartDashboard.putNumber("Robot Speed", robotSpeed);
-		SmartDashboard.putNumber("left", left);
-		SmartDashboard.putNumber("right", right);
-
-		Robot.drivetrain.basicDrive(-1*left, right);
+		
 
 
 
