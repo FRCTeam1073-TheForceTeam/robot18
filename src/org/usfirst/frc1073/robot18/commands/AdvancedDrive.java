@@ -5,7 +5,7 @@ import org.usfirst.frc1073.robot18.RobotMap;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import org.usfirst.frc1073.robot18.Bling;
 /*** Straight drive command 
  * @author Nathaniel 
  */
@@ -73,6 +73,7 @@ public class AdvancedDrive extends Command {
 		ramp = currentSpeed / 2;
 		rampStart = 0;
 		rampEnd = 2;
+		Robot.bling.sendAdvancedDrive();
 	}
 
 	protected void execute() {
@@ -180,6 +181,7 @@ public class AdvancedDrive extends Command {
 			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBool = false;
 				isFinished = true;
+				Robot.bling.sendFinished();
 			}
 		}
 		/* If not set */
@@ -189,6 +191,7 @@ public class AdvancedDrive extends Command {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = false;
 				isFinished = true;
+				Robot.bling.sendFinished();
 			}
 		}
 		//Encoder working
@@ -197,11 +200,13 @@ public class AdvancedDrive extends Command {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = true;
 				isFinished = true;
+				Robot.bling.sendFinished();
 			}
 		}
 		//Cancel button
 		else if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			isFinished = true;
+			Robot.bling.sendFinished();
 		}
 		return isFinished;
 	}

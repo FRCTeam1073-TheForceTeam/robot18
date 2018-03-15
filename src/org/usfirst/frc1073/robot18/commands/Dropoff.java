@@ -4,7 +4,7 @@ import org.usfirst.frc1073.robot18.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import org.usfirst.frc1073.robot18.Bling;
 /*** Drops cube off side of conveyor at speed and direction set in params */
 public class Dropoff extends Command {
 
@@ -29,9 +29,12 @@ public class Dropoff extends Command {
 		endTime = time * 20;
 		if (direction.equals("right")) {
 			dir = 1;
+			Robot.bling.sendDropOff();
+		
 		}
 		else if (direction.equals("left")) {
 			dir = -1;
+			Robot.bling.sendDropOff();
 		}
 		else {
 			dir = 0;
@@ -52,6 +55,7 @@ public class Dropoff extends Command {
 		if (timer >= endTime) {
 			Robot.conveyor.conveyorDrive.tankDrive(0, 0);
 			finished = true;
+			Robot.bling.sendFinished();
 		}
 		return finished;
 	}

@@ -6,7 +6,7 @@ import org.usfirst.frc1073.robot18.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc1073.robot18.RobotMap;
-
+import org.usfirst.frc1073.robot18.Bling;
 /**
  *
  */
@@ -39,6 +39,7 @@ public class SuckInCube extends Command {
 		delayer = 0;
 		timeEnd = (time * 20) + delayEnd;
 		timer = 0;
+		Robot.bling.sendSuckinCube();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -61,6 +62,7 @@ public class SuckInCube extends Command {
 		if (timer > timeEnd || Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			finished = true;
 			Robot.collector.collectDrive.tankDrive(0, 0);
+			Robot.bling.sendFinished();
 		}
 		return finished;
 	}
@@ -72,5 +74,6 @@ public class SuckInCube extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		Robot.bling.sendFinished();
 	}
 }

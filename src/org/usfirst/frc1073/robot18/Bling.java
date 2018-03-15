@@ -127,7 +127,7 @@ public class Bling {
 		send();
 	}
 	
-	public void sendRemoveGear() {
+	public void sendDropOff() {
 		setPattern("solid", "green", "all", "slow", 0, 100);
 		send();
 	}
@@ -141,8 +141,8 @@ public class Bling {
 		send();
 	}
 	
-	public void sendPegTargeting() {
-		setPattern("scanner", "Green", "all", "medium", 0, 100);
+	public void sendAdvancedDrive() {
+		setPattern("Solid", "Blue", "all", "medium", 0, 100);
 		send();
 	}
 	
@@ -172,5 +172,8 @@ public class Bling {
 		setPattern("solid", "green", "all", "medium", 0, 100);
 		send();
 	}
+	public void sendSuckinCube() {
+		setPattern("scanner", "blue", "all", "fast", 0, 100);
+		send();
 	
 }
