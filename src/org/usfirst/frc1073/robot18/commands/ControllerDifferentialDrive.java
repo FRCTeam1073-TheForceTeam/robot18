@@ -17,7 +17,7 @@ public class ControllerDifferentialDrive extends Command {
 
 
 	/* Ramp? */
-	private double axis, rampEnd, forward, forwardLast, forwardFinal, turn, lastSpeed, currentSpeed, hold, held; 
+	private double axis, axisTurn, rampEnd, forward, forwardLast, forwardFinal, turn, lastSpeed, currentSpeed, hold, held; 
 	private int rampCurrent;
 	private boolean top, bottom, ramp, holdingUp, holdingDown;
 	private double[] ramps = {.2, .35, .5, .75, .95, 1};
@@ -47,14 +47,12 @@ public class ControllerDifferentialDrive extends Command {
 		 * 6 - DPad left/right
 		 **/
 
-		axis = Robot.oi.driverControl.getRawAxis(1) ;
-
-		//double forward = Robot.oi.driverControl.getRawAxis(1);
-		//double turn = Robot.oi.driverControl.getRawAxis(4); //Assigns joystick values to the forward and turn speed values
-
+		axis = Robot.oi.driverControl.getRawAxis(1);
+		axisTurn = Robot.oi.driverControl.getRawAxis(4);
+		
 		/** Deadzone */
-		if((Robot.oi.driverControl.getRawAxis(4) < .05 && Robot.oi.driverControl.getRawAxis(4) > 0) 
-				|| (Robot.oi.driverControl.getRawAxis(4) > (-0.05) && Robot.oi.driverControl.getRawAxis(4) < 0)) {
+		if((axisTurn < .05 && axisTurn > 0) 
+				|| (axisTurn > (-0.05) && axisTurn < 0)) {
 			turn = 0;
 		}
 		if((axis < .05 && axis > 0) || (axis > (-.05) && axis < 0)) {
