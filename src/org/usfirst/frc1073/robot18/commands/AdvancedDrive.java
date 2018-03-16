@@ -206,7 +206,7 @@ public class AdvancedDrive extends Command {
 		//Cancel button
 		else if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			isFinished = true;
-			Robot.bling.sendFinished();b
+			Robot.bling.sendFinished();
 		}
 		return isFinished;
 	}
