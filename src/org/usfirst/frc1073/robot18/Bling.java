@@ -3,7 +3,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Bling {
 	NetworkTable newtable;
-	
+
 	//Instance Variables
 	private String color;
 	private String speed;
@@ -13,13 +13,13 @@ public class Bling {
 	private String segment;
 	private String put;
 	private String put2;
-	
+
 	//Constructor
 	public Bling() {
 		newtable = NetworkTable.getTable("Bling");
 		//NetworkTable.initialize();
 	}
-	
+
 	//Methods
 	public String setPattern(String patt, String col, String seg, String spd, int mini, int maxi) {
 		pattern = patt;
@@ -31,46 +31,46 @@ public class Bling {
 		put = "Pattern=" + pattern + "," + "Color=" + color + "," + "Segment=" + segment + "," + "Speed=" + speed + "," + "Min=" + min + "," + "Max=" + max; 
 		return put;
 	}
-	
+
 	public void disableLeds() {
 		put = "Pattern=" + "off" + "," + "Color=" + color + "," + "Segment=" + segment + "," + "Speed=" + speed + "," + "Min=" + min + "," + "Max=" + max; 
 	}
-	
+
 	public void send() {
 		newtable.putString("command", put);
 	}
 
-    /** Set of API functions that can be called from the robot code to send and
+	/** Set of API functions that can be called from the robot code to send and
         pattern to the bling **/
-    public void sendPattern( BlingMode pattern ) {
-        Boolean validPattern = true;
+	public void sendPattern( BlingMode pattern ) {
+		Boolean validPattern = true;
 
-        switch( pattern ) {
-            case ROBOT_INIT:
-		        setPattern("RainbowHalves", "rainbow", "all", "medium", 0, 100);
-                break;
-            case ROBOT_ERROR:
-		        setPattern("Alternates", "christmas", "all", "medium", 0, 100);
-                break;
-            case CLIMBING:
-                setPattern("ColorFade", "teamcolors", "all", "fast", 0, 100);
-                break;
+		switch( pattern ) {
+		case ROBOT_INIT:
+			setPattern("RainbowHalves", "rainbow", "all", "medium", 0, 100);
+			break;
+		case ROBOT_ERROR:
+			setPattern("Alternates", "christmas", "all", "medium", 0, 100);
+			break;
+		case CLIMBING:
+			setPattern("ColorFade", "teamcolors", "all", "fast", 0, 100);
+			break;
 
-            // put all pattern specifiers above this point
-            case OFF:
-                disableLeds();
-                break;
-            default:
-                setPattern("Error", "red", "all", "fast", 0, 100);
-                break;
-        }
-        
-        if ( validPattern ) {
-            send();
-        }
+			// put all pattern specifiers above this point
+		case OFF:
+			disableLeds();
+			break;
+		default:
+			setPattern("Error", "red", "all", "fast", 0, 100);
+			break;
+		}
 
-        return;
-    }
+		if ( validPattern ) {
+			send();
+		}
+
+		return;
+	}
 
 	public void sendClimbing() {
 		setPattern("ColorFade", "teamcolors", "all", "fast", 0, 100);
@@ -81,57 +81,57 @@ public class Bling {
 		setPattern("RainbowHalves", "red", "all", "fast", 0, 100);
 		send();
 	}
-			
+
 	public void sendFinishedClimbing() {
-	    setPattern("Alternates", "teamcolors", "all", "medium", 0, 100);
+		setPattern("Alternates", "teamcolors", "all", "medium", 0, 100);
 		send();
 	}
-			
+
 	public void sendLeftTurning() {
 		setPattern("ColorWipe", "green", "left", "fast", 0, 100);
-	    send();
+		send();
 	}
-			
+
 	public void sendRightTurning() {
 		setPattern("ColorWipe", "green", "right", "fast", 0, 100);
 		send();
 	}
-	
+
 	public void sendDrive() {
 		setPattern("solid", "blue", "all", "medium", 0, 100);
 		send();
 	}
-	
+
 	public void sendBackup() {
 		setPattern("blinking", "yellow", "all", "medium", 0, 100);
 		send();
 	}
-	
+
 	public void sendEnd() {
 		setPattern("fireflies", "rainbow", "all", "medium", 0, 100);
 		send();
 	}
-	
+
 	public void sendOff() {
 		disableLeds();
 		send();
 	}
-	
+
 	public void sendRobotInit() {
 		setPattern("RainbowHalves", "rainbow", "all", "medium", 0, 100);
 		send();
 	}
-	
+
 	public void sendAutoDrive() {
 		setPattern("ColorChase", "green", "all", "slow", 0, 100);
 		send();
 	}
-	
+
 	public void sendDropOff() {
 		setPattern("solid", "green", "all", "slow", 0, 100);
 		send();
 	}
-	
+
 	public void sendAutoTurnRight() {
 		setPattern("blinking", "Green", "right", "medium", 0, 100);
 		send();
@@ -140,22 +140,22 @@ public class Bling {
 		setPattern("blinking", "Green", "left", "medium", 0, 100);
 		send();
 	}
-	
+
 	public void sendAdvancedDrive() {
 		setPattern("Solid", "Blue", "all", "medium", 0, 100);
 		send();
 	}
-	
+
 	public void sendDeliverCube() {
 		setPattern("scanner", "Yellow", "all", "medium", 0, 100);
 		send();
 	}
-	
+
 	public void sendFindingCube() {
 		setPattern("blinking", "Green", "all", "medium", 0, 100);
 		send();
 	}
-	
+
 	public void sendDriveBy() {
 		setPattern("RainbowHalves", "rainbow", "all", "medium", 0, 100);
 		send();
@@ -175,5 +175,6 @@ public class Bling {
 	public void sendSuckinCube() {
 		setPattern("scanner", "blue", "all", "fast", 0, 100);
 		send();
-	
+
+	}
 }
