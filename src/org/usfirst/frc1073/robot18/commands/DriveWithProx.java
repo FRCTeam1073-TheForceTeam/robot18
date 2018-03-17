@@ -13,45 +13,65 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 
+//THIS COMMAND IS MADE FOR IF THE PROX IS ON THE LEFT SIDE OF THE ROBOT
 
 public class DriveWithProx extends Command {
-	double voltage, distance, total;
-    public DriveWithProx() {
-    	
-    	
-    }
-    // Called just before this Command runs the first time
-    protected void initialize() {   
-    	
-    	
+	double voltage;
+	double distance;
+	double total;
+	double distFromWall;
+	double leftSpeed;
+	double rightSpeed;
+    public DriveWithProx(double distFromWall) {
+    	this.distFromWall = distFromWall;
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    protected void initialize() { 
+    	leftSpeed = .2;
+    	rightSpeed = .2;
+    }
+
     protected void execute() {
-    	Robot.drivetrain.difDrive.arcadeDrive(1, 0);
-    	total = 0;
-		for (int i = 0; i < 10; i++) {
-			voltage = RobotMap.frontSensor.getVoltage();
-			distance = (Robot.voltage - 0.0399)/0.0234;  
-			total += distance;
+		voltage = RobotMap.leftSensor.getVoltage();
+		distance = (voltage - 0.0399)/0.0234;
+		
+		SmartDashboard.putNumber("Dist From Wall", distance);
+		SmartDashboard.putNumber("left Speed", leftSpeed);
+		SmartDashboard.putNumber("right Speed", rightSpeed);
+		
+		if((distance+5) < distFromWall){
+			leftSpeed = .25;
+			rightSpeed = .2;
 		}
-		total = total/10;
+		if((distance+10) < distFromWall){
+			leftSpeed = .3;
+			rightSpeed = .2;
+		}
+		if((distance-5)> distFromWall){
+			rightSpeed = .25;
+			leftSpeed = .2;
+		}
+		if((distance-10)> distFromWall){
+			rightSpeed = .3;
+			leftSpeed = .2;
+		}
+		
+    	RobotMap.leftMotor1.set(ControlMode.Position, leftSpeed);
+    	RobotMap.rightMotor1.set(ControlMode.Position, rightSpeed);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (total < 12) return true;
-    	return false;
+    	boolean isFinished = false;
+    	return isFinished;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.difDrive.arcadeDrive(0, 0);
+    	RobotMap.leftMotor1.set(ControlMode.Position, 0.0);
+    	RobotMap.rightMotor1.set(ControlMode.Position, 0.0);
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
+    	RobotMap.leftMotor1.set(ControlMode.Position, 0.0);
+    	RobotMap.rightMotor1.set(ControlMode.Position, 0.0);
     }
 }
