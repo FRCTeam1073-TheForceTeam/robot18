@@ -173,7 +173,7 @@ public class Bling {
 		send();
 	}
 	public void sendSuckinCube() {
-		setPattern("scanner", "blue", "all", "fast", 0, 100);
+		setPattern("scanner", "yellow", "all", "fast", 0, 100);
 		send();
 
 	}
