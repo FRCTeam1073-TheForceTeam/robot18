@@ -65,10 +65,15 @@ public class Robot extends IterativeRobot {
 
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousChooser;
+	public static SendableChooser<AutoObject> autonomousPriority;
 	public AutoObject left;
 	public AutoObject center;
 	public AutoObject right;
 	public AutoObject other;
+	public AutoObject pri_CTL;
+	public AutoObject pri_switch;
+	public AutoObject pri_scale;
+	public AutoObject pri_best;
 
 	public DigitalInput liftSwitchBottom;
 
@@ -97,7 +102,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
-		System.out.println("I'm a dank boi who's ready to go.m,n");
+		System.out.println("I'm a smart boi who's ready to go.m,n");
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
 		elevator = new robotElevator();
@@ -126,19 +131,31 @@ public class Robot extends IterativeRobot {
 		center = new AutoObject(2);
 		right = new AutoObject(3);
 		other = new AutoObject(4);
+		pri_CTL = new AutoObject(5);
+		pri_switch = new AutoObject(6);
+		pri_scale = new AutoObject(7);
+		pri_best = new AutoObject(8);
 
 		/* Jack's Auto Variables*/
 		position = (int) SmartDashboard.getNumber("Position", 1);
 		elevatorWorking = String.valueOf(SmartDashboard.getBoolean("Elevator Working?", true));
 		othersScale = String.valueOf(SmartDashboard.getBoolean("Other Bots Scale?", false));
 
-		/* The Chooser */
+		/* The Position Chooser */
 		autonomousChooser = new SendableChooser<AutoObject>();
 		autonomousChooser.addDefault("None", other);
 		autonomousChooser.addObject("Left", left);
 		autonomousChooser.addObject("Center", center);
 		autonomousChooser.addObject("Right", right);
 		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
+
+		/* The Priority Chooser */
+		autonomousPriority = new SendableChooser<AutoObject>();
+		autonomousPriority.addDefault("Cross the line", pri_CTL);
+		autonomousPriority.addObject("Scale", pri_scale);
+		autonomousPriority.addObject("Switch", pri_switch);
+		autonomousPriority.addObject("Best", pri_best);
+		SmartDashboard.putData("Priority Chooser", autonomousPriority);
 
 		// The first thread, running the front Webcam to the driver station
 		Thread camera1Thread = new Thread(() -> {
