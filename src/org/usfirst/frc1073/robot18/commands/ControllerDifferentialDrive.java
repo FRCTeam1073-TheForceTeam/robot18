@@ -94,12 +94,9 @@ public class ControllerDifferentialDrive extends Command {
 			/* Checks for ramp necessity */
 			if (top == true && axis < -.05) {
 				ramp = true;
-				ramp = false; //JR - Disabling ramp for now, it is not working and I don't understand exactly how is is supposed to
-				
 			}
 			else if (bottom == true && axis > .05) {
 				ramp = true;
-				ramp = false; //JR - Disabling ramp for now, it is not working and I don't understand exactly how is is supposed to
 			}
 			
 			/* Set speed */
@@ -111,9 +108,6 @@ public class ControllerDifferentialDrive extends Command {
 				forwardFinal = ramps[rampCurrent] * axis;
 				rampCurrent++;
 			}
-			else{
-				forwardFinal =  axis;
-			}
 			
 			/* Reset Ramp? */
 			if (rampCurrent == rampEnd) {
@@ -123,9 +117,8 @@ public class ControllerDifferentialDrive extends Command {
 		}
 		
 		/** Output */
-		//SmartDashboard.putNumber("forward", forwardFinal);
-		//SmartDashboard.putNumber("turn", turn);
-		//SmartDashboard.putNumber("rampCurrent", rampCurrent);
+		SmartDashboard.putNumber("forward", forwardFinal);
+		SmartDashboard.putNumber("turn", turn);
 
 		Robot.drivetrain.difDrive.arcadeDrive(forwardFinal, turn * -1);
 	}
