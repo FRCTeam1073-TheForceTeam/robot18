@@ -102,7 +102,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		RobotMap.init();
+
 		System.out.println("I'm a smart boi who's ready to go.m,n");
+		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
 		elevator = new robotElevator();
@@ -148,6 +150,7 @@ public class Robot extends IterativeRobot {
 		autonomousChooser.addObject("Center", center);
 		autonomousChooser.addObject("Right", right);
 		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
+		
 
 		/* The Priority Chooser */
 		autonomousPriority = new SendableChooser<AutoObject>();
@@ -305,86 +308,12 @@ public class Robot extends IterativeRobot {
 		/* instantiate the command used for the autonomous period */
 		autonomousCommand = new Auto1Chooser();
 		if (autonomousCommand != null) autonomousCommand.start();
-		if (alliance == DriverStation.Alliance.Blue){
-			//true = blue, false = red
-			if (FMS == "RRR"){
-				s1 = true;
-				s2 = false;
-				s3 = true;
-				s4 = false;
-				s5 = true;
-				s6 = false;
-			}
-			else if (FMS == "LLL"){
-				s1 = false;
-				s2 = true;
-				s3 = false;
-				s4 = true;
-				s5 = false;
-				s6 = true;
-			}
-			else if (FMS == "LRL"){
-				s1 = false;
-				s2 = true;
-				s3 = true;
-				s4 = false;
-				s5 = false;
-				s6 = true;
-			}
-			else if (FMS == "RLR"){
-				s1 = true;
-				s2 = false;
-				s3 = false;
-				s4 = true;
-				s5 = true;
-				s6 = false;
 
-			}
 
 		}
-		else if (alliance == DriverStation.Alliance.Red){
-			if (FMS == "RRR"){
-				s1 = false;
-				s2 = true;
-				s3 = false;
-				s4 = true;
-				s5 = false;
-				s6 = true;
-			}
-			else if (FMS == "LLL"){
-				s1 = true;
-				s2 = false;
-				s3 = true;
-				s4 = false;
-				s5 = true;
-				s6 = false;
-			}
-			else if (FMS == "LRL"){
-				s1 = true;
-				s2 = false;
-				s3 = false;
-				s4 = true;
-				s5 = true;
-				s6 = false;
-			}
-			else if (FMS == "RLR"){
-				s1 = false;
-				s2 = true;
-				s3 = true;
-				s4 = false;
-				s5 = false;
-				s6 = true;
-
-			}
-
-		}
-		SmartDashboard.putBoolean("s1", s1);
-		SmartDashboard.putBoolean("s2", s2);
-		SmartDashboard.putBoolean("s3", s3);
-		SmartDashboard.putBoolean("s4", s4);
-		SmartDashboard.putBoolean("s5", s5);
-		SmartDashboard.putBoolean("s6", s6);
-	}
+		
+		
+	
 
 
 	/**
@@ -402,7 +331,100 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		new LidarMiniMap();
 		if (autonomousCommand != null) autonomousCommand.cancel();
+		FMS = DriverStation.getInstance().getGameSpecificMessage();
+		alliance = DriverStation.getInstance().getAlliance();
+		SmartDashboard.putString("FMS", FMS);
+		
+		//NOTE: THE FOLLOWING CODE GIVES A LIVE UPDATE OF SWITCH AND SCALE COLORS, PLEASE DO NOT ALTER!
+		
+		
+		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
+		if (FMS.equals("RRR")){
+			s1 = true;
+			s2 = false;
+			s3 = true;
+			s4 = false;
+			s5 = true;
+			s6 = false;
+		}
+		else if (FMS.equals("LLL")){
+			s1 = false;
+			s2 = true;
+			s3 = false;
+			s4 = true;
+			s5 = false;
+			s6 = true;
+		}
+		else if (FMS.equals("LRL")){
+			s1 = false;
+			s2 = true;
+			s3 = true;
+			s4 = false;
+			s5 = false;
+			s6 = true;
+		}
+		else if (FMS.equals("RLR")){
+			s1 = true;
+			s2 = false;
+			s3 = false;
+			s4 = true;
+			s5 = true;
+			s6 = false;
+
+		//}
+
 	}
+		}
+		//if (alliance == DriverStation.Alliance.Blue){
+		//true = blue, false = red
+		
+	
+		
+		else if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)){
+		if (FMS == "RRR"){
+			s1 = false;
+			s2 = true;
+			s3 = false;
+			s4 = true;
+			s5 = false;
+			s6 = true;
+		}
+		else if (FMS == "LLL"){
+			s1 = false;
+			s2 = true;
+			s3 = false;
+			s4 = true;
+			s5 = false;
+			s6 = true;
+		}
+		else if (FMS == "LRL"){
+			s1 = true;
+			s2 = false;
+			s3 = false;
+			s4 = true;
+			s5 = true;
+			s6 = false;
+		}
+		else if (FMS == "RLR"){
+			s1 = false;
+			s2 = true;
+			s3 = true;
+			s4 = false;
+			s5 = false;
+			s6 = true;
+
+		}
+		
+		}
+		SmartDashboard.putBoolean("s1", s1);
+		SmartDashboard.putBoolean("s2", s2);
+		SmartDashboard.putBoolean("s3", s3);
+		SmartDashboard.putBoolean("s4", s4);
+		SmartDashboard.putBoolean("s5", s5);
+		SmartDashboard.putBoolean("s6", s6);
+		}
+	
+	
 
 	/**
 	 * This function is called periodically during operator control

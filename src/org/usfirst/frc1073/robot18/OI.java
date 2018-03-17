@@ -3,6 +3,8 @@ package org.usfirst.frc1073.robot18;
 
 import org.usfirst.frc1073.robot18.XboxController;
 import org.usfirst.frc1073.robot18.commands.*;
+
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
