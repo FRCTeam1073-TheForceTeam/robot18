@@ -72,8 +72,8 @@ public class Bling {
 		return;
 	}
 
-	public void sendClimbing() {
-		setPattern("ColorFade", "teamcolors", "all", "fast", 0, 100);
+	public void sendCubein() {
+		setPattern("Solid", "Aqua", "all", "fast", 0, 100);
 		send();
 	}
 
@@ -88,12 +88,12 @@ public class Bling {
 	}
 
 	public void sendLeftTurning() {
-		setPattern("ColorWipe", "green", "left", "fast", 0, 100);
+		setPattern("ColorWipe", "Purple", "left", "fast", 0, 100);
 		send();
 	}
 
 	public void sendRightTurning() {
-		setPattern("ColorWipe", "green", "right", "fast", 0, 100);
+		setPattern("ColorWipe", "Purple", "right", "fast", 0, 100);
 		send();
 	}
 
@@ -128,16 +128,16 @@ public class Bling {
 	}
 
 	public void sendDropOff() {
-		setPattern("solid", "green", "all", "slow", 0, 100);
+		setPattern("Fireflies", "Aqua", "all", "slow", 0, 100);
 		send();
 	}
 
 	public void sendAutoTurnRight() {
-		setPattern("blinking", "Green", "right", "medium", 0, 100);
+		setPattern("blinking", "Purple", "right", "medium", 0, 100);
 		send();
 	}
 	public void sendAutoTurnLeft() {
-		setPattern("blinking", "Green", "left", "medium", 0, 100);
+		setPattern("blinking", "Purple", "left", "medium", 0, 100);
 		send();
 	}
 
@@ -173,7 +173,7 @@ public class Bling {
 		send();
 	}
 	public void sendSuckinCube() {
-		setPattern("scanner", "blue", "all", "fast", 0, 100);
+		setPattern("scanner", "yellow", "all", "fast", 0, 100);
 		send();
 
 	}

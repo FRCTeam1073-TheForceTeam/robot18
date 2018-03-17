@@ -242,8 +242,8 @@ public class Robot extends IterativeRobot {
 
 			}
 		});
-		camera1Thread.start();
-		camera2Thread.start();
+		//camera1Thread.start();
+		//camera2Thread.start();
 
 
 		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
