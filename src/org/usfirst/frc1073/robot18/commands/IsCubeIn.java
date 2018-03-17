@@ -5,7 +5,7 @@ import org.usfirst.frc1073.robot18.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import org.usfirst.frc1073.robot18.Bling;
 public class IsCubeIn extends Command {
 	
 	public double voltage, stopVoltage;
@@ -17,6 +17,7 @@ public class IsCubeIn extends Command {
 	protected void initialize() {
 		Robot.clawBool = false;
 		stopVoltage = .50;
+		Robot.bling.sendCubein();
 	}
 
 	protected void execute() {
@@ -28,6 +29,7 @@ public class IsCubeIn extends Command {
 		if (stopVoltage <= voltage) {
 			Robot.clawBool = true;
 			isFinished = true;
+			Robot.bling.sendFinished();
 		}
 		return isFinished;
 	}
