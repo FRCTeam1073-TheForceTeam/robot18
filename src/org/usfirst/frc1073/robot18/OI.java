@@ -157,6 +157,7 @@ public class OI {
         SmartDashboard.putNumber("Right Motors", RobotMap.rightMotor1.get());
         SmartDashboard.putData("SeeRobot?", new LidarSeeRobot());
         SmartDashboard.putData("Start Sees White", new CheckForWhite());
+        SmartDashboard.putData("Turn off Bling", new BlingOff());
         if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;

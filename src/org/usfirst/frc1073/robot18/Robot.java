@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.Bling;
 import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.commands.AutonomousChooser.Auto1Chooser;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.LidarSeeRobot;
 import org.usfirst.frc1073.robot18.subsystems.*;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -37,7 +38,6 @@ import org.opencv.imgproc.Imgproc;
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	public static Preferences robotPreferences;
-
 	public static OI oi;
 	public static AutoVars autoSetup;
 	public static robotElevator elevator;
@@ -63,7 +63,6 @@ public class Robot extends IterativeRobot {
 	public boolean s5;
 	public boolean s6;
 	public static Alliance alliance;
-
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousPosition;
 	public static SendableChooser<AutoObject> autonomousMatchType;
@@ -73,12 +72,9 @@ public class Robot extends IterativeRobot {
 	public AutoObject other;
 	public AutoObject quals;
 	public AutoObject elims;
-
 	public DigitalInput liftSwitchBottom;
-
 	public static double voltage;
 	public static double distance;
-
 	public static String gameData;
 	public static int position;
 	public static String elevatorWorking;
@@ -95,6 +91,8 @@ public class Robot extends IterativeRobot {
 	public double collectorPurge;
 	public double conveyorLeftLeft;
 	public double conveyorRightRight;
+	public double x,y,leftInit,rightInit,headingInit;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -103,7 +101,9 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();
 
 		System.out.println("Robot Initialize");
+
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
+		System.out.println("I'm a dank boi who's ready to go.m,n");
 		RobotMap.headingGyro.reset();
 		robotPreferences = Preferences.getInstance();
 		elevator = new robotElevator();
@@ -134,11 +134,6 @@ public class Robot extends IterativeRobot {
 		other = new AutoObject(4);
 		quals = new AutoObject(5);
 		elims = new AutoObject(6);
-
-		/* Jack's Auto Variables*/
-		position = (int) SmartDashboard.getNumber("Position", 1);
-		elevatorWorking = String.valueOf(SmartDashboard.getBoolean("Elevator Working?", true));
-		othersScale = String.valueOf(SmartDashboard.getBoolean("Other Bots Scale?", false));
 
 		/* The Position Position */
 		autonomousPosition = new SendableChooser<AutoObject>();
@@ -184,21 +179,7 @@ public class Robot extends IterativeRobot {
 		System.out.println("Auto Starting");
 		autonomousCommand = new Auto1Chooser();
 		if (autonomousCommand != null) autonomousCommand.start();
-	}
-	/**
-	 * This function is called periodically during autonomous
-	 */
-	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
-	}
 
-	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		new LidarMiniMap();
 		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
 			SmartDashboard.putString("Alliance", "Blue");
 			SmartDashboard.putBoolean("A", true);
@@ -211,14 +192,8 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putBoolean("B", false);
 			SmartDashboard.putBoolean("C", true);
 		}
-		if (autonomousCommand != null) autonomousCommand.cancel();
-		FMS = DriverStation.getInstance().getGameSpecificMessage();
-		alliance = DriverStation.getInstance().getAlliance();
-		SmartDashboard.putString("FMS", FMS);
-
+		//true = blue, false = red
 		//NOTE: THE FOLLOWING CODE GIVES A LIVE UPDATE OF SWITCH AND SCALE COLORS, PLEASE DO NOT ALTER!
-
-
 		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
 			if (FMS.equals("RRR")){
 				s1 = true;
@@ -252,7 +227,7 @@ public class Robot extends IterativeRobot {
 				s5 = true;
 				s6 = false;
 
-				//}
+
 
 			}
 		}
@@ -261,38 +236,38 @@ public class Robot extends IterativeRobot {
 
 
 
-		else if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)){
-			if (FMS == "RRR"){
-				s1 = false;
-				s2 = true;
-				s3 = false;
-				s4 = true;
-				s5 = false;
-				s6 = true;
-			}
-			else if (FMS == "LLL"){
-				s1 = false;
-				s2 = true;
-				s3 = false;
-				s4 = true;
-				s5 = false;
-				s6 = true;
-			}
-			else if (FMS == "LRL"){
+		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)){
+			if (FMS.equals("RRR")){
 				s1 = true;
 				s2 = false;
-				s3 = false;
-				s4 = true;
+				s3 = true;
+				s4 = false;
 				s5 = true;
 				s6 = false;
 			}
-			else if (FMS == "RLR"){
+			else if (FMS.equals("LLL")){
+				s1 = false;
+				s2 = true;
+				s3 = false;
+				s4 = true;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("LRL")){
 				s1 = false;
 				s2 = true;
 				s3 = true;
 				s4 = false;
 				s5 = false;
 				s6 = true;
+			}
+			else if (FMS.equals("RLR")){
+				s1 = true;
+				s2 = false;
+				s3 = false;
+				s4 = true;
+				s5 = true;
+				s6 = false;
 
 			}
 
@@ -305,7 +280,125 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("s6", s6);
 	}
 
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+		new LidarSeeRobot();
+		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
+	}
 
+	public void teleopInit() {
+		// This makes sure that the autonomous stops running when
+		// teleop starts running. If you want the autonomous to
+		// continue until interrupted by another command, remove
+		// this line or comment it out.
+		new LidarMiniMap();
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
+			SmartDashboard.putString("AL", "Blue");
+		}
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)) {
+			SmartDashboard.putString("AL", "Red");
+		}
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
+			SmartDashboard.putString("Alliance", "Blue");
+			SmartDashboard.putBoolean("A", true);
+			SmartDashboard.putBoolean("B", true);
+			SmartDashboard.putBoolean("C", false);
+		}
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)) {
+			SmartDashboard.putString("Alliance", "Red");
+			SmartDashboard.putBoolean("A", false);
+			SmartDashboard.putBoolean("B", false);
+			SmartDashboard.putBoolean("C", true);
+		}
+		if (autonomousCommand != null) autonomousCommand.cancel();
+		FMS = DriverStation.getInstance().getGameSpecificMessage();
+		alliance = DriverStation.getInstance().getAlliance();
+		SmartDashboard.putString("FMS", FMS);
+
+		/** NOTE: THE FOLLOWING CODE GIVES A LIVE UPDATE OF SWITCH AND SCALE COLORS, PLEASE DO NOT ALTER! */
+		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
+			if (FMS.equals("RRR")){
+				s1 = true;
+				s2 = false;
+				s3 = true;
+				s4 = false;
+				s5 = true;
+				s6 = false;
+			}
+			else if (FMS.equals("LLL")){
+				s1 = false;
+				s2 = true;
+				s3 = false;
+				s4 = true;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("LRL")){
+				s1 = false;
+				s2 = true;
+				s3 = true;
+				s4 = false;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("RLR")){
+				s1 = true;
+				s2 = false;
+				s3 = false;
+				s4 = true;
+				s5 = true;
+				s6 = false;
+			}
+		}
+		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)){
+			if (FMS.equals("RRR")){
+				s1 = false;
+				s2 = true;
+				s3 = false;
+				s4 = true;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("LLL")){
+				s1 = false;
+				s2 = true;
+				s3 = false;
+				s4 = true;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("LRL")){
+				s1 = true;
+				s2 = false;
+				s3 = false;
+				s4 = true;
+				s5 = true;
+				s6 = false;
+			}
+			else if (FMS.equals("RLR")){
+				s1 = false;
+				s2 = true;
+				s3 = true;
+				s4 = false;
+				s5 = false;
+				s6 = true;
+			}
+		}
+		SmartDashboard.putBoolean("s1", s1);
+		SmartDashboard.putBoolean("s2", s2);
+		SmartDashboard.putBoolean("s3", s3);
+		SmartDashboard.putBoolean("s4", s4);
+		SmartDashboard.putBoolean("s5", s5);
+		SmartDashboard.putBoolean("s6", s6);
+		y = 0;
+		x = 0;
+		leftInit = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+		rightInit = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+		headingInit = RobotMap.headingGyro.getAngle();
+	}
 
 	/**
 	 * This function is called periodically during operator control
@@ -319,19 +412,21 @@ public class Robot extends IterativeRobot {
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		alliance = DriverStation.getInstance().getAlliance();
 		Scheduler.getInstance().run();
-		if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
-			turnRight = false;
-			turnLeft = true;
-		}
-		else if (RobotMap.rightMotor1.get() > RobotMap.leftMotor1.get()) {
+		SmartDashboard.putNumber("Left Motors", Math.abs(RobotMap.leftMotor1.get()));
+		SmartDashboard.putNumber("Right Motors", Math.abs(RobotMap.rightMotor1.get()));
+		if(Robot.oi.driverControl.getRawAxis(4)>.05) {
 			turnRight = true;
 			turnLeft = false;
+		}
+		else if (Robot.oi.driverControl.getRawAxis(4)<-.05) {
+			turnRight = false;
+			turnLeft = true;
 		}
 		else {
 			turnRight = false;
 			turnLeft = false;
 		}
-		SmartDashboard.putNumber("Lift Speed", RobotMap.elevatorMotorRight.get());
+		SmartDashboard.putNumber("Lift Speed", Math.abs(RobotMap.elevatorMotorRight.get()));
 		SmartDashboard.putBoolean("turn Left", turnLeft);
 		SmartDashboard.putBoolean("", turnRight);
 		if(RobotMap.clawSensor.getAverageVoltage() > 1) {
@@ -386,6 +481,23 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Bottom Limit", RobotMap.liftSwitchBottom.get());
 		SmartDashboard.putBoolean("Top Limit", RobotMap.liftSwitchTop.get());
 		SmartDashboard.putNumber("IR Voltage", RobotMap.clawSensor.getVoltage());
+
+		int distLeft = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+		int distRight = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+		double heading = RobotMap.headingGyro.getAngle() - headingInit;
+
+		double distAvg = (((distLeft - leftInit) * (2799 / 1993)) - ((distRight - rightInit) * (1993 / 2799))) / 2;
+		double distReal = ((distAvg * 3.9) / 1440) * Math.PI;
+		double headingY = Math.cos(Math.toRadians(heading));
+		double headingX = Math.sin(Math.toRadians(heading));
+
+		y = distReal * headingY;
+		x = distReal * headingX;
+
+		SmartDashboard.putNumber("X:", x);
+		SmartDashboard.putNumber("Y:", y);
+		SmartDashboard.putNumber("distReal:", distReal);
+		SmartDashboard.putNumber("Heading", heading);
 	}
 
 	/**
