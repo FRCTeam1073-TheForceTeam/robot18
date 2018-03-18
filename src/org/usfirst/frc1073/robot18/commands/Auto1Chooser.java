@@ -22,14 +22,14 @@ public class Auto1Chooser extends CommandGroup {
 		FMS = Robot.FMS;
 		System.out.println("Auto1Chooser FMS=" + FMS);
 		System.out.println("Auto1Chooser Position=" + Robot.autonomousChooser.getSelected().getString());
-		System.out.println("Auto1Chooser Priority=" + Robot.autonomousPriority.getSelected().getString());
+		//System.out.println("Auto1Chooser Priority=" + Robot.autonomousPriority.getSelected().getString());
 
 		/*  Second version  */ 
 		// If this works it may be broken out into sub commands
 		switch(Robot.autonomousChooser.getSelected().getString()) {
 		case "center":
 			System.out.println("Auto1Chooser start center");
-			switch(Robot.autonomousPriority.getSelected().getString()) {
+			//switch(Robot.autonomousPriority.getSelected().getString()) {
 			case "switch":
 				System.out.println("Auto1Chooser - start center - priorty switch");
 				//addParallel(new LidarSeeRobot());
@@ -76,11 +76,11 @@ public class Auto1Chooser extends CommandGroup {
 			
 			break;
 			}
-		default:
+	//	default:
 			System.out.println("Auto1Chooser start default");
 			SmartDashboard.putString("Chooser", "!!!Chooser Not Set!!!");
 			//addSequential(new AdvancedDrive(-.8, 80, 80));
-			break;
+			//break;
 		}
 
 		/*  First version   */
@@ -102,4 +102,4 @@ public class Auto1Chooser extends CommandGroup {
 		}
 		*/
 	}
-}
+//}
