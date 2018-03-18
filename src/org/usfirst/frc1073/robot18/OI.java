@@ -66,7 +66,6 @@ public class OI {
     	RobotTeleInit = driverControl.start;
     	
     	visionButton = driverControl.b;
-    	visionButton.whileHeld(new CubeGetterSupremeExtreme9000());
     	
     	driverCancel = driverControl.a;
     	
