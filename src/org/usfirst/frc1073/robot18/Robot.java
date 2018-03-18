@@ -399,7 +399,7 @@ public class Robot extends IterativeRobot {
 		rightInit = RobotMap.rightMotor1.getSelectedSensorPosition(0);
 		headingInit = RobotMap.headingGyro.getAngle();
 	}
-
+	
 	/**
 	 * This function is called periodically during operator control
 	 */
