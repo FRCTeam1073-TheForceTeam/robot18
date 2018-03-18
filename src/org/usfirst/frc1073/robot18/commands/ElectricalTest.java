@@ -1,4 +1,6 @@
-package org.usfirst.frc1073.robot18;
+package org.usfirst.frc1073.robot18.commands;
+
+import org.usfirst.frc1073.robot18.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
