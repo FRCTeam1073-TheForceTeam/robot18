@@ -3,7 +3,7 @@ package org.usfirst.frc1073.robot18;
 
 import org.usfirst.frc1073.robot18.XboxController;
 import org.usfirst.frc1073.robot18.commands.*;
-import org.usfirst.frc1073.robot18.commands.AutonomousTools.LidarSeeRobot;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
