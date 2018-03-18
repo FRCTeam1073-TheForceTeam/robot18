@@ -523,7 +523,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("s4", s4);
 		SmartDashboard.putBoolean("s5", s5);
 		SmartDashboard.putBoolean("s6", s6);
-<<<<<<< HEAD
 		
 		y = 0;
 		x = 0;
@@ -532,10 +531,6 @@ public class Robot extends IterativeRobot {
 		headingInit = RobotMap.headingGyro.getAngle();
 		}
 	
-=======
-	}
-
->>>>>>> a639facacef070a7126c349f56df70f305ac8106
 	
 
 	/**
