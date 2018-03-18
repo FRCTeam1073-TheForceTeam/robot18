@@ -312,6 +312,18 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		new LidarMiniMap();
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
+			SmartDashboard.putString("Alliance", "Blue");
+			SmartDashboard.putBoolean("A", true);
+			SmartDashboard.putBoolean("B", true);
+			SmartDashboard.putBoolean("C", false);
+		}
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)) {
+			SmartDashboard.putString("Alliance", "Red");
+			SmartDashboard.putBoolean("A", false);
+			SmartDashboard.putBoolean("B", false);
+			SmartDashboard.putBoolean("C", true);
+		}
 		if (autonomousCommand != null) autonomousCommand.cancel();
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		alliance = DriverStation.getInstance().getAlliance();
