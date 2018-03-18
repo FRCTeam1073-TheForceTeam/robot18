@@ -1,5 +1,13 @@
 package org.usfirst.frc1073.robot18.commands;
 
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.AdvancedDrive;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.CollectorDown;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.IsCubeIn;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.OpenClaw;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.SuckInCube;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.VisionCubeTracker;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.WasteTime;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class CubeGetterSupremeExtreme9000 extends CommandGroup {
