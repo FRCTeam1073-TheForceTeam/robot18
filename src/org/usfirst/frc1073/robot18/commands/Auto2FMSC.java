@@ -21,9 +21,6 @@ public class Auto2FMSC extends CommandGroup {
 			addSequential(new Auto3CommandC_LR());
 			break;
 			/** Should never get used. Something is either very right or very wrong if this gets run */
-		case "DANK":
-			addSequential(new Danktonomous());
-			break;
 		default:
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
 			addSequential(new AdvancedDrive(-.8, 40, 40));

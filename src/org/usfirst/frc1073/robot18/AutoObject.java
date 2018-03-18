@@ -26,6 +26,21 @@ public class AutoObject {
 		else if (n == 3) {
 			send = "right";
 		}
+		else if (n == 4) {
+			send = "other";
+		}
+		else if (n == 5) {
+			send = "pri_CTL";
+		}
+		else if (n == 6) {
+			send = "pri_switch";
+		}
+		else if (n == 7) {
+			send = "pri_scale";
+		}
+		else if (n == 8) {
+			send = "pri_best";
+		}
 		else {
 			send = "not set";
 		}
