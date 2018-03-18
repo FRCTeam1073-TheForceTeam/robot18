@@ -290,8 +290,105 @@ public class Robot extends IterativeRobot {
 		/* instantiate the command used for the autonomous period */
 		autonomousCommand = new Auto1Chooser();
 		if (autonomousCommand != null) autonomousCommand.start();
+		
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
+			SmartDashboard.putString("Alliance", "Blue");
+			SmartDashboard.putBoolean("A", true);
+			SmartDashboard.putBoolean("B", true);
+			SmartDashboard.putBoolean("C", false);
+		}
+		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)) {
+			SmartDashboard.putString("Alliance", "Red");
+			SmartDashboard.putBoolean("A", false);
+			SmartDashboard.putBoolean("B", false);
+			SmartDashboard.putBoolean("C", true);
+		}
+		//true = blue, false = red
+		//NOTE: THE FOLLOWING CODE GIVES A LIVE UPDATE OF SWITCH AND SCALE COLORS, PLEASE DO NOT ALTER!
+		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
+			if (FMS.equals("RRR")){
+				s1 = true;
+				s2 = false;
+				s3 = true;
+				s4 = false;
+				s5 = true;
+				s6 = false;
+			}
+			else if (FMS.equals("LLL")){
+				s1 = false;
+				s2 = true;
+				s3 = false;
+				s4 = true;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("LRL")){
+				s1 = false;
+				s2 = true;
+				s3 = true;
+				s4 = false;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("RLR")){
+				s1 = true;
+				s2 = false;
+				s3 = false;
+				s4 = true;
+				s5 = true;
+				s6 = false;
+
+				
+
+			}
+		}
+		//if (alliance == DriverStation.Alliance.Blue){
+		//true = blue, false = red
 
 
+
+		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)){
+			if (FMS.equals("RRR")){
+				s1 = true;
+				s2 = false;
+				s3 = true;
+				s4 = false;
+				s5 = true;
+				s6 = false;
+			}
+			else if (FMS.equals("LLL")){
+				s1 = false;
+				s2 = true;
+				s3 = false;
+				s4 = true;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("LRL")){
+				s1 = false;
+				s2 = true;
+				s3 = true;
+				s4 = false;
+				s5 = false;
+				s6 = true;
+			}
+			else if (FMS.equals("RLR")){
+				s1 = true;
+				s2 = false;
+				s3 = false;
+				s4 = true;
+				s5 = true;
+				s6 = false;
+
+			}
+
+		}
+		SmartDashboard.putBoolean("s1", s1);
+		SmartDashboard.putBoolean("s2", s2);
+		SmartDashboard.putBoolean("s3", s3);
+		SmartDashboard.putBoolean("s4", s4);
+		SmartDashboard.putBoolean("s5", s5);
+		SmartDashboard.putBoolean("s6", s6);
 		}
 		
 		
