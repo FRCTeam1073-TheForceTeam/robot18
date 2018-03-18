@@ -96,6 +96,8 @@ public class Robot extends IterativeRobot {
 	public double collectorPurge;
 	public double conveyorLeftLeft;
 	public double conveyorRightRight;
+	
+	public double x,y,leftInit,rightInit,headingInit;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -434,6 +436,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("s4", s4);
 		SmartDashboard.putBoolean("s5", s5);
 		SmartDashboard.putBoolean("s6", s6);
+		
+		y = 0;
+		x = 0;
+		leftInit = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+		rightInit = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+		headingInit = RobotMap.headingGyro.getAngle();
 		}
 	
 	
@@ -517,6 +525,23 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Bottom Limit", RobotMap.liftSwitchBottom.get());
 		SmartDashboard.putBoolean("Top Limit", RobotMap.liftSwitchTop.get());
 		SmartDashboard.putNumber("IR Voltage", RobotMap.clawSensor.getVoltage());
+		
+		int distLeft = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+		int distRight = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+		double heading = RobotMap.headingGyro.getAngle() - headingInit;
+		
+		double distAvg = (((distLeft - leftInit) * (2799 / 1993)) - ((distRight - rightInit) * (1993 / 2799))) / 2;
+		double distReal = ((distAvg * 3.9) / 1440) * Math.PI;
+		double headingY = Math.cos(Math.toRadians(heading));
+		double headingX = Math.sin(Math.toRadians(heading));
+		
+		y = distReal * headingY;
+		x = distReal * headingX;
+		
+		SmartDashboard.putNumber("X:", x);
+		SmartDashboard.putNumber("Y:", y);
+		SmartDashboard.putNumber("distReal:", distReal);
+		SmartDashboard.putNumber("Heading", heading);
 	}
 
 	/**
