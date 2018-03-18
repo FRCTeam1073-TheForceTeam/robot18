@@ -1,10 +1,13 @@
 package org.usfirst.frc1073.robot18.commands;
 
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.AdvancedDrive;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.IsCubeIn;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CubeGetterSupremeExtreme9000 extends CommandGroup {
+public class CubeGetterTele extends CommandGroup {
 	
-	public CubeGetterSupremeExtreme9000() {
+	public CubeGetterTele() {
 		addParallel(new CollectorDown());
 		addSequential(new OpenClaw());
 		addParallel(new IsCubeIn());
