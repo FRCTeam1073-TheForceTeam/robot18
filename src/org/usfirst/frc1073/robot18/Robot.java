@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.Bling;
 import org.usfirst.frc1073.robot18.commands.*;
+import org.usfirst.frc1073.robot18.commands.AutonomousChooser.Auto1Chooser;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.LidarSeeRobot;
 import org.usfirst.frc1073.robot18.subsystems.*;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -36,7 +38,6 @@ import org.opencv.imgproc.Imgproc;
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	public static Preferences robotPreferences;
-
 	public static OI oi;
 	public static AutoVars autoSetup;
 	public static robotElevator elevator;
@@ -62,19 +63,18 @@ public class Robot extends IterativeRobot {
 	public boolean s5;
 	public boolean s6;
 	public static Alliance alliance;
-
 	public static String FMS;
-	public static SendableChooser<AutoObject> autonomousChooser;
+	public static SendableChooser<AutoObject> autonomousPosition;
+	public static SendableChooser<AutoObject> autonomousMatchType;
 	public AutoObject left;
 	public AutoObject center;
 	public AutoObject right;
 	public AutoObject other;
-
+	public AutoObject quals;
+	public AutoObject elims;
 	public DigitalInput liftSwitchBottom;
-
 	public static double voltage;
 	public static double distance;
-
 	public static String gameData;
 	public static int position;
 	public static String elevatorWorking;
@@ -91,12 +91,17 @@ public class Robot extends IterativeRobot {
 	public double collectorPurge;
 	public double conveyorLeftLeft;
 	public double conveyorRightRight;
+	public double x,y,leftInit,rightInit,headingInit;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
 		RobotMap.init();
+
+		System.out.println("Robot Initialize");
+
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println("I'm a dank boi who's ready to go.m,n");
 		RobotMap.headingGyro.reset();
@@ -122,133 +127,31 @@ public class Robot extends IterativeRobot {
 		//lift encoder set to 0
 		RobotMap.elevatorMotorLeft.setSelectedSensorPosition(0, 0, 10);
 
-		/* Chooser Objects */
+		/* Position Objects */
 		left = new AutoObject(1);
 		center = new AutoObject(2);
 		right = new AutoObject(3);
 		other = new AutoObject(4);
+		quals = new AutoObject(5);
+		elims = new AutoObject(6);
 
-		/* Jack's Auto Variables*/
-		position = (int) SmartDashboard.getNumber("Position", 1);
-		elevatorWorking = String.valueOf(SmartDashboard.getBoolean("Elevator Working?", true));
-		othersScale = String.valueOf(SmartDashboard.getBoolean("Other Bots Scale?", false));
+		/* The Position Position */
+		autonomousPosition = new SendableChooser<AutoObject>();
+		autonomousPosition.addDefault("None", other);
+		autonomousPosition.addObject("Left", left);
+		autonomousPosition.addObject("Center", center);
+		autonomousPosition.addObject("Right", right);
+		SmartDashboard.putData("Position", autonomousPosition);
 
-		/* The Chooser */
-		autonomousChooser = new SendableChooser<AutoObject>();
-		autonomousChooser.addDefault("None", other);
-		autonomousChooser.addObject("Left", left);
-		autonomousChooser.addObject("Center", center);
-		autonomousChooser.addObject("Right", right);
-		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
-		
-
-		// The first thread, running the front Webcam to the driver station
-		Thread camera1Thread = new Thread(() -> {
-
-			// Sets up the camera, its resolution, and limits the framerate
-			// to help with bandwidth
-			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);   
-			camera1.setResolution(320, 240);
-			camera1.setFPS(12);
-
-			try {
-				Thread.sleep(20);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			CvSink cvSink = CameraServer.getInstance().getVideo(camera1);
-			CvSource outputStream = CameraServer.getInstance().putVideo("Video 1", 320, 240);
-			Mat source = new Mat();
-			boolean currentCamera = selectedCamera;
-			while( !Thread.interrupted() ) {
-				if ( currentCamera != selectedCamera ) {
-					currentCamera = selectedCamera;
-					if ( selectedCamera == false ) {
-						cvSink.setSource(camera1);            		
-						SmartDashboard.putString("Camera 1", "Camera 1");
-					}
-				}
-				cvSink.grabFrame(source);
-
-				if ( source.empty() == false ) {
-					int rows = source.rows();
-					int columns = source.cols();
-
-					Point lineStart = new Point(columns/2, 0);
-					Point lineEnd = new Point(columns/2, rows);
-					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
-
-					lineStart = new Point(0,rows/2);
-					lineEnd = new Point(columns, rows/2);
-					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
-
-					outputStream.putFrame(source);
-				}
-
-				try{
-					Thread.sleep(50);
-				} catch(Exception e) {           		
-				}
-
-			}
-		});
-
-		Thread camera2Thread = new Thread(() -> {
-
-			UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);   
-			camera2.setResolution(320, 240);
-			camera2.setFPS(12);
-
-			try {
-				Thread.sleep(20);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			CvSink cvSink = CameraServer.getInstance().getVideo(camera2);
-			CvSource outputStream = CameraServer.getInstance().putVideo("Video 2", 320, 240);
-			Mat source = new Mat();
-			boolean currentCamera = selectedCamera;
-			while( !Thread.interrupted() ) {
-				if ( currentCamera != selectedCamera ) {
-					currentCamera = selectedCamera;
-					if ( selectedCamera == false ) {
-						cvSink.setSource(camera2);            		
-						SmartDashboard.putString("Camera 2", "Camera 2");
-					}
-				}
-				cvSink.grabFrame(source);
-
-				if ( source.empty() == false ) {
-					int rows = source.rows();
-					int columns = source.cols();
-
-					Point lineStart = new Point(columns/2, 0);
-					Point lineEnd = new Point(columns/2, rows);
-					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
-
-					lineStart = new Point(0,rows/2);
-					lineEnd = new Point(columns, rows/2);
-					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
-
-					outputStream.putFrame(source);
-				}
-
-				try{
-					Thread.sleep(50);
-				} catch(Exception e) {           		
-				}
-
-			}
-		});
-		//camera1Thread.start();
-		//camera2Thread.start();
-
+		/* The MatchType Position */
+		autonomousMatchType = new SendableChooser<AutoObject>();
+		autonomousMatchType.addDefault("None", other);
+		autonomousMatchType.addObject("Qualifications", quals);
+		autonomousMatchType.addObject("Eliminations", elims);
+		SmartDashboard.putData("Match Type", autonomousMatchType);
 
 		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
 		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
-
 	}
 
 	/**
@@ -256,16 +159,13 @@ public class Robot extends IterativeRobot {
 	 * You can use it to reset subsystems before shutting down.
 	 */
 	public void disabledInit(){
-
-
-
 	}
 
 	public void disabledPeriodic() {
 	}
 
 	public void autonomousInit() {
-
+		System.out.println("Auto Setting Up");
 		Robot.pneumatic.driveTrainHighGear();
 		Robot.pneumatic.liftHighGear();
 
@@ -275,22 +175,11 @@ public class Robot extends IterativeRobot {
 
 		new LidarMiniMap();
 
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		if(gameData.charAt(0) == 'L') {
-			switchSide = "left";
-		}else {
-			switchSide = "right";
-		}
-		if(gameData.charAt(1) == 'L') {
-			scaleSide = "left";
-		}else {
-			scaleSide = "right";
-		}
-
 		/* instantiate the command used for the autonomous period */
+		System.out.println("Auto Starting");
 		autonomousCommand = new Auto1Chooser();
 		if (autonomousCommand != null) autonomousCommand.start();
-		
+
 		if(DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
 			SmartDashboard.putString("Alliance", "Blue");
 			SmartDashboard.putBoolean("A", true);
@@ -338,7 +227,7 @@ public class Robot extends IterativeRobot {
 				s5 = true;
 				s6 = false;
 
-				
+
 
 			}
 		}
@@ -389,11 +278,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("s4", s4);
 		SmartDashboard.putBoolean("s5", s5);
 		SmartDashboard.putBoolean("s6", s6);
-		}
-		
-		
-	
-
+	}
 
 	/**
 	 * This function is called periodically during autonomous
@@ -431,12 +316,9 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null) autonomousCommand.cancel();
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		alliance = DriverStation.getInstance().getAlliance();
-		
 		SmartDashboard.putString("FMS", FMS);
-		
-		//NOTE: THE FOLLOWING CODE GIVES A LIVE UPDATE OF SWITCH AND SCALE COLORS, PLEASE DO NOT ALTER!
-		
-		
+
+		/** NOTE: THE FOLLOWING CODE GIVES A LIVE UPDATE OF SWITCH AND SCALE COLORS, PLEASE DO NOT ALTER! */
 		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Blue)) {
 			if (FMS.equals("RRR")){
 				s1 = true;
@@ -469,16 +351,8 @@ public class Robot extends IterativeRobot {
 				s4 = true;
 				s5 = true;
 				s6 = false;
-
-				
-
 			}
 		}
-		//if (alliance == DriverStation.Alliance.Blue){
-		//true = blue, false = red
-
-
-
 		if (DriverStation.getInstance().getAlliance().equals(DriverStation.Alliance.Red)){
 			if (FMS.equals("RRR")){
 				s1 = false;
@@ -511,9 +385,7 @@ public class Robot extends IterativeRobot {
 				s4 = false;
 				s5 = false;
 				s6 = true;
-
 			}
-
 		}
 		SmartDashboard.putBoolean("s1", s1);
 		SmartDashboard.putBoolean("s2", s2);
@@ -521,10 +393,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("s4", s4);
 		SmartDashboard.putBoolean("s5", s5);
 		SmartDashboard.putBoolean("s6", s6);
+		y = 0;
+		x = 0;
+		leftInit = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+		rightInit = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+		headingInit = RobotMap.headingGyro.getAngle();
 	}
-
 	
-
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -538,7 +413,7 @@ public class Robot extends IterativeRobot {
 		alliance = DriverStation.getInstance().getAlliance();
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Left Motors", Math.abs(RobotMap.leftMotor1.get()));
-        SmartDashboard.putNumber("Right Motors", Math.abs(RobotMap.rightMotor1.get()));
+		SmartDashboard.putNumber("Right Motors", Math.abs(RobotMap.rightMotor1.get()));
 		if(Robot.oi.driverControl.getRawAxis(4)>.05) {
 			turnRight = true;
 			turnLeft = false;
@@ -606,6 +481,23 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Bottom Limit", RobotMap.liftSwitchBottom.get());
 		SmartDashboard.putBoolean("Top Limit", RobotMap.liftSwitchTop.get());
 		SmartDashboard.putNumber("IR Voltage", RobotMap.clawSensor.getVoltage());
+
+		int distLeft = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+		int distRight = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+		double heading = RobotMap.headingGyro.getAngle() - headingInit;
+
+		double distAvg = (((distLeft - leftInit) * (2799 / 1993)) - ((distRight - rightInit) * (1993 / 2799))) / 2;
+		double distReal = ((distAvg * 3.9) / 1440) * Math.PI;
+		double headingY = Math.cos(Math.toRadians(heading));
+		double headingX = Math.sin(Math.toRadians(heading));
+
+		y = distReal * headingY;
+		x = distReal * headingX;
+
+		SmartDashboard.putNumber("X:", x);
+		SmartDashboard.putNumber("Y:", y);
+		SmartDashboard.putNumber("distReal:", distReal);
+		SmartDashboard.putNumber("Heading", heading);
 	}
 
 	/**

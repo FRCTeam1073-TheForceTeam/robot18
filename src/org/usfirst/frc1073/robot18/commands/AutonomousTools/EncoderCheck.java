@@ -1,4 +1,4 @@
-package org.usfirst.frc1073.robot18.commands;
+package org.usfirst.frc1073.robot18.commands.AutonomousTools;
 
 import org.usfirst.frc1073.robot18.Robot;
 

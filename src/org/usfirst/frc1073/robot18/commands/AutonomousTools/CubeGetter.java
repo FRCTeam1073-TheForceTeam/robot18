@@ -1,4 +1,4 @@
-package org.usfirst.frc1073.robot18.commands;
+package org.usfirst.frc1073.robot18.commands.AutonomousTools;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -24,5 +24,6 @@ public class CubeGetter extends CommandGroup {
 		addParallel(new IsCubeIn());
 		addSequential(new VisionCubeTracker()); //Tracks cube until it is inside the collector
 		addSequential(new SuckInCube(1.5, .3)); //Pulls in and clamps onto cube
+		System.out.println("Auto Completed");
 	}
 }

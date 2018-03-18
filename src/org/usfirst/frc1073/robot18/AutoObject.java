@@ -30,16 +30,10 @@ public class AutoObject {
 			send = "other";
 		}
 		else if (n == 5) {
-			send = "pri_CTL";
+			send = "quals";
 		}
 		else if (n == 6) {
-			send = "pri_switch";
-		}
-		else if (n == 7) {
-			send = "pri_scale";
-		}
-		else if (n == 8) {
-			send = "pri_best";
+			send = "elims";
 		}
 		else {
 			send = "not set";

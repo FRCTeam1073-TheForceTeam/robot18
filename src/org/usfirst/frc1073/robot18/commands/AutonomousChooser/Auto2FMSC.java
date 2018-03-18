@@ -1,8 +1,10 @@
-package org.usfirst.frc1073.robot18.commands;
+package org.usfirst.frc1073.robot18.commands.AutonomousChooser;
 
 import org.usfirst.frc1073.robot18.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
+
 /*** If Chooser is set to Center */
 public class Auto2FMSC extends CommandGroup {
 	/** If Chooser is set to Center */
