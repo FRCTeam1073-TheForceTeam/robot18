@@ -24,7 +24,7 @@ public class LiftElevatorToDistanceScale extends Command {
 	
     public LiftElevatorToDistanceScale(double _inches) {
     	inches = _inches;
-    	timeout = 150;
+    	timeout = 450;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.elevator);
@@ -32,6 +32,10 @@ public class LiftElevatorToDistanceScale extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+<<<<<<< HEAD
+=======
+    	Robot.pneumatic.liftLowGear();
+>>>>>>> master
     	
     	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
@@ -49,7 +53,7 @@ public class LiftElevatorToDistanceScale extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	distance = RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0);
-    	SmartDashboard.putNumber("Elevator Encoder PLEASE DELETE", distance);
+
     	
     	if((Math.abs(distance)) >= target){
 			Robot.elevator.elevatorDrive.tankDrive(1, -1); //down
