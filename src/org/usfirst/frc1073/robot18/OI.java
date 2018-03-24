@@ -3,6 +3,9 @@ package org.usfirst.frc1073.robot18;
 
 import org.usfirst.frc1073.robot18.XboxController;
 import org.usfirst.frc1073.robot18.commands.*;
+import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
+
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -64,7 +67,6 @@ public class OI {
     	RobotTeleInit = driverControl.start;
     	
     	visionButton = driverControl.b;
-    	visionButton.whileHeld(new CubeGetterSupremeExtreme9000());
     	
     	driverCancel = driverControl.a;
     	
@@ -155,6 +157,7 @@ public class OI {
         SmartDashboard.putNumber("Right Motors", RobotMap.rightMotor1.get());
         SmartDashboard.putData("SeeRobot?", new LidarSeeRobot());
         SmartDashboard.putData("Start Sees White", new CheckForWhite());
+        SmartDashboard.putData("Turn off Bling", new BlingOff());
         if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;

@@ -26,6 +26,15 @@ public class AutoObject {
 		else if (n == 3) {
 			send = "right";
 		}
+		else if (n == 4) {
+			send = "other";
+		}
+		else if (n == 5) {
+			send = "quals";
+		}
+		else if (n == 6) {
+			send = "elims";
+		}
 		else {
 			send = "not set";
 		}

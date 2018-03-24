@@ -20,7 +20,7 @@ public class ControllerDifferentialDrive extends Command {
 	private double axis, axisTurn, rampEnd, forward, forwardLast, forwardFinal, turn, lastSpeed, currentSpeed, hold, held; 
 	private int rampCurrent;
 	private boolean top, bottom, ramp, holdingUp, holdingDown;
-	private double[] ramps = {.2, .35, .5, .75, .95, 1};
+	private double[] ramps = {.2, .35, .475, .5, .625, .75, .95, 1};
 
 	public ControllerDifferentialDrive() {
 		requires(Robot.drivetrain);
@@ -30,7 +30,7 @@ public class ControllerDifferentialDrive extends Command {
 	protected void initialize() {
 		/* Ramp? */
 		rampCurrent = 0;
-		rampEnd = 2;
+		rampEnd = 7;
 		hold = 0;
 		held = 10;
 		top = false;
@@ -51,9 +51,11 @@ public class ControllerDifferentialDrive extends Command {
 		axisTurn = Robot.oi.driverControl.getRawAxis(4);
 		
 		/** Deadzone */
-		if((axisTurn < .05 && axisTurn > 0) 
-				|| (axisTurn > (-0.05) && axisTurn < 0)) {
+		if((axisTurn < .05 && axisTurn > 0) || (axisTurn > (-0.05) && axisTurn < 0)) {
 			turn = 0;
+		}
+		else {
+			turn = axisTurn;
 		}
 		if((axis < .05 && axis > 0) || (axis > (-.05) && axis < 0)) {
 			forward = 0;
@@ -94,12 +96,10 @@ public class ControllerDifferentialDrive extends Command {
 			/* Checks for ramp necessity */
 			if (top == true && axis < -.05) {
 				ramp = true;
-				ramp = false; //JR - Disabling ramp for now, it is not working and I don't understand exactly how is is supposed to
 				
 			}
 			else if (bottom == true && axis > .05) {
 				ramp = true;
-				ramp = false; //JR - Disabling ramp for now, it is not working and I don't understand exactly how is is supposed to
 			}
 			
 			/* Set speed */
@@ -112,11 +112,14 @@ public class ControllerDifferentialDrive extends Command {
 				rampCurrent++;
 			}
 			else{
-				forwardFinal =  axis;
+				forwardFinal = axis;
 			}
 			
 			/* Reset Ramp? */
-			if (rampCurrent == rampEnd) {
+			if (rampCurrent >= rampEnd) {
+				top = false;
+				bottom = false;
+				hold = 0;
 				rampCurrent = 0;
 				ramp = false;
 			}
