@@ -27,7 +27,7 @@ public class AdvancedDrive extends Command {
 	 * @author Nathaniel
 	 * @param speed
 	 * @param distance in inches (must be positive)
-	 * @param timeout in milliseconds (1000 in a second) 
+	 * @param timeout in milliseconds * 5 (200 in a second) 
 	 * Note: 0 = no timeout
 	 * Note: Minimum of 5 millisecond run time
 	 * @category Drive Command

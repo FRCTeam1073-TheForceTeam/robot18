@@ -4,7 +4,7 @@ public class AutoVars {
 	
 	public static double LiftDistUp, DropoffTime, LiftDistDown, 
 	
-	ADSpeed, VisionTurnSpeed,
+	ADSpeed, VisionTurnSpeed, TurnWithGyroSpeed,
 	
 	BothADSpeed, BothAD1Distance, BothAD1Timeout, 
 	BothAD2Distance, BothAD2Timeout, BothVisionTurnSpeed, BothVisionTurnDistance,
@@ -24,6 +24,7 @@ public class AutoVars {
 		/* Speeds */
 		ADSpeed = -.8;
 		VisionTurnSpeed = .8;
+		TurnWithGyroSpeed = .5;
 		
 		/* Requirements to drop off cube in switch or near coin slot */
 		LiftDistUp = 30;
