@@ -29,7 +29,7 @@ public class LidarAlignAuto extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 
-		addSequential(new LidarAlign());
+		//addSequential(new LidarAlign());
 		//addSequential(new moveWithPID(-4));
 		//Drives near peg and auto-drives onto it
 	} 

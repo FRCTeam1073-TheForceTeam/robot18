@@ -13,7 +13,7 @@ public class Auto3CommandC_LL extends CommandGroup {
 	/** If Chooser is set to Center and FMS is LLL */
 	public Auto3CommandC_LL(){
 		System.out.println("Auto3CommandC_LL");
-		switch(/*Robot.autonomousMatchType.getSelected().getString()*/ "elims") {
+		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
 			System.out.println("Auto3CommandC_LL - quals"); //Places 2 cubes in switch
 			addSequential(new HighGearDT());
