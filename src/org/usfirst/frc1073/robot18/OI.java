@@ -36,8 +36,6 @@ public class OI {
 	public JoystickButton lidarButton;
 	public JoystickButton driverCancel;
 	public JoystickButton operatorCancel;
-	public JoystickButton conveyorRight;
-	public JoystickButton conveyorLeft;
 	public JoystickButton intake;
 	public JoystickButton purge;
 	public JoystickButton suckInButton;
@@ -53,12 +51,9 @@ public class OI {
     public JoystickButton LiftTo5FtScale;
     public JoystickButton LiftTo6FtScale;
     public JoystickButton LiftToStay;
-    public double highGearLift;
-    public double lowGearLift;
     public double collectorIntake;
     public double collectorPurge;
-    public double conveyorLeftLeft;
-    public double conveyorRightRight;
+   
 	
     public OI() {
     	
@@ -149,8 +144,6 @@ public class OI {
         SmartDashboard.putData("closeClaw", new CloseClaw());
         SmartDashboard.putData("HighDT", new HighGearDT());
         SmartDashboard.putData("LowDT", new LowGearDT());
-        SmartDashboard.putData("HighLift", new HighGearLift());
-        SmartDashboard.putData("LowLift", new LowGearLift());
         SmartDashboard.putData("ClawUp", new CollectorUp());
         SmartDashboard.putData("ClawDown", new CollectorDown());
         SmartDashboard.putNumber("Left Motors", RobotMap.leftMotor1.get());

@@ -13,7 +13,6 @@ public class Auto3CommandL_LL extends CommandGroup {
 		addParallel(new OpenClaw()); //Claw must be open to cross plane of switch
 		addSequential(new AdvancedDrive(AutoVars.BothADSpeed, AutoVars.BothAD1Distance, AutoVars.BothAD1Timeout));
 		System.out.println("Auto After First move");
-		addParallel(new Dropoff(AutoVars.DropoffTime, AutoVars.LeftDropoff));
 		addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistDown));
 		addSequential(new AdvancedDrive(AutoVars.BothADSpeed, AutoVars.BothAD2Distance, AutoVars.BothAD2Timeout)); //Drives forward while lowering lift and dropping off cube
 		System.out.println("Auto second move");

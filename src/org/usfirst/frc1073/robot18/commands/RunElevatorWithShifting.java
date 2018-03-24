@@ -27,17 +27,9 @@ public class RunElevatorWithShifting extends Command {
 		
 		if (Robot.oi.operatorControl.getRawAxis(1) > 0.05 || Robot.oi.operatorControl.getRawAxis(1) < -0.05) {
 			if (highGear && !(Robot.oi.operatorControl.getRawAxis(5) > 0.05 || Robot.oi.operatorControl.getRawAxis(5) < -0.05)){
-			Robot.pneumatic.liftLowGear();
 			}
 			speed = Robot.oi.operatorControl.getRawAxis(1);
 			highGear = false;
-		}
-		else if (Robot.oi.operatorControl.getRawAxis(5) > 0.05 || Robot.oi.operatorControl.getRawAxis(5) < -0.05) {
-			if (!highGear && !(Robot.oi.operatorControl.getRawAxis(1) > 0.05 || Robot.oi.operatorControl.getRawAxis(1) < -0.05)) {
-			Robot.pneumatic.liftHighGear();
-			}
-			speed = Robot.oi.operatorControl.getRawAxis(5);
-			highGear = true;
 		}
 		else {
 			speed = 0;

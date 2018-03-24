@@ -21,7 +21,6 @@ public class Auto3CommandC_LL extends CommandGroup {
 			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "counterclockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 80, 0));
 			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "clockwise"));
-			addParallel(new Dropoff(AutoVars.DropoffTime, AutoVars.LeftDropoff));
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistDown));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 140, AutoVars.SwitchAD2Timeout));
 			addSequential(new TurnWithGyro(AutoVars.SwitchVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.LeftVisionTurn));

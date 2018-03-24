@@ -43,7 +43,6 @@ public class Robot extends IterativeRobot {
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
 	public static robotCollector collector;
-	public static robotConveyor conveyor;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
 	public static robotPneumatic pneumatic;
@@ -89,8 +88,6 @@ public class Robot extends IterativeRobot {
 	public double lowGearLift;
 	public double collectorIntake;
 	public double collectorPurge;
-	public double conveyorLeftLeft;
-	public double conveyorRightRight;
 	public double x,y,leftInit,rightInit,headingInit;
 
 	/**
@@ -108,7 +105,6 @@ public class Robot extends IterativeRobot {
 		robotPreferences = Preferences.getInstance();
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
-		conveyor = new robotConveyor();
 		pneumatic = new robotPneumatic();
 		collector = new robotCollector();
 		oi = new OI();
@@ -167,7 +163,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		System.out.println("Auto Setting Up");
 		Robot.pneumatic.driveTrainHighGear();
-		Robot.pneumatic.liftHighGear();
 
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 
