@@ -2,7 +2,7 @@ package org.usfirst.frc1073.robot18;
 
 public class AutoVars {
 	
-	public static double LiftDistUp, DropoffTime, LiftDistDown, 
+	public static double LiftDistSwitch, DropoffTime, LiftDistFloor, LiftDistScale,
 	
 	ADSpeed, VisionTurnSpeed, TurnWithGyroSpeed,
 	
@@ -24,11 +24,12 @@ public class AutoVars {
 		/* Speeds */
 		ADSpeed = -.8;
 		VisionTurnSpeed = .8;
-		TurnWithGyroSpeed = .5;
+		TurnWithGyroSpeed = .65;
 		
-		/* Requirements to drop off cube in switch or near coin slot */
-		LiftDistUp = 30;
-		LiftDistDown = 0;
+		/* Other Functions (Elevator/Dropoff) */
+		LiftDistScale = 60;
+		LiftDistSwitch = 30;
+		LiftDistFloor = 0;
 		DropoffTime = 5;
 		
 		/* Left Strings */
