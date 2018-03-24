@@ -18,6 +18,7 @@ public class Auto3CommandC_LL extends CommandGroup {
 			System.out.println("Auto3CommandC_LL - quals"); //Places 2 cubes in switch
 			addSequential(new HighGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 0));
+			addParallel(new LidarSeeRobot());
 			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "counterclockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 80, 0));
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.hal.PDPJNI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -37,6 +38,7 @@ import org.opencv.imgproc.Imgproc;
  */
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
+	NetworkTable lidarSendTable;
 	public static Preferences robotPreferences;
 	public static OI oi;
 	public static AutoVars autoSetup;
@@ -143,7 +145,10 @@ public class Robot extends IterativeRobot {
 		System.out.println("Auto Starting");
 		autonomousCommand = new Auto1Chooser();
 		if (autonomousCommand != null) autonomousCommand.start();
+		lidarSendTable = NetworkTable.getTable("LidarSendTable");
 	}
+	
+	
 
 	/**
 	 * This function is called periodically during autonomous
@@ -152,6 +157,15 @@ public class Robot extends IterativeRobot {
 		new LidarSeeRobot();
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
+		boolean SeeObject = lidarSendTable.getBoolean("Stop", false);
+		if(SeeObject == true) {
+			Robot.notClear = true;
+			SmartDashboard.putBoolean("SeeRobot", true);
+		}
+		else {
+			Robot.notClear = false;
+		}
+		
 	}
 
 	public void teleopInit() {
