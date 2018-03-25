@@ -298,21 +298,24 @@ public class SmartDashboardSetup {
 	 * @author Max
 	 */
 	public void Nav() {
-		int distLeft = RobotMap.leftMotor1.getSelectedSensorPosition(0);
-		int distRight = RobotMap.rightMotor1.getSelectedSensorPosition(0);
-		double heading = RobotMap.headingGyro.getAngle() - headingInit;
+		if(!Robot.turn)
+		{
+			int distLeft = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+			int distRight = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+			double heading = RobotMap.headingGyro.getAngle() - headingInit;
 
-		double distAvg = (((distLeft - leftInit) * (2799 / 1993)) - ((distRight - rightInit) * (1993 / 2799))) / 2;
-		double distReal = ((distAvg * 3.9) / 1440) * Math.PI;
-		double headingY = Math.cos(Math.toRadians(heading));
-		double headingX = Math.sin(Math.toRadians(heading));
+			double distAvg = (((distLeft - leftInit) * (2799 / 1993)) - ((distRight - rightInit) * (1993 / 2799))) / 2;
+			double distReal = ((distAvg * 3.9) / 1440) * Math.PI;
+			double headingY = Math.cos(Math.toRadians(heading));
+			double headingX = Math.sin(Math.toRadians(heading));
 
-		y = distReal * headingY;
-		x = distReal * headingX;
+			y = distReal * headingY;
+			x = distReal * headingX;
 
-		SmartDashboard.putNumber("X:", x);
-		SmartDashboard.putNumber("Y:", y);
-		SmartDashboard.putNumber("distReal:", distReal);
-		SmartDashboard.putNumber("Heading", heading);
+			SmartDashboard.putNumber("X:", x);
+			SmartDashboard.putNumber("Y:", y);
+			SmartDashboard.putNumber("distReal:", distReal);
+			SmartDashboard.putNumber("Heading", heading);
+		}
 	}
 }

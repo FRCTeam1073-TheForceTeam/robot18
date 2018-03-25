@@ -53,13 +53,16 @@ public class Robot extends IterativeRobot {
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousPosition, autonomousMatchType;
 	public AutoObject left, center, right, other, quals, elims;
-	public static boolean clawBool, EncoderBool, EncoderBoolSet, notClear;
+	public static boolean clawBool, EncoderBool, EncoderBoolSet, notClear, turn;
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		//turn is false
+		turn = false;
+		
 		RobotMap.init();
 		
 		System.out.println("Robot Initializing");
@@ -129,6 +132,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		//turn is false
+		turn = false;
+		
 		System.out.println("Auto Setting Up");
 		Robot.pneumatic.driveTrainHighGear();
 		Robot.pneumatic.liftHighGear();
@@ -165,6 +171,8 @@ public class Robot extends IterativeRobot {
 		else {
 			Robot.notClear = false;
 		}
+		
+		sdSetup.Nav();
 		
 	}
 
