@@ -14,7 +14,24 @@ public class Auto3CommandC_RL extends CommandGroup {
 	public Auto3CommandC_RL(){
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
-			
+			System.out.println("Auto3CommandC_RL - quals"); //Places 2 cubes in switch
+			addSequential(new HighGearDT());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 0));
+			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "clockwise"));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 130, 0));
+			//addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));
+			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "counterclockwise")); //Drives to left side of field parallel to side of switch and raises elevator
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, AutoVars.SwitchAD2Timeout));
+			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 90, "clockwise"));
+			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 20, 0));
+			addSequential(new SpitOutCube(1, 0));
+			//addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
+			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 90, "counterclockwise"));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 60, 0));  //Drives forward, after turning and dropping off cube in switch
+			addSequential(new TurnWithGyro(AutoVars.SwitchVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.LeftVisionTurn)); //lowers elevator and turns towards cubes
+			addSequential(new CubeGetter());
+			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 30, "counterclockwise")); //Turns towards switch again after obtaining cube
+			addSequential(new SpitOutCube(1, 0 ));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandC_RL - elims"); //Places 1 cube in scale + gets another cube
