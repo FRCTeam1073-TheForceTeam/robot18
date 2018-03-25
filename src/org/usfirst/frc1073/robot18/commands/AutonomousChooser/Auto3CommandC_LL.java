@@ -38,11 +38,11 @@ public class Auto3CommandC_LL extends CommandGroup {
 			System.out.println("Auto3CommandC_LL - elims"); //Places 1 cube in scale + gets another cube
 			addSequential(new HighGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 150, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "clockwise")); //Drives to left wall and aligns parallel to it
+			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 50, "counterclockwise"));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 120, 0));
+			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 50, "clockwise")); //Drives to left wall and aligns parallel to it
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistScale));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 155, 0)); //Drives to scale
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 175, 0)); //Drives to scale
 			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 80, "counterclockwise"));
 			addSequential(new SpitOutCube(1, 0)); //Deposits cube into scale
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));

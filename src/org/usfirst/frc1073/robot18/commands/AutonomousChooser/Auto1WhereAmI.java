@@ -11,8 +11,8 @@ public class Auto1WhereAmI extends Command {
 	protected void initialize() {
 		/* Sends data to dashboard */
 		SmartDashboard.putString("FMS DATA", Robot.FMS);
-		SmartDashboard.putString("Position", Robot.autonomousPosition.getSelected().getString());
-		SmartDashboard.putString("Match Type", Robot.autonomousMatchType.getSelected().getString());
+		SmartDashboard.putString("Position Selected", Robot.autonomousPosition.getSelected().getString());
+		SmartDashboard.putString("Match Type Selected", Robot.autonomousMatchType.getSelected().getString());
 	}
 
 	protected boolean isFinished() {
