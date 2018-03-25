@@ -126,9 +126,15 @@ public class Robot extends IterativeRobot {
 	 * You can use it to reset subsystems before shutting down.
 	 */
 	public void disabledInit(){
+		Robot.oi.driverControl.rumbleTimeRep(1, 250, 2);
+		Robot.oi.driverControl.rumbleTimeRep(.2, 250, 2);
+		Robot.oi.driverControl.rumbleTimeRep(1, 250, 2);
+		Robot.oi.driverControl.rumbleTimeRep(.2, 250, 2);
+		
 	}
 
 	public void disabledPeriodic() {
+		
 	}
 
 	public void autonomousInit() {

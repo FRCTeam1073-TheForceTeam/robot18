@@ -30,7 +30,7 @@ public class LiftElevatorToDistanceScale extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.pneumatic.liftLowGear();
+    	Robot.pneumatic.liftHighGear();
     	
     	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
@@ -75,7 +75,7 @@ public class LiftElevatorToDistanceScale extends Command {
     		finish = true;
     	}
     	if(inches == 0 && !RobotMap.liftSwitchBottom.get()) finish = true;
-    	if(!RobotMap.liftSwitchTop.get()) finish = true;
+    	//if(!RobotMap.liftSwitchTop.get()) finish = true;
         return finish;
     }
 
