@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
-/*** If Chooser is set to Right and FMS is LLL */
+/*** If Chooser is set to Left and FMS is RRR */
 public class Auto3CommandL_RR extends CommandGroup {
-	/** If Chooser is set to Right and FMS is LLL */
+	/** If Chooser is set to Left and FMS is RRR */
 	public Auto3CommandL_RR(){
 
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
