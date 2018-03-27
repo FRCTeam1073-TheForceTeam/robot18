@@ -20,11 +20,9 @@ public class LiftElevatorToDistanceScale extends Command {
 	double target;
 	double inches;
 	boolean up;
-	double timeout; //DELETE THIS
 	
     public LiftElevatorToDistanceScale(double _inches) {
     	inches = _inches;
-    	timeout = 450;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.elevator);
@@ -32,7 +30,7 @@ public class LiftElevatorToDistanceScale extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.pneumatic.liftLowGear();
+    	Robot.pneumatic.liftHighGear();
     	
     	RobotMap.elevatorMotorLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
@@ -58,7 +56,6 @@ public class LiftElevatorToDistanceScale extends Command {
     	if((Math.abs(distance)) <= target){
 			Robot.elevator.elevatorDrive.tankDrive(-1, 1); //up
     	}
-    	timeout--;
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -78,13 +75,11 @@ public class LiftElevatorToDistanceScale extends Command {
     		finish = true;
     	}
     	if(inches == 0 && !RobotMap.liftSwitchBottom.get()) finish = true;
-    	if(timeout == 0) { //DELETE THIS
-    		finish = true; //DELETE THIS
-    	} //DELETE THIS
-
+    	//if(!RobotMap.liftSwitchTop.get()) finish = true;
         return finish;
     }
 
+    
     // Called once after isFinished returns true
     protected void end() {
 		Robot.elevator.elevatorDrive.tankDrive(0, 0);
