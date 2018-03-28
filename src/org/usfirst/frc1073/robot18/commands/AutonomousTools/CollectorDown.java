@@ -10,12 +10,18 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.subsystems.*;
-/** Puts down pneumatic collector */
+/*** Lowers Collector */
 public class CollectorDown extends Command {
 
+	/** Lowers Collector */
+	public CollectorDown() {
+		
+	}
+	
 	protected void initialize() {
 		Robot.pneumatic.collectorDown();
 	}
+	
 	protected boolean isFinished() {
 		return true;
 	}

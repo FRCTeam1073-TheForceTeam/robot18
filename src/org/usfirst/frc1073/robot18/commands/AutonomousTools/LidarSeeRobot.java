@@ -39,7 +39,8 @@ public class LidarSeeRobot extends Command {
 	protected void initialize() {
 		//SmartDashboard.putString("lidar info", "init");
 		//SmartDashboard.putString("hello_world", "x");
-
+		SeeObject = lidarSendTable.getBoolean("Stop", false);
+		
 	}
 
 	protected void execute() {

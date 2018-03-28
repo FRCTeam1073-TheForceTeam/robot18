@@ -44,6 +44,9 @@ public class AdvancedDrive extends Command {
 	}
 
 	protected void initialize() {
+		/* Set Robot.turn to false because not turning */
+		Robot.turn = false;
+		
 		/* Timer setup and check for if used */
 		timeEnd = timeout;
 		timer = 0;
