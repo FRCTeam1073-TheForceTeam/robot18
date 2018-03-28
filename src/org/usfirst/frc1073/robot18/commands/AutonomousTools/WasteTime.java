@@ -1,5 +1,7 @@
 package org.usfirst.frc1073.robot18.commands.AutonomousTools;
 
+import org.usfirst.frc1073.robot18.TimeWaster.towerRenderer;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class WasteTime extends Command {
@@ -22,6 +24,10 @@ public class WasteTime extends Command {
 	}
 
 	protected void intitialize() {
+		if (timeBool == false) {
+			towerRenderer.meme.solve();
+		}
+		
 		timer = 0;
 		timeEnd = time * 20;
 	}
