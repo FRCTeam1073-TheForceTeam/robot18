@@ -15,7 +15,6 @@ public class Auto3CommandL_RR extends CommandGroup {
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
 			System.out.println("Auto3CommandL_RR - quals");
-			addParallel(new Dropoff(AutoVars.DropoffTime, AutoVars.LeftDropoff));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.NeitherAD1Distance, AutoVars.NeitherAD1Timeout));
 			addSequential(new TurnWithGyro(AutoVars.NeitherVisionTurnSpeed, AutoVars.NeitherVisionTurnDistance, AutoVars.LeftVisionTurn));
 			addSequential(new CubeGetter()); //Drops cube near exchange, then turns around and crosses auto line while aligning to a cube

@@ -46,7 +46,6 @@ public class Robot extends IterativeRobot {
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
 	public static robotCollector collector;
-	public static robotConveyor conveyor;
 	public static robotPneumatic pneumatic;
 	public static Bling bling;
 	public static Alliance alliance;

@@ -16,7 +16,6 @@ public class Auto3CommandL_LR extends CommandGroup {
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));
 			addParallel(new OpenClaw()); //Claw must be open to cross plane of switch
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchAD1Distance, AutoVars.SwitchAD1Timeout));
-			addParallel(new Dropoff(AutoVars.DropoffTime, AutoVars.LeftDropoff));
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchAD2Distance, AutoVars.SwitchAD2Timeout));
 			addSequential(new TurnWithGyro(AutoVars.SwitchVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.LeftVisionTurn));

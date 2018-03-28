@@ -16,7 +16,6 @@ public class Auto3CommandR_RR extends CommandGroup {
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));
 			addParallel(new OpenClaw()); //Claw must be open to cross plane of switch
 			addSequential(new AdvancedDrive(AutoVars.BothADSpeed, AutoVars.BothAD1Distance, AutoVars.BothAD1Timeout));
-			addParallel(new Dropoff(AutoVars.DropoffTime, AutoVars.RightDropoff));
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
 			addSequential(new AdvancedDrive(AutoVars.BothADSpeed, AutoVars.BothAD2Distance, AutoVars.BothAD2Timeout)); //Drives forward while lowering lift and dropping off cube
 			addSequential(new TurnWithGyro(AutoVars.BothVisionTurnSpeed, AutoVars.BothVisionTurnDistance, AutoVars.RightVisionTurn));
