@@ -12,6 +12,7 @@ public class RunElevatorWithShifting extends Command {
 	
 	private double speed;
 	private boolean highGear;
+	private double speed2;
 	
 	public RunElevatorWithShifting() {
 		requires(Robot.elevator);
@@ -19,6 +20,7 @@ public class RunElevatorWithShifting extends Command {
 	
 	protected void initialize() {
 		speed = 0;
+		speed2 = 0;
 		//highGear = false;
 
 	}
@@ -26,8 +28,7 @@ public class RunElevatorWithShifting extends Command {
 	protected void execute() {
 		
 		if (Robot.oi.operatorControl.getRawAxis(1) > 0.05 || Robot.oi.operatorControl.getRawAxis(1) < -0.05) {
-			if (highGear && !(Robot.oi.operatorControl.getRawAxis(5) > 0.05 || Robot.oi.operatorControl.getRawAxis(5) < -0.05)){
-			}
+			
 			speed = Robot.oi.operatorControl.getRawAxis(1);
 			highGear = false;
 		}
@@ -42,6 +43,18 @@ public class RunElevatorWithShifting extends Command {
     	else {
     		Robot.elevator.elevatorDrive.tankDrive(0, 0);
     	}
+		if ((Robot.oi.operatorControl.getRawAxis(5) > 0.05 || Robot.oi.operatorControl.getRawAxis(5) < -0.05)){
+			speed2 = Robot.oi.operatorControl.getRawAxis(5);
+		}
+		if(RobotMap.collectorSwitchBack.get() || speed2 <0 || RobotMap.collectorSwitchFront.get()) {
+			Robot.elevator.elbowDrive.tankDrive(0, 0);
+			}
+		else {
+			speed2 = 0;
+		}
+			Robot.elevator.elbowDrive.tankDrive(speed2, speed2);
+			
+		
 		
 	}
 

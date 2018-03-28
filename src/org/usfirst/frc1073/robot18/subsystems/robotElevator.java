@@ -20,8 +20,11 @@ public class robotElevator extends Subsystem {
     private final WPI_TalonSRX leftMotor = RobotMap.elevatorMotorLeft;
     private final WPI_TalonSRX rightMotor = RobotMap.elevatorMotorRight;
     private final DigitalInput switchBottom = RobotMap.liftSwitchBottom;
+    private final DigitalInput collectorSwitchBack = RobotMap.collectorSwitchBack;
+    private final DigitalInput collectorSwitchFront = RobotMap.collectorSwitchFront;
     
     public DifferentialDrive elevatorDrive;
+    public DifferentialDrive elbowDrive;
 	public robotElevator() {
 		rightMotor.follow(leftMotor);
 		
@@ -29,6 +32,7 @@ public class robotElevator extends Subsystem {
 		leftMotor.setSafetyEnabled(false);
 		
 		elevatorDrive = new DifferentialDrive(RobotMap.elevatorMotorLeft, RobotMap.elevatorMotorRight);
+		elbowDrive = new DifferentialDrive(RobotMap.elbowMotor, RobotMap.elbowMotor);
 		//rightMotor.follow(leftMotor);
 	}
 
