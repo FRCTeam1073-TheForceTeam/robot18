@@ -38,7 +38,7 @@ public class RunElevatorWithShifting extends Command {
 		
 		if(RobotMap.liftSwitchBottom.get() || speed < 0)
     	{
-			Robot.elevator.elevatorDrive.tankDrive(speed, -speed);
+			Robot.elevator.elevatorDrive.tankDrive(speed, speed);
     	}
     	else {
     		Robot.elevator.elevatorDrive.tankDrive(0, 0);
