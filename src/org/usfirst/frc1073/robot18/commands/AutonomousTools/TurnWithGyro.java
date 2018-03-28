@@ -18,6 +18,7 @@ public class TurnWithGyro extends Command {
 	private double slowdownDistance = 11;
 	private double slowdownValue = .5;
 	private double slowdownMin = .5;
+	private double leftEnc,rightEnc;
 	
 	/** Uses basic drive to turn based on the gyro's position from the last time the gyro was reset
 	 * 
@@ -38,6 +39,13 @@ public class TurnWithGyro extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
+    	/* Change Robot.turn to true because turning */
+    	Robot.turn = true;
+    	
+    	/* Remember encoder values for later */
+    	leftEnc = RobotMap.leftMotor1.getSelectedSensorPosition(0);
+    	rightEnc = RobotMap.rightMotor1.getSelectedSensorPosition(0);
+    	
     	originalDegrees = RobotMap.headingGyro.getAngle();
     }
 
@@ -83,6 +91,9 @@ public class TurnWithGyro extends Command {
     
     // Called once after isFinished returns true
     protected void end() {
+    	/* Set the encoder values back to what they were */
+    	RobotMap.leftMotor1.setSelectedSensorPosition((int) leftEnc, 0, 10);
+    	RobotMap.rightMotor1.setSelectedSensorPosition((int) rightEnc, 0, 10);
     }
 
     // Called when another command which requires one or more of the same

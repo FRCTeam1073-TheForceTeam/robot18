@@ -89,10 +89,10 @@ public class RobotMap {
 		rightWrist = new Solenoid (1, 0);
 		//fixed
 		//pneumatics on the right side of the claw
-		liftHigh = new Solenoid (1, 2);
+		liftHigh = new Solenoid (1, 4);
 		//fixed
 		//sets the lift to high gear
-		liftLow = new Solenoid (1, 4);
+		liftLow = new Solenoid (1, 2);
 		//fixed
 		//sets the lift to low gear
 		gearHigh = new Solenoid (1, 5);
