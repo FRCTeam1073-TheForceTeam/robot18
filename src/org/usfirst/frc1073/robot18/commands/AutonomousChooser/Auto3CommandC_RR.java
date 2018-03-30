@@ -16,7 +16,7 @@ public class Auto3CommandC_RR extends CommandGroup {
 		case "quals":
 			System.out.println("Auto3CommandC_RR - quals"); //Places 2 cubes in switch
 			addSequential(new HighGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 0));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 80));
 			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "clockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 130, 0));
 			//addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));
@@ -36,7 +36,7 @@ public class Auto3CommandC_RR extends CommandGroup {
 		case "elims":
 			System.out.println("Auto3CommandC_RR - elims"); //Places 1 cube in scale + gets another cube
 			addSequential(new HighGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 0));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 80));
 			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 50, "clockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 120, 0));
 			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 50, "counterclockwise")); //Drives to left wall and aligns parallel to it
