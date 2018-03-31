@@ -11,8 +11,6 @@ import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 public class Auto3CommandL_LLSimple extends CommandGroup {
 	/** If Chooser is set to Left and FMS is LLL */
 	public Auto3CommandL_LLSimple() {
-		addParallel(new ElevatorMove("high", 1, 55));
-		addParallel(new SpitOutCube(.5));
 		addSequential(new AdvancedDrive(-.8, 115, 100));
 		addSequential(new Dropoff(2, "left"));
 	}
