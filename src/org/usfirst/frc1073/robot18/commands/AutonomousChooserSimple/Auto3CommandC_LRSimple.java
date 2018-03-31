@@ -11,9 +11,10 @@ import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 public class Auto3CommandC_LRSimple extends CommandGroup {
 	/** If Chooser is set to Center and FMS is LRL */
 	public Auto3CommandC_LRSimple() {
-		addSequential(new TurnWithGyro(.8, 27, "counterclockwise"));
+		addSequential(new TurnWithGyro(.8, 35, "counterclockwise"));
 		addSequential(new ElevatorMove("high", 1, 50));
 		addSequential(new AdvancedDrive(.8, 100, 90));
+		addSequential(new TurnWithGyro(.8, 32, "clockwise"));
 		addSequential(new SpitOutCube(.5));
 	}
 }
