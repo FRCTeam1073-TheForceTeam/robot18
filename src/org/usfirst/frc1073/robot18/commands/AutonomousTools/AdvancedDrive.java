@@ -141,9 +141,9 @@ public class AdvancedDrive extends Command {
 		/** Variable update code */
 		/* Uses that average and the original distance to be traveled to make a percentage total completed */
 		percentComplete = avgEncDif/toBeTraveled;
-		boolean temp = true;
+
 		/** Uses lidar to check if path is clear */
-		if (temp) {
+		if (Robot.notClear == false) {
 			/* Ramp? */
 			/* Sets up a final speed */
 			if (rampStart < rampEnd) {
