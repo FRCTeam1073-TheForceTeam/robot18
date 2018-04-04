@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.Bling;
 import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.commands.AutonomousChooser.Auto1Chooser;
+import org.usfirst.frc1073.robot18.commands.AutonomousChooserSimple.*;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.LidarSeeRobot;
 import org.usfirst.frc1073.robot18.subsystems.*;
 import edu.wpi.cscore.CvSink;
@@ -152,7 +153,7 @@ public class Robot extends IterativeRobot {
 		
 		/* instantiate the command used for the autonomous period */
 		System.out.println("Auto Starting");
-		autonomousCommand = new Auto1Chooser();
+		autonomousCommand = new Auto1ChooserSimple();
 		if (autonomousCommand != null) autonomousCommand.start();
 		lidarSendTable = NetworkTable.getTable("LidarSendTable");
 	}
