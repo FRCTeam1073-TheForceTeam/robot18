@@ -19,9 +19,10 @@ public class Auto3CommandC_LL extends CommandGroup {
 			addSequential(new HighGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 5, 10));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 60, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 125, 100));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 100, 100));
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
-			addSequential(new SpitOutCube(1, .5));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, 10));
+			addSequential(new SpitOutCube(1, .8));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandC_LL - elims"); //Places 1 cube in scale + gets another cube

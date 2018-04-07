@@ -22,8 +22,8 @@ public class AutoVars {
 	
 	public AutoVars() {
 		/* Speeds */
-		ADSpeed = -.8;
-		VisionTurnSpeed = .8;
+		ADSpeed = -1;
+		VisionTurnSpeed = .9;
 		TurnSpeed = .65;
 		
 		/* Other Functions (Elevator/Dropoff) */

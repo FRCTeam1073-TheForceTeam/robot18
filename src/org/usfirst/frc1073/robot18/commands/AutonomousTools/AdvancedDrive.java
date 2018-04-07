@@ -22,6 +22,10 @@ public class AdvancedDrive extends Command {
 	/* Timer variables */
 	private double timeout, timer, timeEnd;
 	private boolean fin;
+	
+	//New Timer
+	
+	private double timeStart, timerEnd;
 
 	/** PID, but not because this actually works
 	 * @author Nathaniel
@@ -50,6 +54,8 @@ public class AdvancedDrive extends Command {
 		/* Timer setup and check for if used */
 		timeEnd = timeout;
 		timer = 0;
+		
+		
 
 		/* Grabs initial robot encoder position */
 		startleftEncDif = RobotMap.leftMotor1.getSelectedSensorPosition(0);
@@ -58,6 +64,7 @@ public class AdvancedDrive extends Command {
 		/* Sets speed to an editable value and zeros out values */
 		currentSpeed = speed;
 		avgEncDif = 0;
+		
 
 		/* Grabs current heading to use for comparison during drive */
 		originalDegrees = RobotMap.headingGyro.getAngle();
@@ -77,9 +84,19 @@ public class AdvancedDrive extends Command {
 		rampStart = 0;
 		rampEnd = 2;
 		Robot.bling.sendAdvancedDrive();
+		
+		//New Timer
+		timerEnd = ((dist/60) * 1000) + 1000;
+		timeStart = System.currentTimeMillis();
 	}
 
 	protected void execute() {
+		
+		double deltaTime = (timerEnd + timeStart) - System.currentTimeMillis();
+		
+		System.out.println("timerEnd: " + (long)timerEnd + " timeStart: " + (long)timeStart + " CurrentTime: " + System.currentTimeMillis() + " DeltaTime: " + (long)deltaTime);
+		
+		
 		/** Heading Checks */
 		/* Checks how far the robot has gone from the initial position */
 		leftEncDif = Math.abs(startleftEncDif - RobotMap.leftMotor1.getSelectedSensorPosition(0));
@@ -126,7 +143,7 @@ public class AdvancedDrive extends Command {
 			avgEncDif = (leftEncDif + rightEncDif) / 2;
 		}
 		/* Left is working */
-		else if (leftEncDif != 0 && rightEncDif == 0) {
+		else if (leftEncDif != 0 && rightEncDif <= 1) {
 			avgEncDif = (leftEncDif);
 		}
 		/* Right is working */
@@ -184,6 +201,7 @@ public class AdvancedDrive extends Command {
 			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBool = false;
 				isFinished = true;
+				
 				Robot.bling.sendFinished();
 			}
 		}
@@ -205,6 +223,14 @@ public class AdvancedDrive extends Command {
 				isFinished = true;
 				Robot.bling.sendFinished();
 			}
+		}
+		//New Timer
+		if (System.currentTimeMillis() - timeStart >= timerEnd)
+		{
+			Robot.EncoderBoolSet = true;
+			Robot.EncoderBool = true;
+			isFinished = true;
+			Robot.bling.sendFinished();
 		}
 		//Cancel button
 		else if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {

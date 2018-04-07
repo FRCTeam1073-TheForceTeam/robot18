@@ -38,9 +38,9 @@ public class SpitOutCube extends Command {
 	protected void initialize() {
 		clawBool = false;
 
-		delayEnd = delay * 20;
+		delayEnd = delay * 50;
 		delayer = 0;
-		timeEnd = time * 20;
+		timeEnd = time * 50;
 		timer = 0;
 	}
 

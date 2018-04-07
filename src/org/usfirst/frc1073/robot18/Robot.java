@@ -193,6 +193,7 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		//turn is false
+		RobotMap.headingGyro.reset();
 		turn = false;
 		
 		System.out.println("Auto Setting Up");
