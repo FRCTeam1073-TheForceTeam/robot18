@@ -151,6 +151,7 @@ public class OI {
         SmartDashboard.putData("SeeRobot?", new LidarSeeRobot());
         SmartDashboard.putData("Start Sees White", new CheckForWhite());
         SmartDashboard.putData("Turn off Bling", new BlingOff());
+        SmartDashboard.putData("Auto Test", new AutoTest());
         if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;
@@ -211,6 +212,8 @@ public class OI {
         }
         SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
         SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
+        
+      
         
         
        // SmartDashboard.putNumber("Percent up",((RobotMap.liftEncoder.get()/9.42)/1440.0/2.0/(16.0/5.0)));

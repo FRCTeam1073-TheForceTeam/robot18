@@ -21,7 +21,7 @@ public class Auto3CommandL_LR extends CommandGroup {
 			addSequential(new TurnWithGyro(AutoVars.SwitchVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.LeftVisionTurn));
 			addSequential(new CubeGetter());
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 30, "clockwise"));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 30, "clockwise"));
 			addSequential(new SpitOutCube(1, 0));
 			System.out.println("Auto Completed");
 			break;

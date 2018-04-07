@@ -4,7 +4,7 @@ public class AutoVars {
 	
 	public static double LiftDistSwitch, DropoffTime, LiftDistFloor, LiftDistScale,
 	
-	ADSpeed, VisionTurnSpeed, TurnWithGyroSpeed,
+	ADSpeed, VisionTurnSpeed, TurnSpeed,
 	
 	BothADSpeed, BothAD1Distance, BothAD1Timeout, 
 	BothAD2Distance, BothAD2Timeout, BothVisionTurnSpeed, BothVisionTurnDistance,
@@ -24,7 +24,7 @@ public class AutoVars {
 		/* Speeds */
 		ADSpeed = -.8;
 		VisionTurnSpeed = .8;
-		TurnWithGyroSpeed = .65;
+		TurnSpeed = .65;
 		
 		/* Other Functions (Elevator/Dropoff) */
 		LiftDistScale = 60;
