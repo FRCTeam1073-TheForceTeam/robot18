@@ -26,7 +26,7 @@ public class RunElevatorWithShifting extends Command {
 	}
 	
 	protected void execute() {
-		
+		//moves the lift
 		if (Robot.oi.operatorControl.getRawAxis(1) > 0.05 || Robot.oi.operatorControl.getRawAxis(1) < -0.05) {
 			
 			speed = Robot.oi.operatorControl.getRawAxis(1);
@@ -43,6 +43,8 @@ public class RunElevatorWithShifting extends Command {
     	else {
     		Robot.elevator.elevatorDrive.tankDrive(0, 0);
     	}
+		
+		//moves the elbow
 		if ((Robot.oi.operatorControl.getRawAxis(5) > 0.05 || Robot.oi.operatorControl.getRawAxis(5) < -0.05)){
 			speed2 = Robot.oi.operatorControl.getRawAxis(5);
 		}
