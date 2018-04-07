@@ -21,17 +21,17 @@ public class Auto3CommandR_RR extends CommandGroup {
 			addSequential(new TurnWithGyro(AutoVars.BothVisionTurnSpeed, AutoVars.BothVisionTurnDistance, AutoVars.RightVisionTurn));
 			addSequential(new CubeGetter());
 			addParallel(new LiftElevatorToDistanceScale(30));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 30, "clockwise"));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 30, "clockwise"));
 			addSequential(new SpitOutCube(1, 0));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandR_RR - elims"); //Places 1 cube in scale + gets another cube
 			addParallel(new LiftElevatorToDistanceScale(60));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 260, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 90, "clockwise"));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "clockwise"));
 			addSequential(new SpitOutCube(1, 0));
 			addParallel(new LiftElevatorToDistanceScale(0));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "counterclockwise"));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 45, "counterclockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 60, 0));
 			addSequential(new CubeGetter());
 			break;

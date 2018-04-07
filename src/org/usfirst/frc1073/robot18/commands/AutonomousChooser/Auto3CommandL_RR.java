@@ -23,16 +23,16 @@ public class Auto3CommandL_RR extends CommandGroup {
 		case "elims":
 			System.out.println("Auto3CommandL_RR - elims");
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 200, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 90, "clockwise"));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "clockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 190, 0));
 			addParallel(new LiftElevatorToDistanceScale(60));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 90, "counterclockwise"));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "counterclockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 70, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 90, "clockwise"));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "clockwise"));
 			addSequential(new SpitOutCube());
 			addParallel(new CloseClaw());
 			addParallel(new LiftElevatorToDistanceScale(0));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "counterclockwise"));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 45, "counterclockwise"));
 			break;
 		default:
 			SmartDashboard.putString("MatchType", "!!!Chooser Not Set!!!");
