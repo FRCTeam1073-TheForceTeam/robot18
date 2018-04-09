@@ -51,6 +51,7 @@ public class AdvancedDriveFR extends Command {
 
 		/* Grabs current heading to use for comparison during drive */
 		originalDegrees = RobotMap.headingGyro.getAngle();
+		originalDegrees = originalDegrees%360;
 
 		/* Variables for the math of the encoder tick to distance */
 		double rotation = 1440;
