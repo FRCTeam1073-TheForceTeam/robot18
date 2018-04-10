@@ -20,7 +20,7 @@ public class robotElevator extends Subsystem {
     private final WPI_TalonSRX leftMotor = RobotMap.elevatorMotorLeft;
     private final WPI_TalonSRX rightMotor = RobotMap.elevatorMotorRight;
     private final DigitalInput switchBottom = RobotMap.liftSwitchBottom;
-    private final DigitalInput collectorSwitchBack = RobotMap.collectorSwitchBack;
+    private final DigitalInput collectorSwitchBack = RobotMap.collectorFlip;
     private final DigitalInput collectorSwitchFront = RobotMap.collectorSwitchFront;
     
     public DifferentialDrive elevatorDrive;

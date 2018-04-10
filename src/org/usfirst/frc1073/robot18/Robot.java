@@ -260,7 +260,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left", RobotMap.leftMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right", RobotMap.rightMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
-		
+		SmartDashboard.putBoolean("Flip?", RobotMap.collectorFlip.get());
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		alliance = DriverStation.getInstance().getAlliance();
 		

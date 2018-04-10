@@ -17,7 +17,7 @@ public class robotCollector extends Subsystem {
     private final WPI_VictorSPX leftCollectorMotor = RobotMap.leftCollectorMotor;
     private final Encoder collectorEncoder = RobotMap.collectorEncoder;
     private final DigitalInput collectorSwitchBottom = RobotMap.collectorSwitchBottom;
-    private final DigitalInput collectorSwitchBack = RobotMap.collectorSwitchBack;
+    private final DigitalInput collectorSwitchBack = RobotMap.collectorFlip;
     private final DigitalInput collectorSwitchFront = RobotMap.collectorSwitchFront;
     
     public DifferentialDrive collectDrive;

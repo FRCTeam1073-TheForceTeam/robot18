@@ -48,7 +48,7 @@ public class RunElevatorWithShifting extends Command {
 		if ((Robot.oi.operatorControl.getRawAxis(5) > 0.05 || Robot.oi.operatorControl.getRawAxis(5) < -0.05)){
 			speed2 = Robot.oi.operatorControl.getRawAxis(5);
 		}
-		if(RobotMap.collectorSwitchBack.get() || speed2 <0 || RobotMap.collectorSwitchFront.get()) {
+		if(RobotMap.collectorFlip.get() || speed2 <0 || RobotMap.collectorSwitchFront.get()) {
 			Robot.elevator.elbowDrive.tankDrive(0, 0);
 			}
 		else {

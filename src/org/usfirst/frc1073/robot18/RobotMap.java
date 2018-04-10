@@ -59,7 +59,7 @@ public class RobotMap {
 	public static WPI_VictorSPX leftCollectorMotor;
 	public static WPI_VictorSPX rightCollectorMotor;
 	public static DigitalInput collectorSwitchBottom;
-	public static DigitalInput collectorSwitchBack;
+	public static DigitalInput collectorFlip;
 	public static DigitalInput collectorSwitchFront;
 
 	public static void init() {
@@ -67,8 +67,8 @@ public class RobotMap {
 		LiveWindow.addSensor("Elevator", "switchBottom", liftSwitchBottom);
 		liftSwitchTop = new DigitalInput(1);
 		LiveWindow.addSensor("Elevator", "switchTop", liftSwitchTop);
-		collectorSwitchBack = new DigitalInput(2);
-		LiveWindow.addSensor("collector", "switchBack", collectorSwitchBack);
+		collectorFlip = new DigitalInput(2);
+		LiveWindow.addSensor("collector", "switchBack", collectorFlip);
 		collectorSwitchFront = new DigitalInput(3);
 		LiveWindow.addSensor("collector", "switchFront", collectorSwitchFront);
 
