@@ -23,7 +23,7 @@ public class ElbowUpDown extends Command {
     }
 
     protected void initialize() {
-    	RobotMap.elbowMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    	RobotMap.elbowMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
     	distance = RobotMap.elbowMotor.getSelectedSensorPosition(0);
     }
 

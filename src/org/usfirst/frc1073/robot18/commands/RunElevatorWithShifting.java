@@ -27,9 +27,13 @@ public class RunElevatorWithShifting extends Command {
 	
 	protected void execute() {
 		//moves the lift
-		if (Robot.oi.operatorControl.getRawAxis(1) > 0.05 || Robot.oi.operatorControl.getRawAxis(1) < -0.05) {
+		if (Robot.oi.operatorControl.getRawAxis(1) > 0.05 ) {
 			
-			speed = Robot.oi.operatorControl.getRawAxis(1);
+			speed = (Robot.oi.operatorControl.getRawAxis(1)*0.5);
+			highGear = false;
+		}
+		else if(Robot.oi.operatorControl.getRawAxis(1) < -0.05) {
+			speed = (Robot.oi.operatorControl.getRawAxis(1));
 			highGear = false;
 		}
 		else {
@@ -45,8 +49,16 @@ public class RunElevatorWithShifting extends Command {
     	}
 		
 		//moves the elbow
-		if ((Robot.oi.operatorControl.getRawAxis(5) > 0.05 || Robot.oi.operatorControl.getRawAxis(5) < -0.05)){
-			speed2 = Robot.oi.operatorControl.getRawAxis(5);
+		if ((Robot.oi.operatorControl.getRawAxis(5) > 0.05)){
+			if(RobotMap.elbowMotor.getSelectedSensorPosition(0)>5000) {
+				speed2 = .25;
+			}
+			else {
+			speed2 = (Robot.oi.operatorControl.getRawAxis(5)*0.75);
+		}
+		}
+		else if(Robot.oi.operatorControl.getRawAxis(5) < -0.05) {
+			speed2 = (Robot.oi.operatorControl.getRawAxis(5)*0.5);
 		}
 		if(RobotMap.collectorFlip.get() || speed2 <0 || RobotMap.collectorSwitchFront.get()) {
 			Robot.elevator.elbowDrive.tankDrive(0, 0);

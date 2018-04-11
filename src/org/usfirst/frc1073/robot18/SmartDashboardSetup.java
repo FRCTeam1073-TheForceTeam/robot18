@@ -238,6 +238,7 @@ public class SmartDashboardSetup {
 			turnLeft = false;
 		}
 		SmartDashboard.putNumber("Lift Speed", Math.abs(RobotMap.elevatorMotorRight.get()));
+		SmartDashboard.putNumber("lift axis", Robot.oi.operatorControl.getRawAxis(1));
 		SmartDashboard.putBoolean("turn Left", turnLeft);
 		SmartDashboard.putBoolean("", turnRight);
 		if(RobotMap.clawSensor.getAverageVoltage() > 1) {
