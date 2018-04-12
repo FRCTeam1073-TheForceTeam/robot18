@@ -11,7 +11,9 @@ import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 /*** If Chooser is set to Center and FMS is LLL */
 public class Auto3CommandC_LL extends CommandGroup {
-	/** If Chooser is set to Center and FMS is LLL */
+	/** If Chooser is set to Center and FMS is LLL
+	 * @author Jack
+	 */
 	public Auto3CommandC_LL(){
 		System.out.println("Auto3CommandC_LL");
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
@@ -23,7 +25,7 @@ public class Auto3CommandC_LL extends CommandGroup {
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.MiddleDist, 100));
 			addSequential(new TurnToPoint(AutoVars.TurnSpeedSlow, 0));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.FinalApproach, 10));
-			addSequential(new SpitOutCube(1, -0.8));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandC_LL - elims"); //Places 1 cube in scale + gets another cube
@@ -39,12 +41,14 @@ public class Auto3CommandC_LL extends CommandGroup {
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
 			addParallel(new CloseClaw());
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 50, "clockwise")); //Turns away from scale and lowers elevator and closes claw
-			//addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 60, 0));
-			//addSequential(new CubeGetter()); //Retrieves another cube
+			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 60, 0));
+			addSequential(new CubeGetter()); //Retrieves another cube
+			System.out.println("Auto Completed");
 			break;
 		default:
 			SmartDashboard.putString("MatchType", "!!!Chooser Not Set!!!");
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 80, 80)); //Gets to autoline
+			System.out.println("Auto Completed");
 			break;
 		}
 		System.out.println("Auto Completed");

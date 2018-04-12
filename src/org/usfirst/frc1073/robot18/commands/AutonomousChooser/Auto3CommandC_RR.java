@@ -18,7 +18,8 @@ public class Auto3CommandC_RR extends CommandGroup {
 			System.out.println("Auto3CommandC_RR - quals"); //Places 2 cubes in switch
 			addSequential(new LowGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchDist, 200));
-			addSequential(new SpitOutCube(1, -0.5));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
+			System.out.println("Auto Completed");
 			break;
 		case "elims":
 			System.out.println("Auto3CommandC_RR - elims"); //Places 1 cube in scale + gets another cube
@@ -34,12 +35,14 @@ public class Auto3CommandC_RR extends CommandGroup {
 			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
 			addParallel(new CloseClaw());
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 50, "counterclockwise")); //Turns away from scale and lowers elevator and closes claw
-			//addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 60, 0));
-			//addSequential(new CubeGetter()); //Retrieves another cube
+			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 60, 0));
+			addSequential(new CubeGetter()); //Retrieves another cube
+			System.out.println("Auto Completed");
 			break;
 		default:
 			SmartDashboard.putString("MatchType", "!!!Chooser Not Set!!!");
 			addSequential(new AdvancedDrive(-.8, 80, 80));
+			System.out.println("Auto Completed");
 			break;
 		}
 		System.out.println("Auto Completed");

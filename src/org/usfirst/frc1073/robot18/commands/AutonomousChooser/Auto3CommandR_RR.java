@@ -23,14 +23,15 @@ public class Auto3CommandR_RR extends CommandGroup {
 			addSequential(new TurnWithGyro(AutoVars.BothVisionTurnSpeed, AutoVars.BothVisionTurnDistance, AutoVars.RightVisionTurn));
 			addSequential(new CubeGetter());
 			addParallel(new LiftElevatorToDistanceScale(30));
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 30, "clockwise"));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
 			addSequential(new SpitOutCube(1, 0));
 			*/
 			addSequential(new LowGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SideDist, 100));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.FinalApproach, 25));
-			addSequential(new SpitOutCube(1, -0.8));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SideApproach, 25));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
+			System.out.println("Auto Completed");
 			break;
 		case "elims":
 			System.out.println("Auto3CommandR_RR - elims"); //Places 1 cube in scale + gets another cube
@@ -42,10 +43,12 @@ public class Auto3CommandR_RR extends CommandGroup {
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 45, "counterclockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 60, 0));
 			addSequential(new CubeGetter());
+			System.out.println("Auto Completed");
 			break;
 		default:
 			SmartDashboard.putString("MatchType", "!!!Chooser Not Set!!!");
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 80, 80)); //Gets to autoline
+			System.out.println("Auto Completed");
 			break;
 		}
 	}

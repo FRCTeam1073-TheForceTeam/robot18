@@ -17,8 +17,12 @@ public class Auto3CommandR_LL extends CommandGroup {
 		case "quals":
 			System.out.println("Auto3CommandR_LL - quals");
 			addSequential(new LowGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchDist, 120));
-			
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 200, 200));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "counterclockwise"));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 150, 100));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 180));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, 20));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandR_LL - elims");
@@ -33,10 +37,12 @@ public class Auto3CommandR_LL extends CommandGroup {
 			addParallel(new CloseClaw());
 			addParallel(new LiftElevatorToDistanceScale(0));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 45, "clockwise"));
+			System.out.println("Auto Completed");
 			break;
 		default:
 			SmartDashboard.putString("MatchType", "!!!Chooser Not Set!!!");
 			addSequential(new AdvancedDrive(-.8, 80, 80));
+			System.out.println("Auto Completed");
 			break;
 		}
 	}

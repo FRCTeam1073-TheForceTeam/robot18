@@ -4,7 +4,7 @@ public class AutoVars {
 	
 	public static double LiftDistSwitch, DropoffTime, LiftDistFloor, LiftDistScale,
 	
-	ADSpeed, VisionTurnSpeed, TurnSpeed, TurnSpeedSlow,
+	ADSpeed, VisionTurnSpeed, TurnSpeed, TurnSpeedSlow, SpitOutSpeed,
 	
 	BothADSpeed, BothAD1Distance, BothAD1Timeout, 
 	BothAD2Distance, BothAD2Timeout, BothVisionTurnSpeed, BothVisionTurnDistance,
@@ -18,7 +18,7 @@ public class AutoVars {
 	NeitherADSpeed, NeitherAD1Distance, NeitherAD1Timeout,
 	NeitherAD2Distance, NeitherAD2Timeout, NeitherVisionTurnSpeed, NeitherVisionTurnDistance,
 	
-	MiddleDist, FinalApproach,
+	MiddleDist, FinalApproach, SideApproach,
 	
 	SwitchDist, SideDist;
 	;
@@ -31,6 +31,7 @@ public class AutoVars {
 		VisionTurnSpeed = .9;
 		TurnSpeed = .65;
 		TurnSpeedSlow = .5;
+		SpitOutSpeed = -0.75;
 		
 		/* Other Functions (Elevator/Dropoff) */
 		LiftDistScale = 60;
@@ -81,6 +82,7 @@ public class AutoVars {
 		
 		/* Center Left Auto Vars */
 		FinalApproach = 20;
+		SideApproach = 30;
 		MiddleDist = 100;
 		SideDist = 105;
 		
