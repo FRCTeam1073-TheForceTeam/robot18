@@ -10,7 +10,7 @@ import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
 @SuppressWarnings("deprecation")
-public class VisionCubeTracker extends Command{
+public class VisionCubeTracker extends Command {
 
 	edu.wpi.first.networktables.NetworkTable netTable;
 	NetworkTableInstance netTableInst;
@@ -144,13 +144,13 @@ public class VisionCubeTracker extends Command{
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		boolean finished = false;
+		// boolean finished = false;
 		if (v > 10 && Robot.clawBool == true) {
-			finished = true;
+			return true;
 		}
 		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
-			finished = true;
+			return true;
 		}
-		return finished;
+		return false;
 	}
 }

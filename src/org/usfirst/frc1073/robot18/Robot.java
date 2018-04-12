@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
 	public static Alliance alliance;
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousPosition, autonomousMatchType;
-	public AutoObject left, center, right, other, quals, elims;
+	public AutoObject left, center, right, scale, other, quals, elims;
 	public static boolean clawBool, EncoderBool, EncoderBoolSet, notClear, turn;
 
 	/**
@@ -99,7 +99,8 @@ public class Robot extends IterativeRobot {
 		left = new AutoObject(1);
 		center = new AutoObject(2);
 		right = new AutoObject(3);
-		other = new AutoObject(4);
+		scale = new AutoObject(4);
+		other = new AutoObject(7);
 		quals = new AutoObject(5);
 		elims = new AutoObject(6);
 
@@ -109,6 +110,7 @@ public class Robot extends IterativeRobot {
 		autonomousPosition.addObject("Left", left);
 		autonomousPosition.addObject("Center", center);
 		autonomousPosition.addObject("Right", right);
+		autonomousPosition.addObject("Right Scale", scale);
 		SmartDashboard.putData("Position", autonomousPosition);
 
 		/* The MatchType Position */

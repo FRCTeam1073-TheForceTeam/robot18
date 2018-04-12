@@ -33,6 +33,8 @@ public class Auto1ChooserSimple extends CommandGroup {
 		case "right":
 			addSequential(new Auto2FMSRSimple());
 			break;
+		case "meme":
+			addSequential(new MEMEAutoTenSeventySad());
 		default:
 			SmartDashboard.putString("Chooser", "!!!Chooser Not Set!!!");
 			addSequential(new AdvancedDrive(-.8, 80, 80));

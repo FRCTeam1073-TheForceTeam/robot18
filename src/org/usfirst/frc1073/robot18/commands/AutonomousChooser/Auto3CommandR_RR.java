@@ -23,7 +23,7 @@ public class Auto3CommandR_RR extends CommandGroup {
 			addSequential(new CubeGetter());
 			addParallel(new LiftElevatorToDistanceScale(30));
 			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 30, "clockwise"));
-			addSequential(new SpitOutCube(1, 0));
+			addSequential(new SpitOutCube(1.5, 0));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandR_RR - elims"); //Places 1 cube in scale + gets another cube

@@ -27,7 +27,7 @@ public class AutoObject {
 			send = "right";
 		}
 		else if (n == 4) {
-			send = "other";
+			send = "meme";
 		}
 		else if (n == 5) {
 			send = "quals";
