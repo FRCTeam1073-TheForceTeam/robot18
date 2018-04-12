@@ -15,36 +15,19 @@ public class Auto3CommandC_RR extends CommandGroup {
 	public Auto3CommandC_RR(){
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
-			System.out.println("Auto3CommandC_RR - quals"); //Places 2 cubes in switch
+		case "elims":
+			System.out.println("Auto3CommandC_RR - quals"); //Places 1 cube in switch
 			addSequential(new LowGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchDist, 200));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			System.out.println("Auto Completed");
 			break;
-		case "elims":
-			System.out.println("Auto3CommandC_RR - elims"); //Places 1 cube in scale + gets another cube
-			addSequential(new LowGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 50, "clockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 120, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 50, "counterclockwise")); //Drives to left wall and aligns parallel to it
-			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistScale));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 175, 0)); //Drives to scale
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 80, "clockwise"));
-			addSequential(new SpitOutCube(1, 0)); //Deposits cube into scale
-			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
-			addParallel(new CloseClaw());
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 50, "counterclockwise")); //Turns away from scale and lowers elevator and closes claw
-			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 60, 0));
-			addSequential(new CubeGetter()); //Retrieves another cube
-			System.out.println("Auto Completed");
-			break;
 		default:
 			SmartDashboard.putString("MatchType", "!!!Chooser Not Set!!!");
+			addSequential(new LowGearDT());
 			addSequential(new AdvancedDrive(-.8, 80, 80));
 			System.out.println("Auto Completed");
 			break;
 		}
-		System.out.println("Auto Completed");
 	}
 }
