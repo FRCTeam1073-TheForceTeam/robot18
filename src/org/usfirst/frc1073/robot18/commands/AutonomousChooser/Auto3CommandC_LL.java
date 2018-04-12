@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.commands.HighGearDT;
+import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 /*** If Chooser is set to Center and FMS is LLL */
@@ -16,13 +17,13 @@ public class Auto3CommandC_LL extends CommandGroup {
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
 			System.out.println("Auto3CommandC_LL - quals"); //Places 2 cubes in switch
-			addSequential(new HighGearDT());
+			addSequential(new LowGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 5, 10));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 60, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 100, 100));
-			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, 10));
-			addSequential(new SpitOutCube(1, .8));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.MiddleDist, 100));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeedSlow, 0));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.FinalApproach, 10));
+			addSequential(new SpitOutCube(1, -0.8));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandC_LL - elims"); //Places 1 cube in scale + gets another cube

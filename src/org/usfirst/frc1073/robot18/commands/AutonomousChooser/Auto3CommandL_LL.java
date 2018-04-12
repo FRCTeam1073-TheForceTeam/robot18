@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.commands.HighGearDT;
+import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 public class Auto3CommandL_LL extends CommandGroup {
@@ -13,17 +14,11 @@ public class Auto3CommandL_LL extends CommandGroup {
 	public Auto3CommandL_LL(){
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
-			System.out.println("Auto3CommandL_LL - quals"); //Places 2 cubes in switch
-			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));
-			addParallel(new OpenClaw()); //Claw must be open to cross plane of switch
-			addSequential(new AdvancedDrive(AutoVars.BothADSpeed, AutoVars.BothAD1Distance, AutoVars.BothAD1Timeout));
-			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
-			addSequential(new AdvancedDrive(AutoVars.BothADSpeed, AutoVars.BothAD2Distance, AutoVars.BothAD2Timeout)); //Drives forward while lowering lift and dropping off cube
-			addSequential(new TurnWithGyro(AutoVars.BothVisionTurnSpeed, AutoVars.BothVisionTurnDistance, AutoVars.LeftVisionTurn));
-			addSequential(new CubeGetter());
-			addParallel(new LiftElevatorToDistanceScale(30));
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 30, "clockwise"));
-			addSequential(new SpitOutCube(1, 0));
+			addSequential(new LowGearDT());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SideDist, 100));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "clockwise"));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.FinalApproach, 25));
+			addSequential(new SpitOutCube(1, -0.8));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandL_LL - elims"); //Places 1 cube in scale + gets another cube

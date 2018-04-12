@@ -6,6 +6,7 @@ import org.usfirst.frc1073.robot18.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 /*** If Chooser is set to Left and FMS is RRR */
@@ -15,9 +16,8 @@ public class Auto3CommandL_RR extends CommandGroup {
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
 			System.out.println("Auto3CommandL_RR - quals");
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.NeitherAD1Distance, AutoVars.NeitherAD1Timeout));
-			addSequential(new TurnWithGyro(AutoVars.NeitherVisionTurnSpeed, AutoVars.NeitherVisionTurnDistance, AutoVars.LeftVisionTurn));
-			addSequential(new CubeGetter()); //Drops cube near exchange, then turns around and crosses auto line while aligning to a cube
+			addSequential(new LowGearDT());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchDist, 120));
 			System.out.println("Auto Completed");
 			break;
 		case "elims":

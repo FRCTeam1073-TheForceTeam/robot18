@@ -2,7 +2,7 @@ package org.usfirst.frc1073.robot18.commands.AutonomousChooser;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.AutoVars;
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.commands.HighGearDT;
@@ -15,23 +15,13 @@ public class Auto3CommandC_LR extends CommandGroup {
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
 			System.out.println("Auto3CommandC_LR - quals"); //Places 2 cubes in switch
-			addSequential(new HighGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 45, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 130, 0));
-			//addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 45, "clockwise")); //Drives to left side of field parallel to side of switch and raises elevator
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, AutoVars.SwitchAD2Timeout));
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "counterclockwise"));
-			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 20, 0));
-			addSequential(new SpitOutCube(1, 0));
-			//addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "clockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 60, 0));  //Drives forward, after turning and dropping off cube in switch
-			addSequential(new TurnWithGyro(AutoVars.SwitchVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.LeftVisionTurn)); //lowers elevator and turns towards cubes
-			addSequential(new CubeGetter());
-			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 30, "clockwise")); //Turns towards switch again after obtaining cube
-			addSequential(new SpitOutCube(1, 0 ));
+			addSequential(new LowGearDT());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 5, 10));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 60, "counterclockwise"));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.MiddleDist, 100));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeedSlow, 0));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.FinalApproach, 10));
+			addSequential(new SpitOutCube(1, -0.8));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandC_LR - elims"); //Places 1 cube in scale + gets another cube

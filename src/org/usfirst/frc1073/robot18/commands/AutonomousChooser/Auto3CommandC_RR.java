@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.AutoVars;
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.commands.HighGearDT;
+import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 /*** If Chooser is set to Center and FMS is RRR */
@@ -15,13 +16,13 @@ public class Auto3CommandC_RR extends CommandGroup {
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
 			System.out.println("Auto3CommandC_RR - quals"); //Places 2 cubes in switch
-			addSequential(new HighGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 95, 200));
-			addSequential(new SpitOutCube(1, .5));
+			addSequential(new LowGearDT());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchDist, 200));
+			addSequential(new SpitOutCube(1, -0.5));
 			break;
 		case "elims":
 			System.out.println("Auto3CommandC_RR - elims"); //Places 1 cube in scale + gets another cube
-			addSequential(new HighGearDT());
+			addSequential(new LowGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 0));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 50, "clockwise"));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 120, 0));

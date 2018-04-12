@@ -103,8 +103,8 @@ public class OI {
     	
         //opens and closes the claw
         clawOpen = operatorControl.rightBumper;
-        clawOpen.whileHeld(new OpenClaw());
-        clawOpen.whenReleased(new CloseClaw());
+        clawOpen.whileHeld(new CloseClaw());
+        clawOpen.whenReleased(new OpenClaw());
 
         //Makes the collector go up or down
         collectorUD = operatorControl.leftBumper;
