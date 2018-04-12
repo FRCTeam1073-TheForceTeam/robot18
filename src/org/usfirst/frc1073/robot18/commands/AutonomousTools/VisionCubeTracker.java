@@ -49,7 +49,7 @@ public class VisionCubeTracker extends Command{
 		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
 		// Defines speed and slow down markers
-		double speed = .7;
+		double speed = .65;
 		double side = 25; // Marks the reasonable area around the center	
 
 		// Puts variables from Network Tables on SmartDashboard
@@ -75,64 +75,42 @@ public class VisionCubeTracker extends Command{
 				dir = "Center";
 			}
 
-			if (Math.abs(xDelta) > 120) {
-				fullDir = false;
-			}
-			else {
-				fullDir = false;
-			}
-
 			// If block is far away: sets motor directions
-			if (xWidth < 250) {
-				if (xWidth < 90) {
-					if (xWidth < 75) {
-						if (xWidth < 50) {
-							if (xWidth < 35) {
-								driveDir = 4;
+			if (xWidth < 175) {
+				if (xWidth < 120) {
+					if (xWidth < 85) {
+						if (xWidth < 70) {
+							if (xWidth < 55) {
+								driveDir = 1.2;
 							}
 							else {
-								driveDir = 3;
+								driveDir = 1.15;
 							}
 						}
 						else {
-							driveDir = 2;
+							driveDir = 1;
 						}
 					}
 					else {
-						driveDir = 1.5;	
+						driveDir = .9;	
 					}
 				}
 				else {
-					driveDir = 1;
+					driveDir = .75;
 				}
 			}
 			else {
-				if (Robot.clawBool == true) {
-					driveDir = 0;
-					v++;
-				}
-				else {
-					driveDir = .5;
-				}
+				driveDir = 0;
+				v++;
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
-				if (fullDir == true) {
-					Robot.drivetrain.difDrive.tankDrive(-speed * driveDir, speed * driveDir / 5);
-				}
-				else {
-					Robot.drivetrain.difDrive.tankDrive(-speed * driveDir / 2, 0);
-				}
+				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir / 1.25, 0);
 			}
 			else if (dir.equals("Left") && driveDir >= 0) {
-				if (fullDir == true) {
-					Robot.drivetrain.difDrive.tankDrive(speed * driveDir / 5, -speed * driveDir );
-				}
-				else {
-					Robot.drivetrain.difDrive.tankDrive(0, -speed * driveDir / 2);
-				}
+				Robot.drivetrain.difDrive.tankDrive(0, -speed * driveDir / 1.25);
 			}
 			else if (dir.equals("Center")) {
-				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir * 1.5, -speed * driveDir * 1.5);
+				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir * 1.25, -speed * driveDir * 1.25);
 			}
 		}
 		// When no blocks are seen, we strafe back and forth, and up and down,
