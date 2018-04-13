@@ -105,11 +105,14 @@ public class VisionCubeTracker extends Command{
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
 				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir / 1.25, 0);
+			SmartDashboard.putString("visionDir", "right");
 			}
 			else if (dir.equals("Left") && driveDir >= 0) {
 				Robot.drivetrain.difDrive.tankDrive(0, -speed * driveDir / 1.25);
+				SmartDashboard.putString("visionDir", "left");
 			}
 			else if (dir.equals("Center")) {
+				SmartDashboard.putString("visionDir", "center");
 				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir * 1.25, -speed * driveDir * 1.25);
 			}
 		}
@@ -117,16 +120,20 @@ public class VisionCubeTracker extends Command{
 		// while the bot looks for the target
 		else {
 			Robot.drivetrain.difDrive.tankDrive(0, 0);
+			SmartDashboard.putString("visionDir", "HELP!");
 		}
+		SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		boolean finished = false;
 		if (v > 10 && Robot.clawBool == true) {
+			SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 			finished = true;
 		}
 		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 			finished = true;
 		}
 		return finished;

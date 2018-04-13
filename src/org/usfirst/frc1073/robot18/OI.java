@@ -152,6 +152,7 @@ public class OI {
         SmartDashboard.putData("Start Sees White", new CheckForWhite());
         SmartDashboard.putData("Turn off Bling", new BlingOff());
         SmartDashboard.putData("Auto Test", new AutoTest());
+        SmartDashboard.putData("VisionCube", new VisionCubeTracker());
         if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;

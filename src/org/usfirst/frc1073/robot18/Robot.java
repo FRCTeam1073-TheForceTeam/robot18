@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 	public static Alliance alliance;
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousPosition, autonomousMatchType;
-	public AutoObject left, center, right, other, quals, elims;
+	public AutoObject left, center, right, other, quals, elims, experimental;
 	public static boolean clawBool, EncoderBool, EncoderBoolSet, notClear, turn;
 	public static CameraServer cameraSwitcher;
 	public static boolean selectedCamera;
@@ -115,6 +115,7 @@ public class Robot extends IterativeRobot {
 		autonomousMatchType.addDefault("None", other);
 		autonomousMatchType.addObject("Qualifications", quals);
 		autonomousMatchType.addObject("Eliminations", elims);
+		autonomousMatchType.addObject("Experimental", experimental);
 		SmartDashboard.putData("Match Type", autonomousMatchType);
 
 		RobotMap.leftMotor1.configOpenloopRamp(0, 10);

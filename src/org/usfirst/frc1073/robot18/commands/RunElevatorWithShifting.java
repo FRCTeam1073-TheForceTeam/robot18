@@ -42,7 +42,7 @@ public class RunElevatorWithShifting extends Command {
 
 		if(RobotMap.liftSwitchBottom.get() || speed < 0)
 		{
-			Robot.elevator.elevatorDrive.tankDrive(speed, speed);
+			Robot.elevator.elevatorDrive.tankDrive(-speed, speed);
 		}
 		else {
 			Robot.elevator.elevatorDrive.tankDrive(0, 0);
@@ -50,26 +50,26 @@ public class RunElevatorWithShifting extends Command {
 
 		//moves the elbow
 		if((Robot.oi.operatorControl.getRawAxis(5) > 0.05)){
-			if(RobotMap.elbowMotor.getSelectedSensorPosition(0)>3400) {
-				speed2 = .25;
-			}
-			else {
-				speed2 = (Robot.oi.operatorControl.getRawAxis(5)*0.75);
-			}
-		}
+//			if(RobotMap.elbowMotor.getSelectedSensorPosition(0)>3400) {
+//				speed2 = .25;
+//			}
+//			else {
+				speed2 = (Robot.oi.operatorControl.getRawAxis(5));
+	//		}
+	}
 		else if(Robot.oi.operatorControl.getRawAxis(5) < -0.05) {
-			speed2 = (Robot.oi.operatorControl.getRawAxis(5)*0.5);
+			speed2 = (Robot.oi.operatorControl.getRawAxis(5)*0.8);
 		}
 		
 //		if(RobotMap.collectorFlip.get() || speed2 <0 || RobotMap.collectorSwitchFront.get()) {		
 //			Robot.elevator.elbowDrive.tankDriv-e(0, 0);
 //			speed2 = 0;
-//		}
-//		else {
-//			speed2 = 0;
-//		}
+//		
+		else {
+			speed2 = 0;
+		}
 		
-		Robot.elevator.elbowDrive.tankDrive(speed2, speed2);
+		Robot.elevator.elbowDrive.tankDrive(-speed2, speed2);
 }
 
 	protected boolean isFinished() {

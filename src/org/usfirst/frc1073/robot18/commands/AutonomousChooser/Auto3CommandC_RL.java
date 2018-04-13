@@ -21,6 +21,24 @@ public class Auto3CommandC_RL extends CommandGroup {
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			System.out.println("Auto Completed");
 			break;
+		case "experimental":
+			System.out.println("Hello World!");
+			addSequential(new LowGearDT());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SwitchDist, 200));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
+			
+			addSequential(new LiftElevatorToDistanceScale(35));
+			addParallel(new ElbowFlip());
+			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 10, 10));
+			addParallel(new LiftElevatorToDistanceScale(0));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 270));
+			addSequential(new CubeGetter());
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 270));
+			addParallel(new LiftElevatorToDistanceScale(30));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 10, 10));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 180));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
+			System.out.println("Auto Completed");
 		default:
 			SmartDashboard.putString("MatchType", "!!!Chooser Not Set!!!");
 			addSequential(new LowGearDT());
