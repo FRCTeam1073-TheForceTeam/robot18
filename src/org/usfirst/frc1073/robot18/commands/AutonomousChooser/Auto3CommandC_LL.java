@@ -6,56 +6,57 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc1073.robot18.commands.HighGearDT;
+import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 /*** If Chooser is set to Center and FMS is LLL */
 public class Auto3CommandC_LL extends CommandGroup {
-	/** If Chooser is set to Center and FMS is LLL */
+	/** If Chooser is set to Center and FMS is LLL
+	 * @author Jack
+	 */
 	public Auto3CommandC_LL(){
 		System.out.println("Auto3CommandC_LL");
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
-			System.out.println("Auto3CommandC_LL - quals"); //Places 2 cubes in switch
-			addSequential(new HighGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 80));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 130, 0));
-			//addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistSwitch));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 45, "clockwise")); //Drives to left side of field parallel to side of switch and raises elevator
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, AutoVars.SwitchAD2Timeout));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 90, "counterclockwise"));
-			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 20, 0));
-			addSequential(new SpitOutCube(1, 0));
-			//addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 90, "clockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 60, 0));  //Drives forward, after turning and dropping off cube in switch
-			addSequential(new TurnWithGyro(AutoVars.SwitchVisionTurnSpeed, AutoVars.ScaleVisionTurnDistance, AutoVars.LeftVisionTurn)); //lowers elevator and turns towards cubes
-			addSequential(new CubeGetter());
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 30, "clockwise")); //Turns towards switch again after obtaining cube
-			addSequential(new SpitOutCube(1, 0 ));
-			break;
 		case "elims":
-			System.out.println("Auto3CommandC_LL - elims"); //Places 1 cube in scale + gets another cube
-			addSequential(new HighGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 6, 80));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 50, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 120, 0));
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 50, "clockwise")); //Drives to left wall and aligns parallel to it
-			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistScale));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 175, 0)); //Drives to scale
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 80, "counterclockwise"));
-			addSequential(new SpitOutCube(1, 0)); //Deposits cube into scale
-			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistFloor));
-			addParallel(new CloseClaw());
-			addSequential(new TurnWithGyro(AutoVars.TurnWithGyroSpeed, 50, "clockwise")); //Turns away from scale and lowers elevator and closes claw
-			//addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 60, 0));
-			//addSequential(new CubeGetter()); //Retrieves another cube
+			System.out.println("Auto3CommandC_LL"); //Places 1 cube in switch
+			addSequential(new LowGearDT());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 5, 10));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 60, "counterclockwise"));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.MiddleDist, 100));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeedSlow, 0));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.FinalApproach, 10));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
+			System.out.println("Auto Completed");
 			break;
+		case "experimental":
+			System.out.println("Hello World!");
+			addSequential(new LowGearDT());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 5, 10));
+			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 60, "counterclockwise"));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.MiddleDist, 100));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeedSlow, 0));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.FinalApproach, 10));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
+			
+			addSequential(new LiftElevatorToDistanceScale(35));
+			addParallel(new ElbowFlip());
+			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 10, 10));
+			addParallel(new LiftElevatorToDistanceScale(0));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 90));
+			addSequential(new CubeGetter());
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 90));
+			addParallel(new LiftElevatorToDistanceScale(30));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 10, 10));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 180));
+			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
+			System.out.println("Auto Completed");
 		default:
 			SmartDashboard.putString("MatchType", "!!!Chooser Not Set!!!");
+			addSequential(new LowGearDT());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 80, 80)); //Gets to autoline
+			System.out.println("Auto Completed");
 			break;
 		}
-		System.out.println("Auto Completed");
 	}
 }

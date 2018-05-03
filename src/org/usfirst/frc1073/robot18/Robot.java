@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.Bling;
 import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.commands.AutonomousChooser.Auto1Chooser;
-import org.usfirst.frc1073.robot18.commands.AutonomousChooserSimple.*;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.LidarSeeRobot;
 import org.usfirst.frc1073.robot18.subsystems.*;
 import edu.wpi.cscore.CvSink;
@@ -47,14 +46,15 @@ public class Robot extends IterativeRobot {
 	public static robotElevator elevator;
 	public static robotDrivetrain drivetrain;
 	public static robotCollector collector;
-	public static robotConveyor conveyor;
 	public static robotPneumatic pneumatic;
 	public static Bling bling;
 	public static Alliance alliance;
 	public static String FMS;
 	public static SendableChooser<AutoObject> autonomousPosition, autonomousMatchType;
-	public AutoObject left, center, right, other, quals, elims;
+	public AutoObject left, center, right, other, quals, elims, experimental;
 	public static boolean clawBool, EncoderBool, EncoderBoolSet, notClear, turn;
+	public static CameraServer cameraSwitcher;
+	public static boolean selectedCamera;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -76,7 +76,6 @@ public class Robot extends IterativeRobot {
 		
 		elevator = new robotElevator();
 		drivetrain = new robotDrivetrain();
-		conveyor = new robotConveyor();
 		pneumatic = new robotPneumatic();
 		collector = new robotCollector();
 		oi = new OI();
@@ -116,11 +115,66 @@ public class Robot extends IterativeRobot {
 		autonomousMatchType.addDefault("None", other);
 		autonomousMatchType.addObject("Qualifications", quals);
 		autonomousMatchType.addObject("Eliminations", elims);
+		autonomousMatchType.addObject("Experimental", experimental);
 		SmartDashboard.putData("Match Type", autonomousMatchType);
 
 		RobotMap.leftMotor1.configOpenloopRamp(0, 10);
 		RobotMap.rightMotor1.configOpenloopRamp(0, 10);
+		
+		/** Instantiate a the camera server for both USB webcams in a separate thread **/
+		Thread cameraThread = new Thread(() -> {
+
+			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);            
+			camera1.setResolution(320, 240);
+			camera1.setFPS(15);
+
+			try {
+				Thread.sleep(20);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			CvSink cvSink = CameraServer.getInstance().getVideo(camera1);
+			CvSource outputStream = CameraServer.getInstance().putVideo("Video", 320, 240);
+			Mat source = new Mat();
+			boolean currentCamera = selectedCamera;
+			while( !Thread.interrupted() ) {
+				if ( currentCamera != selectedCamera ) {
+					currentCamera = selectedCamera;
+					if ( selectedCamera == false ) {
+						cvSink.setSource(camera1);            		
+						SmartDashboard.putString("Camera", "Camera 1");
+					}
+				}
+				cvSink.grabFrame(source);
+
+				if ( source.empty() == false ) {
+					int rows = source.rows();
+					int columns = source.cols();
+
+					Point lineStart = new Point(columns/2, 0);
+					Point lineEnd = new Point(columns/2, rows);
+					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
+
+					lineStart = new Point(0,rows/2);
+					lineEnd = new Point(columns, rows/2);
+					Imgproc.line(source, lineStart, lineEnd, new Scalar(0,0,255), 1);
+
+					outputStream.putFrame(source);
+				}
+
+				try{
+					Thread.sleep(50);
+				} catch(Exception e) {           		
+				}
+
+			}
+		});
+
+		cameraThread.start();
+
 	}
+	
 
 	/**
 	 * This function is called when the disabled button is hit.
@@ -140,11 +194,11 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		//turn is false
+		RobotMap.headingGyro.reset();
 		turn = false;
 		
 		System.out.println("Auto Setting Up");
 		Robot.pneumatic.driveTrainHighGear();
-		Robot.pneumatic.liftHighGear();
 
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 
@@ -156,7 +210,7 @@ public class Robot extends IterativeRobot {
 		
 		/* instantiate the command used for the autonomous period */
 		System.out.println("Auto Starting");
-		autonomousCommand = new Auto1ChooserSimple();
+		autonomousCommand = new Auto1Chooser();
 		if (autonomousCommand != null) autonomousCommand.start();
 		lidarSendTable = NetworkTable.getTable("LidarSendTable");
 	}
@@ -207,7 +261,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left", RobotMap.leftMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right", RobotMap.rightMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Gyro", RobotMap.headingGyro.getAngle());
-		
+		SmartDashboard.putBoolean("Flip?", RobotMap.collectorFlip.get());
+		SmartDashboard.putNumber("elbow", RobotMap.elbowMotor.getSelectedSensorPosition(0));
 		FMS = DriverStation.getInstance().getGameSpecificMessage();
 		alliance = DriverStation.getInstance().getAlliance();
 		

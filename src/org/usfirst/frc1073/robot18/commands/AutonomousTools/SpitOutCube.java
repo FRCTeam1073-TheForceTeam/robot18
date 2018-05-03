@@ -12,44 +12,47 @@ import org.usfirst.frc1073.robot18.RobotMap;
  */
 public class SpitOutCube extends Command {
 
-	private double time, timer, timeEnd, delay, delayer, delayEnd;
+	private double speed, time, timer, timeEnd, delay, delayer, delayEnd;
 
 	private boolean clawBool;
 
 	public SpitOutCube() {
 		this.time = .5;
 		this.delay = 0;
+		this.speed = 1;
 	}
 
-	public SpitOutCube(double time) {
+	public SpitOutCube(double time, double speed) {
 		this.time = time;
 		this.delay = 0;
+		this.speed = speed;
 	}
 
-	public SpitOutCube(double time, double delay) {
+	public SpitOutCube(double time, double delay, double speed) {
 		this.time = time;
 		this.delay = delay;
+		this.speed = speed;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		clawBool = false;
 
-		delayEnd = delay * 20;
+		delayEnd = delay * 50;
 		delayer = 0;
-		timeEnd = time * 20;
+		timeEnd = time * 50;
 		timer = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.collector.collectDrive.tankDrive(-1, -1);
+		Robot.collector.collectDrive.tankDrive(speed, speed);
 		Robot.bling.sendDeliverCube();
 		timer++;
 		
 		if (delayEnd <= delayer) {
 			if (clawBool == false) {
-				Robot.pneumatic.openClaw();
+				//Robot.pneumatic.openClaw();
 				clawBool = true;
 			}
 		}

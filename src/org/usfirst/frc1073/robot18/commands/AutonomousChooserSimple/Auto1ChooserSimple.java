@@ -22,7 +22,7 @@ public class Auto1ChooserSimple extends CommandGroup {
 		addSequential(new Auto1WhereAmISimple());
 		FMS = Robot.FMS;
 
-		/*  First version */
+		/*  Second version */
 		switch(Robot.autonomousPosition.getSelected().getString()) {
 		case "left":
 			addSequential(new Auto2FMSLSimple());

@@ -39,6 +39,7 @@ public class RobotMap {
 	public static WPI_TalonSRX leftMotor1;
 	public static WPI_TalonSRX elevatorMotorRight;
 	public static WPI_TalonSRX elevatorMotorLeft;
+	public static WPI_TalonSRX elbowMotor;
 	public static Encoder rightEnc;
 	public static Encoder leftEnc;
 
@@ -58,21 +59,29 @@ public class RobotMap {
 	public static WPI_VictorSPX leftCollectorMotor;
 	public static WPI_VictorSPX rightCollectorMotor;
 	public static DigitalInput collectorSwitchBottom;
-	public static WPI_TalonSRX conveyorMotor;
+	public static DigitalInput collectorFlip;
+	public static DigitalInput collectorSwitchFront;
 
 	public static void init() {
 		liftSwitchBottom = new DigitalInput(0);
 		LiveWindow.addSensor("Elevator", "switchBottom", liftSwitchBottom);
 		liftSwitchTop = new DigitalInput(1);
 		LiveWindow.addSensor("Elevator", "switchTop", liftSwitchTop);
+		collectorFlip = new DigitalInput(2);
+		LiveWindow.addSensor("collector", "switchBack", collectorFlip);
+		collectorSwitchFront = new DigitalInput(3);
+		LiveWindow.addSensor("collector", "switchFront", collectorSwitchFront);
 
 		// Motor init
 		// Right
+		//collectorEncoder = new Encoder;
 		rightMotor2 = new WPI_VictorSPX(2);
 		rightMotor1 = new WPI_TalonSRX(3);
 		//Left
 		leftMotor2 = new WPI_VictorSPX(9);
 		leftMotor1 = new WPI_TalonSRX(8);
+		//Elbow
+		elbowMotor = new WPI_TalonSRX(19);
 		// Solenoids
 		leftWrist = new Solenoid (1, 6);
 		//fixed
@@ -110,9 +119,6 @@ public class RobotMap {
 		// Gyro
 		headingGyro = new ADXRS450_Gyro();
 		LiveWindow.addSensor("DriveTrain", "headingGyro", headingGyro);
-
-		// Conveyor Motor
-		conveyorMotor = new WPI_TalonSRX(10);
 
 		// Collector Motors
 		leftCollectorMotor = new WPI_VictorSPX(7);

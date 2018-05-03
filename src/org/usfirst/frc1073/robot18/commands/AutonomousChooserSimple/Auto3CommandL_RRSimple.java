@@ -11,6 +11,6 @@ import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 public class Auto3CommandL_RRSimple extends CommandGroup {
 	/** If Chooser is set to Left and FMS is RRR */
 	public Auto3CommandL_RRSimple() {
-		addSequential(new AdvancedDrive(-.8, 150, 100));
+		addSequential(new AdvancedDrive(.8, 150, 100));
 	}
 }

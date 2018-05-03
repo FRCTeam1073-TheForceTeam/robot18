@@ -36,8 +36,6 @@ public class OI {
 	public JoystickButton lidarButton;
 	public JoystickButton driverCancel;
 	public JoystickButton operatorCancel;
-	public JoystickButton conveyorRight;
-	public JoystickButton conveyorLeft;
 	public JoystickButton intake;
 	public JoystickButton purge;
 	public JoystickButton suckInButton;
@@ -53,12 +51,9 @@ public class OI {
     public JoystickButton LiftTo5FtScale;
     public JoystickButton LiftTo6FtScale;
     public JoystickButton LiftToStay;
-    public double highGearLift;
-    public double lowGearLift;
     public double collectorIntake;
     public double collectorPurge;
-    public double conveyorLeftLeft;
-    public double conveyorRightRight;
+   
 	
     public OI() {
     	
@@ -108,8 +103,8 @@ public class OI {
     	
         //opens and closes the claw
         clawOpen = operatorControl.rightBumper;
-        clawOpen.whileHeld(new OpenClaw());
-        clawOpen.whenReleased(new CloseClaw());
+        clawOpen.whileHeld(new CloseClaw());
+        clawOpen.whenReleased(new OpenClaw());
 
         //Makes the collector go up or down
         collectorUD = operatorControl.leftBumper;
@@ -149,8 +144,6 @@ public class OI {
         SmartDashboard.putData("closeClaw", new CloseClaw());
         SmartDashboard.putData("HighDT", new HighGearDT());
         SmartDashboard.putData("LowDT", new LowGearDT());
-        SmartDashboard.putData("HighLift", new HighGearLift());
-        SmartDashboard.putData("LowLift", new LowGearLift());
         SmartDashboard.putData("ClawUp", new CollectorUp());
         SmartDashboard.putData("ClawDown", new CollectorDown());
         SmartDashboard.putNumber("Left Motors", RobotMap.leftMotor1.get());
@@ -158,6 +151,8 @@ public class OI {
         SmartDashboard.putData("SeeRobot?", new LidarSeeRobot());
         SmartDashboard.putData("Start Sees White", new CheckForWhite());
         SmartDashboard.putData("Turn off Bling", new BlingOff());
+        SmartDashboard.putData("Auto Test", new AutoTest());
+        SmartDashboard.putData("VisionCube", new VisionCubeTracker());
         if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;
@@ -218,6 +213,8 @@ public class OI {
         }
         SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
         SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
+        
+      
         
         
        // SmartDashboard.putNumber("Percent up",((RobotMap.liftEncoder.get()/9.42)/1440.0/2.0/(16.0/5.0)));
