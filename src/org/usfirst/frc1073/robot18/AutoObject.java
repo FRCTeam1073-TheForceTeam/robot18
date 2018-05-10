@@ -35,6 +35,9 @@ public class AutoObject {
 		else if (n == 6) {
 			send = "elims";
 		}
+		else if (n == 7) {
+			send = "experimental";
+		}
 		else {
 			send = "not set";
 		}

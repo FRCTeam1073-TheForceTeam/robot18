@@ -17,23 +17,32 @@ public class ElbowFlip extends Command {
 	/** 
 	 * @author Cam
 	 */
+	double time = 0;
+	boolean finished;
+	
 	protected void initialize() {
 		RobotMap.elbowMotor.setSelectedSensorPosition(0, 0, 0);
 	}
 	protected void execute(){
+		while(time < 10) {
+			Robot.elevator.elevatorDrive.tankDrive(-1, -1);
+			time = time + 1;
+			if(time == 10) {
+				break;
+			}
+		}
 		if(RobotMap.elbowMotor.getSelectedSensorPosition(0)<=1000 || RobotMap.elbowMotor.getSelectedSensorPosition(0 )>=-1000) {
 			Robot.elevator.elbowDrive.tankDrive(1, 1);
+			finished = false;
 		}
 		else {
 			Robot.elevator.elbowDrive.tankDrive(0, 0);
+			finished = true;
+		//	isFinished = true;
 		}
 	}
 	protected boolean isFinished() {
-		if(RobotMap.elbowMotor.getSelectedSensorPosition(0)<=1000 || RobotMap.elbowMotor.getSelectedSensorPosition(0 )>=-1000) {
-			return false;
-		}
-		else {
-			return true;
-		}
+	return finished;
 	}
+	
 }

@@ -40,6 +40,7 @@ public class RobotMap {
 	public static WPI_TalonSRX elevatorMotorRight;
 	public static WPI_TalonSRX elevatorMotorLeft;
 	public static WPI_TalonSRX elbowMotor;
+	public static WPI_VictorSPX climberMotor;
 	public static Encoder rightEnc;
 	public static Encoder leftEnc;
 
@@ -82,6 +83,8 @@ public class RobotMap {
 		leftMotor1 = new WPI_TalonSRX(8);
 		//Elbow
 		elbowMotor = new WPI_TalonSRX(19);
+		//climber
+		climberMotor = new WPI_VictorSPX(10);
 		// Solenoids
 		leftWrist = new Solenoid (1, 6);
 		//fixed

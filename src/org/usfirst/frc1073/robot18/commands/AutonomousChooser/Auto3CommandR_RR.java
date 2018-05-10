@@ -9,7 +9,9 @@ import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 public class Auto3CommandR_RR extends CommandGroup {
-	/** If Chooser is set to Left and FMS is LLL */
+	/** If Chooser is set to Left and FMS is LLL
+	 * @author Jack
+	 */
 	public Auto3CommandR_RR(){
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
@@ -24,7 +26,7 @@ public class Auto3CommandR_RR extends CommandGroup {
 		case "elims":
 			System.out.println("Auto3CommandR_RR - elims"); //Places 1 cube in scale
 			addSequential(new LowGearDT());
-			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistScale));
+			addParallel(new LiftElevatorWithTime(AutoVars.LiftDistScale));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 260, 0));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "counterclockwise"));
 			addSequential(new SpitOutCube(1, 0));
@@ -38,10 +40,10 @@ public class Auto3CommandR_RR extends CommandGroup {
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SideApproach, 25));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			
-			addSequential(new LiftElevatorToDistanceScale(35));
+			addSequential(new LiftElevatorWithTime(5));
 			addParallel(new ElbowFlip());
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
-			addParallel(new LiftElevatorToDistanceScale(0));
+			addParallel(new LiftElevatorWithTimeDown(30));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 50, 50));
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 350));
 			addSequential(new CubeGetter());

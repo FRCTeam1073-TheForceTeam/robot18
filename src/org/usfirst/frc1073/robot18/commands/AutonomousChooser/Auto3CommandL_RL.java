@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
-/*** If Chooser is set to Left and FMS is RLR */
+/*** If Chooser is set to Left and FMS is RLR
+	 * @author Jack
+	 */
 public class Auto3CommandL_RL extends CommandGroup {
 	/** If Chooser is set to Left and FMS is RLR */
 	public Auto3CommandL_RL(){
@@ -23,7 +25,7 @@ public class Auto3CommandL_RL extends CommandGroup {
 		case "elims":
 			System.out.println("Auto3CommandL_RL - elims"); //Places 1 cube on scale
 			addSequential(new LowGearDT());
-			addParallel(new LiftElevatorToDistanceScale(AutoVars.LiftDistScale));
+			addParallel(new LiftElevatorWithTime(AutoVars.LiftDistScale));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 260, 0));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "clockwise"));
 			addSequential(new SpitOutCube(1, 0));

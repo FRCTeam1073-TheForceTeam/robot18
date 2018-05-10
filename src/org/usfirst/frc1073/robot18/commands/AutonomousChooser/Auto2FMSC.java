@@ -22,12 +22,10 @@ public class Auto2FMSC extends CommandGroup {
 		case "LRL":
 			addSequential(new Auto3CommandC_LR());
 			break;
-			/** Should never get used. Something is either very right or very wrong if this gets run */
 		default:
+			/** Should never get used. Something is either very right or very wrong if this gets run */
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
-			addSequential(new AdvancedDrive(-.8, 40, 40));
-			addSequential(new TurnWithGyro(.8, 65, "clockwise"));
-			addSequential(new AdvancedDrive(-.8, 60, 60));
+			addSequential(new AdvancedDrive(-.8, 75, 80));
 			break;
 		}
 	}

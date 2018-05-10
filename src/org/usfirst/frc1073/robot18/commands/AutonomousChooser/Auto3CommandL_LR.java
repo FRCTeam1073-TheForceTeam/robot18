@@ -10,7 +10,9 @@ import org.usfirst.frc1073.robot18.commands.LowGearDT;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 public class Auto3CommandL_LR extends CommandGroup {
-	/** If Chooser is set to Left and FMS is LRL */
+	/** If Chooser is set to Left and FMS is LRL
+	 * @author Jack
+	 */
 	public Auto3CommandL_LR(){
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":
@@ -31,13 +33,13 @@ public class Auto3CommandL_LR extends CommandGroup {
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SideApproach, 25));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			
-			addSequential(new LiftElevatorToDistanceScale(35));
+			addSequential(new LiftElevatorWithTime(5));
 			addParallel(new ElbowFlip());
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
-			addParallel(new LiftElevatorToDistanceScale(0));
+			addParallel(new LiftElevatorWithTimeDown(30));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 50, 50));
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 10));
-			addSequential(new CubeGetter());
+			addSequential(new CubeDriveAndGet());
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 10));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 10, 10));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
