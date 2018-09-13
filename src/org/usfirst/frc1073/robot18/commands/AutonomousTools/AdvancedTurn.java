@@ -145,7 +145,7 @@ public class AdvancedTurn extends Command {
 			percentComplete = (originalDegrees - currentDegrees) / degrees;
 		}
 
-		/** Grabs a degreesance traveled based on the average of the two encoders */
+		/** Grabs a degrees traveled based on the average of the two encoders */
 		/* Both are working */ if (leftEncDif != 0 && rightEncDif != 0) {
 			avgEncDif = (leftEncDif + rightEncDif) / 2;
 		} /* Left is working */ else if (leftEncDif != 0 && rightEncDif <= 1) {
