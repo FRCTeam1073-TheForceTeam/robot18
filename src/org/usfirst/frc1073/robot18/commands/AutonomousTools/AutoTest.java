@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutoTest extends CommandGroup {
 
     public AutoTest() {
-		addSequential(new LiftElevatorToDistanceScale(30));
-		addSequential(new ElbowFlip());
+		addSequential(new LiftElevatorWithTime(30));
+//		addSequential(new ElbowFlip());
     }
 }

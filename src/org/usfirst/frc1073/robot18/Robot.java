@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.hal.PDPJNI;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -47,6 +48,7 @@ public class Robot extends IterativeRobot {
 	public static robotDrivetrain drivetrain;
 	public static robotCollector collector;
 	public static robotPneumatic pneumatic;
+	public static robotClimber climber;
 	public static Bling bling;
 	public static Alliance alliance;
 	public static String FMS;
@@ -81,6 +83,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		autoSetup = new AutoVars();
 		sdSetup = new SmartDashboardSetup();
+		climber = new robotClimber();
 
 		FMS = "";
 		EncoderBoolSet = false;
@@ -101,8 +104,9 @@ public class Robot extends IterativeRobot {
 		other = new AutoObject(4);
 		quals = new AutoObject(5);
 		elims = new AutoObject(6);
-
-		/* The Position Position */
+		experimental = new AutoObject(7);
+		
+		/* The Position Chooser */
 		autonomousPosition = new SendableChooser<AutoObject>();
 		autonomousPosition.addDefault("None", other);
 		autonomousPosition.addObject("Left", left);
@@ -110,7 +114,7 @@ public class Robot extends IterativeRobot {
 		autonomousPosition.addObject("Right", right);
 		SmartDashboard.putData("Position", autonomousPosition);
 
-		/* The MatchType Position */
+		/* The MatchType Chooser */
 		autonomousMatchType = new SendableChooser<AutoObject>();
 		autonomousMatchType.addDefault("None", other);
 		autonomousMatchType.addObject("Qualifications", quals);
@@ -207,6 +211,9 @@ public class Robot extends IterativeRobot {
 		new LidarMiniMap();
 
 		sdSetup.AutoInit();
+		
+		//Encoder resets
+		
 		
 		/* instantiate the command used for the autonomous period */
 		System.out.println("Auto Starting");

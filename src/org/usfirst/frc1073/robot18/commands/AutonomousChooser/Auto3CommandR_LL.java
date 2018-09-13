@@ -11,7 +11,9 @@ import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 /*** If Chooser is set to Right and FMS is LLL */
 public class Auto3CommandR_LL extends CommandGroup {
-	/** If Chooser is set to Right and FMS is LLL */
+	/** If Chooser is set to Right and FMS is LLL
+	 * @author Jack
+	 */
 	public Auto3CommandR_LL(){
 		switch(Robot.autonomousMatchType.getSelected().getString()) {
 		case "quals":

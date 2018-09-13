@@ -287,7 +287,7 @@ public class SmartDashboardSetup {
 		SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
 		SmartDashboard.putNumber("Match Time1", Timer.getMatchTime());
 
-		SmartDashboard.putNumber("Elevator Enc enc", RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Elevator Enc", RobotMap.elevatorMotorLeft.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Enc", RobotMap.rightMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Left Enc", RobotMap.leftMotor1.getSelectedSensorPosition(0));
 		SmartDashboard.putBoolean("Bottom Limit", RobotMap.liftSwitchBottom.get());

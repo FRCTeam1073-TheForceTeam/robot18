@@ -22,8 +22,8 @@ public class Auto2FMSL extends CommandGroup {
 		case "LRL":
 			addSequential(new Auto3CommandL_LR());
 			break;
-			/** Should never get used. Something is either very right or very wrong if this gets run */
 		default:
+			/** Should never get used. Something is either very right or very wrong if this gets run */
 			SmartDashboard.putString("FMS DATA", "!!!Field Fault!!!");
 			addSequential(new AdvancedDrive(-.8, 75, 80));
 			break;
