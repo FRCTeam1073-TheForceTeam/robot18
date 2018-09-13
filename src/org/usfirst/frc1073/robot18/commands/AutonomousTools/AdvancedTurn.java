@@ -9,12 +9,13 @@ import org.usfirst.frc1073.robot18.Bling;
 /*** Straight drive command 
  * @author Nathaniel 
  */
-public class AdvancedDrive extends Command {
+public class AdvancedTurn extends Command {
 
 	/** Class wide variable declaration */
 	private double speed, currentSpeed, finalSpeed, finalSpeedL, finalSpeedR, 
-	dist, toBeTraveled, inch, leftEncDif, rightEncDif, startleftEncDif, percentComplete, 
+	degrees, toBeTraveled, inch, leftEncDif, rightEncDif, startleftEncDif, percentComplete, 
 	avgEncDif, startrightEncDif, originalDegrees, currentDegrees, n;
+	private String direction;
 
 	/* Ramp? */
 	private double ramp, rampStart, rampEnd;
@@ -25,20 +26,22 @@ public class AdvancedDrive extends Command {
 	
 	//New Timer
 	
-	private double timeStart, timerEnd;
+	private double timerStart, timerEnd;
 
 	/** PID, but not because this actually works
 	 * @author Nathaniel
-	 * @param speed
-	 * @param distance in inches (must be positive)
+	 * @param speed (must be positive)
+	 * @param degrees (must be positive)
+	 * @param direction ("left" or "right")
 	 * @param timeout in milliseconds * 5 (200 in a second) 
 	 * Note: 0 = no timeout
 	 * Note: Minimum of 5 millisecond run time
 	 * @category Drive Command
 	 */
-	public AdvancedDrive(double speed, double dist, double timeout) {
+	public AdvancedTurn(double speed, double degrees, String direction, double timeout) {
 		this.speed = speed;
-		this.dist = dist;
+		this.direction = direction;
+		this.degrees = degrees;
 		this.timeout = timeout;
 
 		/* Sets up encoders */
@@ -52,10 +55,8 @@ public class AdvancedDrive extends Command {
 		Robot.turn = false;
 		
 		/* Timer setup and check for if used */
-		timeEnd = timeout;
-		timer = 0;
-		
-		
+		timerEnd = timeout;
+		timerStart = System.currentTimeMillis();
 
 		/* Grabs initial robot encoder position */
 		startleftEncDif = RobotMap.leftMotor1.getSelectedSensorPosition(0);
@@ -64,16 +65,15 @@ public class AdvancedDrive extends Command {
 		/* Sets speed to an editable value and zeros out values */
 		currentSpeed = speed;
 		avgEncDif = 0;
-		
 
 		/* Grabs current heading to use for comparison during drive */
 		originalDegrees = RobotMap.headingGyro.getAngle();
 
-		/* Variables for the math of the encoder tick to distance */
+		/* Variables for the math of the encoder tick to degreesance */
 		double rotation = 1440;
 		double circumference = 12.25221134900019363000430919479;
 		inch = 117.52980412939963256779108679819;
-		toBeTraveled = (dist * inch * 1.045); // Distance to be traveled as used in the code
+		toBeTraveled = degrees;
 
 		/* Extra variables */
 		n = 0;
@@ -83,19 +83,19 @@ public class AdvancedDrive extends Command {
 		ramp = currentSpeed / 2;
 		rampStart = 0;
 		rampEnd = 2;
-		Robot.bling.sendAdvancedDrive();
 		
-		//New Timer
-		timerEnd = ((timeout/60) * 1000) + 1000;
-		timeStart = System.currentTimeMillis();
+		if (direction == "left") {
+			Robot.bling.sendAutoTurnLeft();
+		} else if (direction == "right") {
+			Robot.bling.sendAutoTurnRight();
+		}
 	}
 
 	protected void execute() {
 		
-		double deltaTime = (timerEnd + timeStart) - System.currentTimeMillis();
+		double deltaTime = (timerEnd + timerStart) - System.currentTimeMillis();
 		
-		System.out.println("timerEnd: " + (long)timerEnd + " timeStart: " + (long)timeStart + " CurrentTime: " + System.currentTimeMillis() + " DeltaTime: " + (long)deltaTime);
-		
+		System.out.println("timerEnd: " + (long)timerEnd + " timerStart: " + (long)timerStart + " CurrentTime: " + System.currentTimeMillis() + " DeltaTime: " + (long)deltaTime);
 		
 		/** Heading Checks */
 		/* Checks how far the robot has gone from the initial position */
@@ -106,58 +106,55 @@ public class AdvancedDrive extends Command {
 		currentDegrees = RobotMap.headingGyro.getAngle();
 
 		/** Code used to adjust the heading for straighter travel */
-		/* If going straight */
-		if (currentSpeed > 0) {
-			if (1 < originalDegrees - currentDegrees) {
-				finalSpeedL = 1;
-				finalSpeedR = .8;
+		/* If going right */
+		if (direction == "right") {
+			if (currentDegrees - originalDegrees <= degrees / 1.05) {
+				if (currentDegrees - originalDegrees < degrees / 1.15) {
+					if (currentDegrees - originalDegrees < degrees / 1.35) {
+						finalSpeedL = -1;
+						finalSpeedR = 1;
+					}
+					finalSpeedL = -.8;
+					finalSpeedR = .8;
+				}
+				finalSpeedL = -.5;
+				finalSpeedR = .5;
+			} else if (currentDegrees - originalDegrees >= degrees / .95) {
+				finalSpeedL = .5;
+				finalSpeedR = -.5;
 			}
-			else if (-1 > originalDegrees - currentDegrees) {
-				finalSpeedL = .8;
-				finalSpeedR = 1;
-			}
-			else {
-				finalSpeedL = 1;
-				finalSpeedR = 1;
-			}
+			percentComplete = (currentDegrees - originalDegrees) / degrees;
 		}
-		/* If going backwards */
-		if (currentSpeed < 0) {
-			if (1 < originalDegrees - currentDegrees) {
-				finalSpeedL = .8;
-				finalSpeedR = 1;
+		/* If going left */
+		if (direction == "left") {
+			if (originalDegrees - currentDegrees <= degrees / 1.05) {
+				if (originalDegrees - currentDegrees < degrees / 1.15) {
+					if (originalDegrees - currentDegrees < degrees / 1.35) {
+						finalSpeedL = 1;
+						finalSpeedR = -1;
+					}
+					finalSpeedL = .8;
+					finalSpeedR = -.8;
+				}
+				finalSpeedL = .5;
+				finalSpeedR = -.5;
+			} else if (originalDegrees - currentDegrees >= degrees / .95) {
+				finalSpeedL = -.5;
+				finalSpeedR = .5;
 			}
-			else if (-1 > originalDegrees - currentDegrees) {
-				finalSpeedL = 1;
-				finalSpeedR = .8;
-			}
-			else {
-				finalSpeedL = 1;
-				finalSpeedR = 1;
-			}
+			percentComplete = (originalDegrees - currentDegrees) / degrees;
 		}
 
-		/** Grabs a distance traveled based on the average of the two encoders */
-		/* Both are working */
-		if (leftEncDif != 0 && rightEncDif != 0) {
+		/** Grabs a degreesance traveled based on the average of the two encoders */
+		/* Both are working */ if (leftEncDif != 0 && rightEncDif != 0) {
 			avgEncDif = (leftEncDif + rightEncDif) / 2;
-		}
-		/* Left is working */
-		else if (leftEncDif != 0 && rightEncDif == 0) {
+		} /* Left is working */ else if (leftEncDif != 0 && rightEncDif <= 1) {
 			avgEncDif = (leftEncDif);
-		}
-		/* Right is working */
-		else if (leftEncDif == 0 && rightEncDif != 0) {
+		} /* Right is working */ else if (leftEncDif == 0 && rightEncDif != 0) {
 			avgEncDif = (rightEncDif);
-		}
-		/* Neither are working */
-		else {
+		} /* Neither are working */ else {
 			avgEncDif = 0;
-		}
-
-		/** Variable update code */
-		/* Uses that average and the original distance to be traveled to make a percentage total completed */
-		percentComplete = avgEncDif/toBeTraveled;
+		}		
 
 		/** Uses lidar to check if path is clear */
 		if (Robot.notClear == false) {
@@ -166,13 +163,11 @@ public class AdvancedDrive extends Command {
 			if (rampStart < rampEnd) {
 				if (rampStart < rampEnd / 2) {
 					finalSpeed = ramp / 2;
-				}
-				else {
+				} else {
 					finalSpeed = ramp;
 				}
 				rampStart++;
-			}
-			else {
+			} else {
 				finalSpeed = currentSpeed;
 			}
 
@@ -181,8 +176,7 @@ public class AdvancedDrive extends Command {
 
 			/* Timer step for if timed */
 			timer++;
-		}
-		else {
+		} else {
 			/* Stops the robot */
 			Robot.drivetrain.difDrive.tankDrive(0, 0);
 
@@ -201,22 +195,18 @@ public class AdvancedDrive extends Command {
 			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBool = false;
 				isFinished = true;
-				
 				Robot.bling.sendFinished();
 			}
 		}
 		/* If not set */
-		//Encoder not working
-		if (timer > 5 && avgEncDif == 0) {
+		/* Encoder not working */ if (System.currentTimeMillis() - timerStart > 5 && avgEncDif == 0) {
 			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || timer >= timeEnd) {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = false;
 				isFinished = true;
 				Robot.bling.sendFinished();
 			}
-		}
-		//Encoder working
-		else if (timer > 5 && avgEncDif != 0) {
+		} /* Encoder working else if */ else if (System.currentTimeMillis() - timerStart > 5 && avgEncDif != 0) {
 			if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || percentComplete >= .99) {
 				Robot.EncoderBoolSet = true;
 				Robot.EncoderBool = true;
@@ -224,15 +214,12 @@ public class AdvancedDrive extends Command {
 				Robot.bling.sendFinished();
 			}
 		}
-		//New Timer
-		if (System.currentTimeMillis() - timeStart >= timerEnd)
-		{
+		if (System.currentTimeMillis() - timerStart >= timerEnd) {
 			Robot.EncoderBoolSet = true;
 			Robot.EncoderBool = true;
 			isFinished = true;
 			Robot.bling.sendFinished();
 		}
-		//Cancel button
 		else if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
 			isFinished = true;
 			Robot.bling.sendFinished();
