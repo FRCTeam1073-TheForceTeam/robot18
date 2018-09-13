@@ -49,8 +49,8 @@ public class VisionCubeTracker extends Command{
 		blockCount = netTable.getEntry("Blocks").getDouble(0);
 
 		// Defines speed and slow down markers
-		double speed = .65;
-		double side = 25; // Marks the reasonable area around the center	
+		double speed = 1;
+		double side = 30; // Marks the reasonable area around the center	
 
 		// Puts variables from Network Tables on SmartDashboard
 		SmartDashboard.putNumber("xDelta", xDelta);
@@ -65,22 +65,32 @@ public class VisionCubeTracker extends Command{
 
 			// This code handles the left and right motion of the bot
 			// based on the Pixy's values
-			if (xDelta > side) {
-				dir = "Right";
+			if (xDelta > 1.75 * side) {
+				if (xDelta > 3 * side) {
+					dir = "Very Right";
+				}
+				else {
+					dir = "Right";
+				}
 			}
-			else if (xDelta < -(side)) {
-				dir = "Left";
+			else if (xDelta < -(1.75 * side)) {
+				if (xDelta < -(3 * side)) {
+					dir = "Very Left";
+				}
+				else {
+					dir = "Left";
+				}
 			}
 			else {
 				dir = "Center";
 			}
 
 			// If block is far away: sets motor directions
-			if (xWidth < 175) {
-				if (xWidth < 120) {
-					if (xWidth < 85) {
-						if (xWidth < 70) {
-							if (xWidth < 55) {
+			if (xWidth < 110) {
+				if (xWidth < 95) {
+					if (xWidth < 75) {
+						if (xWidth < 60) {
+							if (xWidth < 40) {
 								driveDir = 1.2;
 							}
 							else {
@@ -104,16 +114,24 @@ public class VisionCubeTracker extends Command{
 				v++;
 			}
 			if (dir.equals("Right") && driveDir >= 0) {
-				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir / 1.25, 0);
-			SmartDashboard.putString("visionDir", "right");
+				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir / 1.0, 0);
+				SmartDashboard.putString("visionDir", "right");
 			}
 			else if (dir.equals("Left") && driveDir >= 0) {
-				Robot.drivetrain.difDrive.tankDrive(0, -speed * driveDir / 1.25);
+				Robot.drivetrain.difDrive.tankDrive(0, -speed * driveDir / 1.0);
 				SmartDashboard.putString("visionDir", "left");
+			}
+			else if (dir.equals("Very Right") && driveDir >= 0) {
+				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir / 1.0, speed * .65);
+				SmartDashboard.putString("visionDir", "very right");
+			}
+			else if (dir.equals("Very Left") && driveDir >= 0) {
+				Robot.drivetrain.difDrive.tankDrive(speed * .65, -speed * driveDir / 1.0);
+				SmartDashboard.putString("visionDir", "very left");
 			}
 			else if (dir.equals("Center")) {
 				SmartDashboard.putString("visionDir", "center");
-				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir * 1.25, -speed * driveDir * 1.25);
+				Robot.drivetrain.difDrive.tankDrive(-speed * driveDir * 1.0, -speed * driveDir * 1.0);
 			}
 		}
 		// When no blocks are seen, we strafe back and forth, and up and down,

@@ -62,6 +62,7 @@ public class OI {
     	RobotTeleInit = driverControl.start;
     	
     	visionButton = driverControl.b;
+    	visionButton.whenPressed(new VisionCubeTracker());
     	
     	driverCancel = driverControl.a;
     	
