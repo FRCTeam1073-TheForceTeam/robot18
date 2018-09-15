@@ -15,9 +15,9 @@ public class TurnWithGyro extends Command {
 	private double turnDegrees;
 	private String turnDirection;
 	private double originalDegrees;
-	private double slowdownDistance = 11;
-	private double slowdownValue = .5;
-	private double slowdownMin = .5;
+	private double slowdownDistance = 8;
+	private double slowdownValue = .8;
+	private double slowdownMin = .6;
 	private double leftEnc,rightEnc;
 	
 	/** Uses basic drive to turn based on the gyro's position from the last time the gyro was reset

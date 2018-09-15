@@ -19,6 +19,7 @@ public class TurnToPoint extends Command {
 	private double slowdownValue = .5;
 	private double slowdownMin = .5;
 	private double leftEnc,rightEnc;
+	private int loop;
 	double turnSpeedDecreased;
 	
 	/** Uses basic drive to turn based on the gyro's position from the last time the gyro was reset
@@ -33,6 +34,7 @@ public class TurnToPoint extends Command {
     public TurnToPoint(double Speed, double Degrees) {
     	turnSpeed = Speed;
     	turnDegrees = Degrees;
+    	
     	
         requires(Robot.drivetrain);
 
@@ -68,14 +70,14 @@ public class TurnToPoint extends Command {
  	   	
     	if (originalDegrees > (turnDegrees - 15) && originalDegrees < (turnDegrees + 15) ){
     		
-    		
+    		if(loop%10==0)
     		turnSpeedDecreased =  turnSpeedDecreased * 0.9;
     		
     		
     	}
     	
     	
-    	
+    	loop++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
