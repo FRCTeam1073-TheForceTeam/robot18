@@ -22,24 +22,26 @@ public class ElbowFlip extends Command {
 	
 	protected void initialize() {
 		RobotMap.elbowMotor.setSelectedSensorPosition(0, 0, 0);
+		SmartDashboard.putNumber("time", time);
 	}
 	protected void execute(){
-		while(time < 1) {
-			Robot.elevator.elevatorDrive.tankDrive(-.5, -.5);
+		SmartDashboard.putNumber("time", time);
+		while(time < 2000) {
+			Robot.elevator.elbowDrive.tankDrive(.8, .8);
 			time = time + 1;
-			if(time == 1) {
-				break;
-			}
-		}
-		if(RobotMap.elbowMotor.getSelectedSensorPosition(0)<=1000 || RobotMap.elbowMotor.getSelectedSensorPosition(0 )>=-1000) {
-			Robot.elevator.elbowDrive.tankDrive(-.5, -.5);
 			finished = false;
+			SmartDashboard.putNumber("time", time);
 		}
-		else {
-			Robot.elevator.elbowDrive.tankDrive(0, 0);
-			finished = true;
-		//	isFinished = true;
-		}
+		
+	
+//		if(RobotMap.elbowMotor.getSelectedSensorPosition(0)<=1000 || RobotMap.elbowMotor.getSelectedSensorPosition(0 )>=-1000) {
+//			Robot.elevator.elbowDrive.tankDrive(-.5, -.5);
+//			finished = false;
+//		}
+//		else {
+//			Robot.elevator.elbowDrive.tankDrive(0, 0);
+//			finished = true;
+//		}
 	}
 	protected boolean isFinished() {
 	return finished;
