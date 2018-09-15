@@ -35,18 +35,22 @@ public class Auto3CommandR_RR extends CommandGroup {
 		case "experimental":
 			System.out.println("Hello World!");
 			addSequential(new LowGearDT());
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SideDist, 100));
+			/*shoots in switch*/
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 90, 100));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, AutoVars.SideApproach, 25));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, 25));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
-			
+			/*grabs new cube*/
 			addSequential(new LiftElevatorWithTime(5));
-			addParallel(new ElbowFlip());
+			//addParallel(new ElbowFlip());
+			
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
 			addParallel(new LiftElevatorWithTimeDown(30));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 50, 50));
-			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 350));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, -20));
 			addSequential(new CubeGetter());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed,10,10));
+			/*shoots in scale*/
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 350));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 10, 10));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
