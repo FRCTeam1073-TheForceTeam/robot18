@@ -8,3 +8,4 @@ build/
 src/org/usfirst/frc1073/robot18/commands/AutoTest.java
 dist/FRCUserProgram.jar
 src/org/usfirst/frc1073/robot18/commands/AutonomousTools/AutoTest.java
+.classpath

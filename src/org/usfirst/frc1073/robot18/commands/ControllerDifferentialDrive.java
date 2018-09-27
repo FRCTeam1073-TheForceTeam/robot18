@@ -28,12 +28,12 @@ public class ControllerDifferentialDrive extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		/* Ramp? */
+		/* Ramp? 
 		rampCurrent = 0;
 		rampEnd = 7;
 		hold = 0;
 		held = 10;
-		top = false;
+		top = false; */
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -61,68 +61,68 @@ public class ControllerDifferentialDrive extends Command {
 			forward = 0;
 			hold = 0;
 		}
-		/** Ramp? */
+		/* Ramp? */
 		else {
 			/* State of controller */
-			if (axis > .05) {
-				holdingUp = true;
-				holdingDown = false;
-			}
-			else if (axis < -.05) {
-				holdingUp = false;
-				holdingDown = true;
-			}
+			//if (axis > .05) {
+				//holdingUp = true;
+				//holdingDown = false;
+			//}
+			//else if (axis < -.05) {
+				//holdingUp = false;
+				//holdingDown = true;
+			//}
 			
 			/* Is long pressed? */
-			if (axis > .05) {
-				if (hold >= held) {
-					top = true;
-				}
-				else {
-					top = false;
-					hold++;
-				}
-			}
-			else if (axis < -.05) {
-				if (hold >= held) {
-					bottom = true;
-				}
-				else {
-					bottom = false;
-					hold++;
-				}
-			}
+			//if (axis > .05) {
+				//if (hold >= held) {
+					//top = true;
+				//}
+				//else {
+					//top = false;
+					//hold++;
+				//}
+			//}
+			//else if (axis < -.05) {
+				//if (hold >= held) {
+					//bottom = true;
+				//}
+				//else {
+					//bottom = false;
+					//hold++;
+				//}
+			//}
 			
-			/* Checks for ramp necessity */
+			/* Checks for ramp necessity 
 			if (top == true && axis < -.05) {
 				ramp = true;
 				
 			}
 			else if (bottom == true && axis > .05) {
 				ramp = true;
-			}
+			}*/
 			
 			/* Set speed */
-			if (ramp == true && axis > .05) {
-				forwardFinal = ramps[rampCurrent] * axis;
-				rampCurrent++;
+			if (/*ramp == true && */axis > .05) {
+				forwardFinal = /*ramps[rampCurrent] * */axis;
+				//rampCurrent++;
 			}
-			else if (ramp == true && axis < -.05) {
-				forwardFinal = ramps[rampCurrent] * axis;
-				rampCurrent++;
+			else if (/*ramp == true && */axis < -.05) {
+				forwardFinal = /*ramps[rampCurrent] * */axis;
+				//rampCurrent++;
 			}
 			else{
 				forwardFinal = axis;
 			}
 			
-			/* Reset Ramp? */
+			/* Reset Ramp?
 			if (rampCurrent >= rampEnd) {
 				top = false;
 				bottom = false;
 				hold = 0;
 				rampCurrent = 0;
 				ramp = false;
-			}
+			}*/
 		}
 		
 		/** Output */

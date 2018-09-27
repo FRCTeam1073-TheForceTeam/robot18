@@ -25,7 +25,7 @@ public class WasteTime extends Command {
 
 	protected void intitialize() {
 		if (timeBool == false) {
-			towerRenderer.meme.solve();
+			//towerRenderer.meme.solve();
 		}
 		
 		timer = 0;

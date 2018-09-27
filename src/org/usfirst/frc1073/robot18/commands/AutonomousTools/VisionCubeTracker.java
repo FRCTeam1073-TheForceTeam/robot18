@@ -26,7 +26,6 @@ public class VisionCubeTracker extends Command{
 	public VisionCubeTracker() {
 		netTableInst = NetworkTableInstance.getDefault();
 		netTable = netTableInst.getTable("TurretTable");
-		//netTable = NetworkTable.getTable("TurretTable");
 	}
 
 	// Called just before this Command runs the first time

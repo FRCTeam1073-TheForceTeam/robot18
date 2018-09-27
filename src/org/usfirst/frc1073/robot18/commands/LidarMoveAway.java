@@ -1,5 +1,6 @@
 
 package org.usfirst.frc1073.robot18.commands;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc1073.robot18.Robot;
@@ -14,8 +15,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class LidarMoveAway extends Command {
 
-	NetworkTable lidarSendTable;
-	NetworkTable gyroTable;
+	edu.wpi.first.networktables.NetworkTable Table;
+	//edu.wpi.first.networktables.NetworkTable Gyro;
+	NetworkTableInstance lidarSendTable;
+	//NetworkTableInstance gyroTable;
 	double lidarDegrees;
 	double ultimateMeasurement;
 	double robotSpeed;
@@ -33,14 +36,16 @@ public class LidarMoveAway extends Command {
 		requires(Robot.drivetrain);
 
 		//Sets the correct Network Table to pull from the Pixy
-		lidarSendTable = NetworkTable.getTable("LidarSendTable");
-		gyroTable = NetworkTable.getTable("gyro");
+		lidarSendTable = NetworkTableInstance.getDefault();
+		
+		Table = lidarSendTable.getTable("lidarSendTable");
+		//gyroTable = lidarSendTable.getTable("gyro");
 	}
 
 	protected void initialize() {
 		SmartDashboard.putString("lidar info", "init");
 		SmartDashboard.putString("hello_world", "x");
-		gyroTable = NetworkTable.getTable("gyro");
+		//gyroTable = NetworkTable.getTable("gyro");
 
 
 	}
@@ -56,10 +61,12 @@ public class LidarMoveAway extends Command {
 		//These are the variables for speed - start slow
 
 		//These are what the Pixy send us
-		robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
-		left = lidarSendTable.getNumber("left", 99);
-		right = lidarSendTable.getNumber("right", 99);
-		degrees = lidarSendTable.getNumber("degrees",99);
+		
+		//finish these
+		//robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
+		//left = lidarSendTable.getNumber("left", 99);
+		//right = lidarSendTable.getNumber("right", 99);
+		//degrees = lidarSendTable.getNumber("degrees",99);
 		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
 
 
@@ -76,8 +83,8 @@ public class LidarMoveAway extends Command {
 
 		Robot.drivetrain.basicDrive(-1*right, left);
 
-		gyroTable.putNumber("gyroValue", RobotMap.headingGyro.getAngle());
-		lidarSendTable.putNumber("gyroValue", RobotMap.headingGyro.getAngle());
+		//gyroTable.putNumber("gyroValue", RobotMap.headingGyro.getAngle());
+		//lidarSendTable.putNumber("gyroValue", RobotMap.headingGyro.getAngle());
 
 
 

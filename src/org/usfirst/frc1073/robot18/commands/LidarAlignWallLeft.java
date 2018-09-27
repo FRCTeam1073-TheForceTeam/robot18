@@ -1,5 +1,6 @@
 
 package org.usfirst.frc1073.robot18.commands;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 
 
@@ -14,9 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class LidarAlignWallLeft extends Command {
+	edu.wpi.first.networktables.NetworkTable Table;
+	NetworkTableInstance lidarSendTable;
 
-
-	NetworkTable lidarSendTable;
 	double lidarDegrees;
 	double ultimateMeasurement;
 	double robotSpeed;
@@ -33,7 +34,8 @@ public class LidarAlignWallLeft extends Command {
 		requires(Robot.drivetrain);
 
 		//Sets the correct Network Table to pull from the Pixy
-		lidarSendTable = NetworkTable.getTable("LidarSendTable");
+		lidarSendTable = NetworkTableInstance.getDefault();
+		Table = lidarSendTable.getTable("lidarSendTable");
 	}
 
 	protected void initialize() {
@@ -52,11 +54,10 @@ public class LidarAlignWallLeft extends Command {
 		//These are the variables for speed - start slow
 
 		//These are what the Pixy send us
-		robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
-		left = lidarSendTable.getNumber("left", 99);
-		right = lidarSendTable.getNumber("right", 99);
-		degrees = lidarSendTable.getNumber("degrees",99);
-		String turn = lidarSendTable.getString("Turn","turn");
+		robotSpeed = lidarSendTable.getEntry("robotSpeed").getDouble(99);
+		left = lidarSendTable.getEntry("left").getDouble(99);
+		right = lidarSendTable.getEntry("right").getDouble(99);
+		degrees = lidarSendTable.getEntry("degrees").getDouble(99);
 		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
 
 
@@ -71,7 +72,7 @@ public class LidarAlignWallLeft extends Command {
 
 		Robot.drivetrain.basicDrive(-1*left, right);
 		
-		lidarSendTable.putString("Turn", "left");
+		lidarSendTable.getEntry("Turn").setString("left");
 		
 		
 			

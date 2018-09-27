@@ -29,7 +29,7 @@ public class RunElevatorWithShifting extends Command {
 		//moves the lift
 		if (Robot.oi.operatorControl.getRawAxis(1) > 0.05 ) {
 
-			speed = (Robot.oi.operatorControl.getRawAxis(1)*0.6);
+			speed = (Robot.oi.operatorControl.getRawAxis(1)*0.8);
 			highGear = false;
 		}
 		else if(Robot.oi.operatorControl.getRawAxis(1) < -0.05) {

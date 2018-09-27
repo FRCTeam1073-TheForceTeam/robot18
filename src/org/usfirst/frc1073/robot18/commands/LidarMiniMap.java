@@ -1,4 +1,5 @@
 package org.usfirst.frc1073.robot18.commands;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 
 
@@ -13,9 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class LidarMiniMap extends Command {
-
-
-	NetworkTable lidarSendTable;
+	edu.wpi.first.networktables.NetworkTable Table;
+	NetworkTableInstance lidarSendTable;
 	double lidarDegrees;
 	double ultimateMeasurement;
 	double robotSpeed;
@@ -31,18 +31,18 @@ public class LidarMiniMap extends Command {
 	boolean isPressed = false;
 
 	public LidarMiniMap() {
-
+		lidarSendTable = NetworkTableInstance.getDefault();
+		Table = lidarSendTable.getTable("lidarSendTable");
 		requires(Robot.drivetrain);
 
 		//Sets the correct Network Table to pull from the Pixy
-		lidarSendTable = NetworkTable.getTable("LidarSendTable");
 	}
 
 	protected void initialize() {
 		SmartDashboard.putString("lidar info", "init");
 		SmartDashboard.putString("hello_world", "x");
 		rightLeft = SmartDashboard.getString("rightLeft", "right");
-		lidarSendTable.putString("rightLeft", rightLeft);
+		lidarSendTable.getEntry("rightLeft").setString(rightLeft);
 			
 		
 		
@@ -50,8 +50,8 @@ public class LidarMiniMap extends Command {
 
 	protected void execute() {
 		SmartDashboard.putString("lidar info", "executing");
-		x = lidarSendTable.getNumber("x", 0);
-		y = lidarSendTable.getNumber("x", 0);
+		x = lidarSendTable.getEntry("x").getDouble(0);
+		y = lidarSendTable.getEntry("x").getDouble(0);
 		SmartDashboard.putNumber("X Coordinate", x);
 		SmartDashboard.putNumber("Y Coordinate", y);
 	}

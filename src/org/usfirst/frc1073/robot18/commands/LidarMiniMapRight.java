@@ -1,4 +1,5 @@
 package org.usfirst.frc1073.robot18.commands;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 
 
@@ -15,7 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class LidarMiniMapRight extends Command {
 
 
-	NetworkTable lidarSendTable;
+	edu.wpi.first.networktables.NetworkTable Table;
+	NetworkTableInstance lidarSendTable;
 	double lidarDegrees;
 	double ultimateMeasurement;
 	double robotSpeed;
@@ -35,20 +37,21 @@ public class LidarMiniMapRight extends Command {
 		requires(Robot.drivetrain);
 
 		//Sets the correct Network Table to pull from the Pixy
-		lidarSendTable = NetworkTable.getTable("LidarSendTable");
+		lidarSendTable = NetworkTableInstance.getDefault();
+		Table = lidarSendTable.getTable("lidarSendTable");
 		rightLeft = "right";
-		lidarSendTable.putString("rightLeft", rightLeft);
+		lidarSendTable.getEntry("rightLeft").setString(rightLeft);
 		rightLeft = "right";
-		lidarSendTable.putString("rightLeft", rightLeft);
-		x = lidarSendTable.getNumber("x", 0);
-		y = lidarSendTable.getNumber("x", 0);
+		lidarSendTable.getEntry("rightLeft").setString(rightLeft);
+		x = lidarSendTable.getEntry("x").getDouble(0);
+		y = lidarSendTable.getEntry("y").getDouble(0);
 		SmartDashboard.putNumber("X Coordinate", x);
 		SmartDashboard.putNumber("Y Coordinate", y);
 	}
 
 	protected void initialize() {
 		rightLeft = "right";
-		lidarSendTable.putString("rightLeft", rightLeft);
+		lidarSendTable.getEntry("rightLeft").setString(rightLeft);
 			
 		
 		
@@ -56,9 +59,9 @@ public class LidarMiniMapRight extends Command {
 
 	protected void execute() {
 		rightLeft = "right";
-		lidarSendTable.putString("rightLeft", rightLeft);
-		x = lidarSendTable.getNumber("x", 0);
-		y = lidarSendTable.getNumber("x", 0);
+		lidarSendTable.getEntry("rightLeft").setString(rightLeft);
+		x = lidarSendTable.getEntry("x").getDouble(0);
+		y = lidarSendTable.getEntry("y").getDouble(0);
 		SmartDashboard.putNumber("X Coordinate", x);
 		SmartDashboard.putNumber("Y Coordinate", y);
 	}
