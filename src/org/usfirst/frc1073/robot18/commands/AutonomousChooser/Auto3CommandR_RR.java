@@ -36,22 +36,25 @@ public class Auto3CommandR_RR extends CommandGroup {
 			System.out.println("Hello World!");
 			addSequential(new LowGearDT());
 			/*shoots in switch*/
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 90, 100));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 120, 150));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, 25));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 25, 30));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			/*grabs new cube*/
-			addSequential(new LiftElevatorWithTime(5));
-			//addParallel(new ElbowFlip());
+			addSequential(new ElbowFlip());
+			//addSequential(new LiftElevatorWithTime(500));
+			
+			
+			addSequential(new DropElevatorWithTime(450));
 			
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
-			addParallel(new LiftElevatorWithTimeDown(30));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 50, 50));
-			addSequential(new TurnToPoint(AutoVars.TurnSpeed, -20));
+			//addParallel(new LiftElevatorWithTime(1000));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 80, 80));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 50));
 			addSequential(new CubeGetter());
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed,10,10));
-			/*shoots in scale*/
-			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 350));
+			/*shoots in switch*/
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
 			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 10, 10));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			System.out.println("Auto Completed");

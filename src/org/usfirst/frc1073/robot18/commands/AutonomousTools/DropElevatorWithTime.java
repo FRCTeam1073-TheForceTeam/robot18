@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LiftElevatorWithTime extends Command {
+public class DropElevatorWithTime extends Command {
 
 	double time;
 	
-	public LiftElevatorWithTime(double time) {
+	public DropElevatorWithTime(double time) {
 		this.time = time*20;
 	}
 	
@@ -25,7 +25,7 @@ public class LiftElevatorWithTime extends Command {
     protected void execute() {
     	int plus = 0;
     	while(plus < time) {
-    		Robot.elevator.elevatorDrive.tankDrive(1, -1);
+    		Robot.elevator.elevatorDrive.tankDrive(-1, 1);
     		plus = plus + 1;
     		if(plus == time) {
     			break;

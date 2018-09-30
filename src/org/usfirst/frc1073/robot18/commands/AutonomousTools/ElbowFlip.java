@@ -26,8 +26,8 @@ public class ElbowFlip extends Command {
 	}
 	protected void execute(){
 		SmartDashboard.putNumber("time", time);
-		while(time < 2000) {
-			Robot.elevator.elbowDrive.tankDrive(.8, .8);
+		while(time < 3000) {
+			Robot.elevator.elbowDrive.tankDrive(1, 1);
 			time = time + 1;
 			finished = false;
 			SmartDashboard.putNumber("time", time);
@@ -44,7 +44,12 @@ public class ElbowFlip extends Command {
 //		}
 	}
 	protected boolean isFinished() {
-	return finished;
+	if(time== 3000) {
+		return true;
+	}
+	else {
+		return false;
+	}
 	}
 	
 }

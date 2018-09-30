@@ -165,6 +165,8 @@ public class OI {
         SmartDashboard.putData("Turn off Bling", new BlingOff());
         SmartDashboard.putData("Auto Test", new AutoTest());
         SmartDashboard.putData("VisionCube", new VisionCubeTracker());
+        SmartDashboard.putData("Lift", new DropElevatorWithTime(2000));
+
         if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;

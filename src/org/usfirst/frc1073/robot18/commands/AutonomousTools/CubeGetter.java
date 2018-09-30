@@ -21,7 +21,7 @@ public class CubeGetter extends CommandGroup {
 		//addSequential(new EncoderCheck()); //Checks encoders before running
 		//addParallel(new CollectorDown());
 		addSequential(new OpenClaw()); //Puts collector in optimal cube collecting position
-		addSequential(new VisionCubeTracker()); //Tracks cube until it is inside the collector
+		addSequential(new VisionCubeTracker(200)); //Tracks cube until it is inside the collector
 		addSequential(new AdvancedDrive(.65, 10, 0));
 		addSequential(new SuckInCube(1.5, .3)); //Pulls in and clamps onto cube
 		System.out.println("Auto Completed");

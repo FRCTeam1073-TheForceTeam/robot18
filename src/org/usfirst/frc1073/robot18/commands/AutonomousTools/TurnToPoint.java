@@ -68,11 +68,11 @@ public class TurnToPoint extends Command {
     		Robot.drivetrain.difDrive.tankDrive(Double.max(slowdownMin, turnSpeedDecreased), -Double.max(slowdownMin, turnSpeedDecreased));
     	}
  	   	
-    	if (originalDegrees > (turnDegrees - 15) && originalDegrees < (turnDegrees + 15) ){
+   	if (originalDegrees > (turnDegrees - 15) && originalDegrees < (turnDegrees + 15) ){
     		
-    		if(loop%10==0)
+    		if(loop%20==0){
     		turnSpeedDecreased =  turnSpeedDecreased * 0.9;
-    		
+    }
     		
     	}
     	
