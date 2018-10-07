@@ -30,7 +30,7 @@ public class AdvancedDrive extends Command {
 	/** PID, but not because this actually works
 	 * @author Nathaniel
 	 * @param speed
-	 * @param distance in inches (must be positive)
+	 * @param distance in inches (must be positive(like no literally we make it positive(this is for the idiots)))
 	 * @param timeout in milliseconds * 5 (200 in a second) 
 	 * Note: 0 = no timeout
 	 * Note: Minimum of 5 millisecond run time
@@ -38,7 +38,7 @@ public class AdvancedDrive extends Command {
 	 */
 	public AdvancedDrive(double speed, double dist, double timeout) {
 		this.speed = speed;
-		this.dist = dist;
+		this.dist = Math.abs(dist);
 		this.timeout = timeout;
 
 		/* Sets up encoders */

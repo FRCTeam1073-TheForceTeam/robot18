@@ -1,6 +1,7 @@
 package org.usfirst.frc1073.robot18.commands.AutonomousTools;
 
 import org.usfirst.frc1073.robot18.AutoVars;
+import org.usfirst.frc1073.robot18.OI;
 import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
@@ -21,17 +22,14 @@ public class ElbowFlip extends Command {
 	boolean finished;
 	
 	protected void initialize() {
-		RobotMap.elbowMotor.setSelectedSensorPosition(0, 0, 0);
+		//RobotMap.elbowMotor.setSelectedSensorPosition(0, 0, 0);
 		SmartDashboard.putNumber("time", time);
 	}
 	protected void execute(){
 		SmartDashboard.putNumber("time", time);
-		while(time < 3000) {
-			Robot.elevator.elbowDrive.tankDrive(1, 1);
+			Robot.elevator.elbowDrive.tankDrive(-0.7,-0.7);
 			time = time + 1;
-			finished = false;
 			SmartDashboard.putNumber("time", time);
-		}
 		
 	
 //		if(RobotMap.elbowMotor.getSelectedSensorPosition(0)<=1000 || RobotMap.elbowMotor.getSelectedSensorPosition(0 )>=-1000) {
@@ -44,7 +42,7 @@ public class ElbowFlip extends Command {
 //		}
 	}
 	protected boolean isFinished() {
-	if(time== 3000) {
+	if(time>= 60) {
 		return true;
 	}
 	else {
