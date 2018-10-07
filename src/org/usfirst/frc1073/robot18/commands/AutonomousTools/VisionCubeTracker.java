@@ -150,7 +150,6 @@ public class VisionCubeTracker extends Command{
 			finished = true;
 		}
 		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
-			SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 			finished = true;
 		}
 		return finished;

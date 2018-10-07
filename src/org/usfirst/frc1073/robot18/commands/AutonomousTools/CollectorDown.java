@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.subsystems.*;
 /*** Lowers Collector */
 public class CollectorDown extends Command {
-
+boolean finished = false;
 	/** Lowers Collector */
 	public CollectorDown() {
 		
@@ -23,6 +23,9 @@ public class CollectorDown extends Command {
 	}
 	
 	protected boolean isFinished() {
-		return true;
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			finished = true;
+		}
+		return finished;
 	}
 }

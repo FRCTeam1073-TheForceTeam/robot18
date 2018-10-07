@@ -14,11 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.subsystems.*;
 /** Opens the pneumatic claw */
 public class OpenClaw extends Command {
-
+boolean finished = false;
 	protected void initialize() {
 		Robot.pneumatic.openClaw();
 	}
 	protected boolean isFinished() {
-		return true;
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			finished = true;
+		}
+		return finished;
 	}
 }

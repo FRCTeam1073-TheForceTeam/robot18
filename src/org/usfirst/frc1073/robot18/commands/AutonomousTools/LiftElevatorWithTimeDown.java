@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LiftElevatorWithTimeDown extends Command {
 
 	double time;
+	boolean finished = false;
 	
 	public LiftElevatorWithTimeDown(double time) {
 		this.time = time;
@@ -37,7 +38,10 @@ public class LiftElevatorWithTimeDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+    	if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			finished = true;
+		}
+        return finished;
     }
 
     // Called once after isFinished returns true

@@ -91,9 +91,9 @@ public class LidarSeeRobot extends Command {
 	}
 
 	protected boolean isFinished() {
+		
 		boolean is_finished = false;
-		return is_finished;
-
+		return is_finished;	
 		//SmartDashboard.putString("lidar info", "isFinished");
 
 		//Checks the cancel button for its state

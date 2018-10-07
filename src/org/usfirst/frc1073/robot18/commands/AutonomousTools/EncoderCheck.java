@@ -11,6 +11,9 @@ public class EncoderCheck extends Command {
 		if (Robot.EncoderBool == true) {
 			isFinished = true;
 		}
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			isFinished = true;
+		}
 		return isFinished;
 	}
 

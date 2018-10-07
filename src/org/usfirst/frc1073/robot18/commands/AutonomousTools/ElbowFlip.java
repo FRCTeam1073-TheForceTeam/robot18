@@ -44,6 +44,9 @@ public class ElbowFlip extends Command {
 //		}
 	}
 	protected boolean isFinished() {
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			finished = true;
+		}
 	return finished;
 	}
 	
