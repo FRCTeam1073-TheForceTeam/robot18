@@ -23,9 +23,6 @@ boolean finished = false;
 	}
 	
 	protected boolean isFinished() {
-		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
-			finished = true;
-		}
-		return finished;
+		return true;
 	}
 }

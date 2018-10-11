@@ -88,12 +88,6 @@ public class TurnToPoint extends Command {
     	{
     		finish = true;
     	}
-    	if(Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true){
-    		finish = true;
-    	}
-    	if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
-			finish = true;
-		}
     	
     	return finish;
     }

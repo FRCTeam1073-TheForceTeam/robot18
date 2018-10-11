@@ -27,7 +27,7 @@ public class ElbowFlip extends Command {
 	}
 	protected void execute(){
 		SmartDashboard.putNumber("time", time);
-		Robot.elevator.elbowDrive.tankDrive(.8, .8);
+		Robot.elevator.elbowDrive.tankDrive(-0.7, -0.7);
 		time = time + 1;
 		SmartDashboard.putNumber("time", time);
 		

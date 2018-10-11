@@ -64,9 +64,6 @@ public class SuckInCube extends Command {
 			Robot.collector.collectDrive.tankDrive(0, 0);
 			Robot.bling.sendFinished();
 		}
-		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
-			finished = true;
-		}
 		return finished;
 	}
 

@@ -54,7 +54,7 @@ public class Auto3CommandR_RR extends CommandGroup {
 			//addSequential(new TurnToPoint(.7, 12));
 			//addSequential(new TurnToPoint(AutoVars.TurnSpeed, 50));
 			//addSequential(new CubeGetter());
-			addSequential(new OpenClaw()); //Puts collector in optimal cube collecting position
+			addSequential(new OpenClaw()); //Puts collector in optimal cube collecting position //check this
 			//addSequential(new AdvancedDrive(.65,7,9));
 			addSequential(new TurnToPoint(.8, 90));
 			addSequential(new AdvancedDrive(.65,40,45));

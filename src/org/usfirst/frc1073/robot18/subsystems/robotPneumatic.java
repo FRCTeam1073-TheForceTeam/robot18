@@ -27,8 +27,8 @@ public class robotPneumatic {
 		rightWrist.set(false);
 	}
 	public void driveTrainHighGear() {
-		gearLow.set(true);
-		gearHigh.set(false);
+		gearLow.set(false);
+		gearHigh.set(true);
 	}
 	public void driveTrainLowGear() {
 		gearLow.set(true);

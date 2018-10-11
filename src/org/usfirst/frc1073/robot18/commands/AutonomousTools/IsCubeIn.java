@@ -31,9 +31,6 @@ public class IsCubeIn extends Command {
 			isFinished = true;
 			Robot.bling.sendFinished();
 		}
-		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
-			isFinished = true;
-		}
 		return isFinished;
 	}
 }
