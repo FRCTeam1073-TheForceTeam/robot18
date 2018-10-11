@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class LiftElevatorWithTime extends Command {
 
+
 	double timeStart = 0;
 	double timeFinished;
-	boolean finished;
+	boolean finished = false;
+
 	
 	public LiftElevatorWithTime(double endTime) {
 		this.timeFinished = endTime;

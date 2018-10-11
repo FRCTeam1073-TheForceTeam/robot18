@@ -237,6 +237,7 @@ public class AdvancedDrive extends Command {
 			isFinished = true;
 			Robot.bling.sendFinished();
 		}
+		
 		return isFinished;
 	}
 }

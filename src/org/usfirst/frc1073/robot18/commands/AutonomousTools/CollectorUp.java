@@ -12,11 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.subsystems.*;
 /** Puts up pneumatic collector */
 public class CollectorUp extends Command {
-
+boolean finished = false;
 	protected void initialize() {
 		Robot.pneumatic.collectorUp();
 	}
 	protected boolean isFinished() {
-		return true;
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			finished = true;
+		}
+		return finished;
 	}
 }

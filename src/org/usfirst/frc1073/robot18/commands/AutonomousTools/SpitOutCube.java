@@ -66,6 +66,9 @@ public class SpitOutCube extends Command {
 			finished = true;
 			Robot.collector.collectDrive.tankDrive(0, 0);
 		}
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			finished = true;
+		}
 		return finished;
 	}
 

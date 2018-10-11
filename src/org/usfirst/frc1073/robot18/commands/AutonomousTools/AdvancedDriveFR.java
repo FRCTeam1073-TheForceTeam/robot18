@@ -176,6 +176,7 @@ public class AdvancedDriveFR extends Command {
 			isFinished = true;
 			Robot.bling.sendFinished();
 		}
+		
 		return isFinished;
 	}
 }

@@ -27,11 +27,10 @@ public class ElbowFlip extends Command {
 	}
 	protected void execute(){
 		SmartDashboard.putNumber("time", time);
-			Robot.elevator.elbowDrive.tankDrive(-0.7,-0.7);
-			time = time + 1;
-			SmartDashboard.putNumber("time", time);
+		Robot.elevator.elbowDrive.tankDrive(.8, .8);
+		time = time + 1;
+		SmartDashboard.putNumber("time", time);
 		
-	
 //		if(RobotMap.elbowMotor.getSelectedSensorPosition(0)<=1000 || RobotMap.elbowMotor.getSelectedSensorPosition(0 )>=-1000) {
 //			Robot.elevator.elbowDrive.tankDrive(-.5, -.5);
 //			finished = false;
@@ -42,12 +41,16 @@ public class ElbowFlip extends Command {
 //		}
 	}
 	protected boolean isFinished() {
-	if(time>= 60) {
-		return true;
-	}
-	else {
-		return false;
-	}
+		boolean finished = false;
+		
+		if(time>= 60) {
+			finished = true;
+		}
+		else {
+			finished = false;
+		}
+		
+		return finished;
 	}
 	
 }

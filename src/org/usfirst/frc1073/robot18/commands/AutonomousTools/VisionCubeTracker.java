@@ -158,9 +158,18 @@ public class VisionCubeTracker extends Command{
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		boolean finished = false;
+
 		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || width < xWidth) {
+		if (v > 10 && Robot.clawBool == true) {
+			SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 			finished = true;
 		}
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			finished = true;
+		}
+	}
 		return finished;
 	}
 }
+
+
