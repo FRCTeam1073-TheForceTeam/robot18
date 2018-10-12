@@ -1,4 +1,5 @@
 package org.usfirst.frc1073.robot18.commands.AutonomousTools;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command; 
 
 
@@ -15,7 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class LidarSeeRobot extends Command {
 
 
-	NetworkTable lidarSendTable;
+	edu.wpi.first.networktables.NetworkTable Table;
+	NetworkTableInstance lidarSendTable;
 	//double lidarDegrees;
 	//double ultimateMeasurement;
 	//double robotSpeed;
@@ -33,13 +35,14 @@ public class LidarSeeRobot extends Command {
 		requires(Robot.drivetrain);
 
 		//Sets the correct Network Table to pull from the Pixy
-		lidarSendTable = NetworkTable.getTable("LidarSendTable");
+		lidarSendTable = NetworkTableInstance.getDefault();
+		Table = lidarSendTable.getTable("lidarSendTable");
 	}
 
 	protected void initialize() {
 		//SmartDashboard.putString("lidar info", "init");
 		//SmartDashboard.putString("hello_world", "x");
-		SeeObject = lidarSendTable.getBoolean("Stop", false);
+		SeeObject = lidarSendTable.getEntry("Stop").getBoolean(false);
 		
 	}
 
@@ -58,7 +61,7 @@ public class LidarSeeRobot extends Command {
 		//right = lidarSendTable.getNumber("right", 99);
 		//degrees = lidarSendTable.getNumber("degrees",99);
 		//SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
-		SeeObject = lidarSendTable.getBoolean("Stop", false);
+		SeeObject = lidarSendTable.getEntry("Stop").getBoolean(false);
 		/*if(SeeObject == false) {
 			Robot.drivetrain.difDrive.arcadeDrive(-0.25, 0);
 			SmartDashboard.putBoolean("SeeRobot", false);
@@ -91,9 +94,9 @@ public class LidarSeeRobot extends Command {
 	}
 
 	protected boolean isFinished() {
+		
 		boolean is_finished = false;
-		return is_finished;
-
+		return is_finished;	
 		//SmartDashboard.putString("lidar info", "isFinished");
 
 		//Checks the cancel button for its state
