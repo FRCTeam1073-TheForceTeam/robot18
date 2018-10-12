@@ -1,6 +1,5 @@
 
 package org.usfirst.frc1073.robot18.commands;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc1073.robot18.Robot;
@@ -15,9 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class LidarMoveAway360 extends Command {
 
-	edu.wpi.first.networktables.NetworkTable Table;
-	NetworkTableInstance lidarSendTable;
-	//NetworkTable gyroTable;
+	NetworkTable lidarSendTable;
+	NetworkTable gyroTable;
 	double lidarDegrees;
 	double ultimateMeasurement;
 	double robotSpeed;
@@ -36,15 +34,14 @@ public class LidarMoveAway360 extends Command {
 		requires(Robot.drivetrain);
 
 		//Sets the correct Network Table to pull from the Pixy
-		lidarSendTable = NetworkTableInstance.getDefault();
-		Table = lidarSendTable.getTable("lidarSendTable");
-		//gyroTable = NetworkTable.getTable("gyro");
+		lidarSendTable = NetworkTable.getTable("LidarSendTable");
+		gyroTable = NetworkTable.getTable("gyro");
 	}
 
 	protected void initialize() {
 		SmartDashboard.putString("lidar info", "init");
 		SmartDashboard.putString("hello_world", "x");
-		//gyroTable = NetworkTable.getTable("gyro");
+		gyroTable = NetworkTable.getTable("gyro");
 
 
 	}
@@ -60,11 +57,11 @@ public class LidarMoveAway360 extends Command {
 		//These are the variables for speed - start slow
 
 		//These are what the Pixy send us
-		robotSpeed = lidarSendTable.getEntry("robotSpeed").getDouble(99);
-		left = lidarSendTable.getEntry("left").getDouble(99);
-		right = lidarSendTable.getEntry("right").getDouble(99);
-		degrees = lidarSendTable.getEntry("degrees").getDouble(99);
-		targetPosition =lidarSendTable.getEntry("targetPosition").getDouble(99);
+		robotSpeed = lidarSendTable.getNumber("robotSpeed", 99);
+		left = lidarSendTable.getNumber("left", 99);
+		right = lidarSendTable.getNumber("right", 99);
+		degrees = lidarSendTable.getNumber("degrees",99);
+		targetPosition =lidarSendTable.getNumber("targetPosition", 99);
 		SmartDashboard.putNumber("Ultimate Lidar Measurement", ultimateMeasurement);
 
 
@@ -95,8 +92,8 @@ public class LidarMoveAway360 extends Command {
 		
 		
 
-		//gyroTable.putNumber("gyroValue", RobotMap.headingGyro.getAngle());
-		//lidarSendTable.get("gyroValue", RobotMap.headingGyro.getAngle());
+		gyroTable.putNumber("gyroValue", RobotMap.headingGyro.getAngle());
+		lidarSendTable.putNumber("gyroValue", RobotMap.headingGyro.getAngle());
 
 
 

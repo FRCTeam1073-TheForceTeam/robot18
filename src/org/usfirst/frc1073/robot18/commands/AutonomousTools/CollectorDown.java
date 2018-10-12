@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.subsystems.*;
 /*** Lowers Collector */
 public class CollectorDown extends Command {
-boolean finished = false;
+
 	/** Lowers Collector */
 	public CollectorDown() {
 		

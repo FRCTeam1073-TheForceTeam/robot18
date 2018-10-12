@@ -19,12 +19,12 @@ public class robotPneumatic {
 	//private final boolean in = true;
 
 	public void openClaw() {
-		leftWrist.set(false);
-		rightWrist.set(true);
-	}
-	public void closeClaw() {
 		leftWrist.set(true);
 		rightWrist.set(false);
+	}
+	public void closeClaw() {
+		leftWrist.set(false);
+		rightWrist.set(true);
 	}
 	public void driveTrainHighGear() {
 		gearLow.set(false);

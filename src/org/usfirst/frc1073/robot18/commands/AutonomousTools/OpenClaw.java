@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.subsystems.*;
 /** Opens the pneumatic claw */
 public class OpenClaw extends Command {
-boolean finished = false;
+
 	protected void initialize() {
 		Robot.pneumatic.openClaw();
 	}

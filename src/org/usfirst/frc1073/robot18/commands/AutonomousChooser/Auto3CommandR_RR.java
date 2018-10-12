@@ -36,40 +36,23 @@ public class Auto3CommandR_RR extends CommandGroup {
 			System.out.println("Hello World!");
 			addSequential(new LowGearDT());
 			/*shoots in switch*/
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 135, 150));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 90, 100));
 			addSequential(new TurnWithGyro(AutoVars.TurnSpeed, 90, "counterclockwise"));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 5, 10));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 20, 25));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
-			addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 1, 2));
 			/*grabs new cube*/
-			addSequential(new ElbowFlip());
-			//addSequential(new LiftElevatorWithTime(500));
-			
-			
-			addSequential(new DropElevatorWithTime(30));
+			addSequential(new LiftElevatorWithTime(5));
+			//addParallel(new ElbowFlip());
 			
 			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
-			//addParallel(new LiftElevatorWithTime(1000));
-			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 65, 30));
-			//addSequential(new TurnToPoint(.7, 12));
-			//addSequential(new TurnToPoint(AutoVars.TurnSpeed, 50));
-			//addSequential(new CubeGetter());
-			addSequential(new OpenClaw()); //Puts collector in optimal cube collecting position //check this
-			//addSequential(new AdvancedDrive(.65,7,9));
-			addSequential(new TurnToPoint(.8, 90));
-			addSequential(new AdvancedDrive(.65,40,45));
-			addSequential(new TurnToPoint(.8, 0));
-			addSequential(new AdvancedDrive(.65,11,13));
-			addSequential(new CloseClaw());
-			//addSequential(new TurnToPoint(.8, 90));
-			addSequential(new VisionCubeTracker(230)); //Tracks cube until it is inside the collector
-			addSequential(new AdvancedDrive(.65, 10, 0)); //used to be 10
-			addParallel(new SuckInCube(1.5, 0)); //Pulls in and clamps onto cube
-			//addSequential(new AdvancedDrive(-AutoVars.ADSpeed,2,3));
-			/*shoots in switch*/
-			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 0));
-			addSequential(new LiftElevatorWithTime(75));
-			//addSequential(new AdvancedDrive(-AutoVars.ADSpeed, 2, 3));
+			addParallel(new LiftElevatorWithTimeDown(30));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 50, 50));
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, -20));
+			addSequential(new CubeGetter());
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed,10,10));
+			/*shoots in scale*/
+			addSequential(new TurnToPoint(AutoVars.TurnSpeed, 350));
+			addSequential(new AdvancedDrive(AutoVars.ADSpeed, 10, 10));
 			addSequential(new SpitOutCube(1, AutoVars.SpitOutSpeed));
 			System.out.println("Auto Completed");
 		default:

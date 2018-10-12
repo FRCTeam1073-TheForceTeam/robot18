@@ -6,7 +6,6 @@ import org.usfirst.frc1073.robot18.commands.*;
 import org.usfirst.frc1073.robot18.commands.AutonomousTools.*;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -166,10 +165,6 @@ public class OI {
         SmartDashboard.putData("Turn off Bling", new BlingOff());
         SmartDashboard.putData("Auto Test", new AutoTest());
         SmartDashboard.putData("VisionCube", new VisionCubeTracker());
-        SmartDashboard.putData("Lift", new DropElevatorWithTime(150));
-        SmartDashboard.putData("VISION!!!!", new CubeGetter());
-        
-        
         if(RobotMap.leftMotor1.get() > RobotMap.rightMotor1.get()) {
         	turnRight = false;
         	turnLeft = true;
@@ -241,12 +236,6 @@ public class OI {
         	//SmartDashboard.putString("Robot Name" , Robot.robotName.OK_Puzzles);
 
     }
-
-
-	private Sendable CubeGetter() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
 
 
