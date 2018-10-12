@@ -14,16 +14,28 @@ public class VisionCubeTracker extends Command{
 
 	edu.wpi.first.networktables.NetworkTable netTable;
 	NetworkTableInstance netTableInst;
-	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir, v;
+	public double xDelta, xWidth, yDelta, yWidth, blockCount, driveDir, v, width;
 	public String dir;
 	public boolean fullDir;
+	
+	/** Stays about 2 feet away from a cube. Will back up or move forwards and turn as necessary.
+	 * @category Autonomous
+	 * @param width (Default 110) How close to the robot the cube will be. Bigger is closer.
+	 * @author Nathaniel
+	 */
+	public VisionCubeTracker(double width) {
+		this.width = width;
+		netTableInst = NetworkTableInstance.getDefault();
+		netTable = netTableInst.getTable("TurretTable");
+	}
 
 	/** Stays about 2 feet away from a cube. Will back up or move forwards and turn as necessary.
 	 * @category Autonomous
-	 * @param None No parameters
+	 * @param width (Default 110) How close to the robot the cube will be. Bigger is closer.
 	 * @author Nathaniel
 	 */
 	public VisionCubeTracker() {
+		this.width = 110;
 		netTableInst = NetworkTableInstance.getDefault();
 		netTable = netTableInst.getTable("TurretTable");
 	}
@@ -57,14 +69,15 @@ public class VisionCubeTracker extends Command{
 		SmartDashboard.putNumber("yDelta", yDelta);
 		SmartDashboard.putNumber("yWidth", yWidth);
 		SmartDashboard.putNumber("Block Count", blockCount);
-
+		SmartDashboard.putBoolean("I see you", false);
 		// BlockCount asks the Pixy how many things it sees
 		// when it sees something, we track it
 		if (blockCount > 0) {
-
+			SmartDashboard.putBoolean("I see you", true);
 			// This code handles the left and right motion of the bot
 			// based on the Pixy's values
 			if (xDelta > 1.75 * side) {
+				
 				if (xDelta > 3 * side) {
 					dir = "Very Right";
 				}
@@ -85,11 +98,11 @@ public class VisionCubeTracker extends Command{
 			}
 
 			// If block is far away: sets motor directions
-			if (xWidth < 110) {
-				if (xWidth < 95) {
-					if (xWidth < 75) {
-						if (xWidth < 60) {
-							if (xWidth < 40) {
+			if (xWidth < width) {
+				if (xWidth < width * .9) {
+					if (xWidth < width * .775) {
+						if (xWidth < width * .65) {
+							if (xWidth < width * .4) {
 								driveDir = 1.2;
 							}
 							else {
@@ -145,14 +158,18 @@ public class VisionCubeTracker extends Command{
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		boolean finished = false;
+
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || width < xWidth) {
 		if (v > 10 && Robot.clawBool == true) {
 			SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 			finished = true;
 		}
 		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
-			SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 			finished = true;
 		}
+	}
 		return finished;
 	}
 }
+
+

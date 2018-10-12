@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc1073.robot18.subsystems.*;
 /*** Closes the pneumatic claw */
 public class CloseClaw extends Command {
-	
+	boolean finished = false;
 	/** Closes the claw */
 	public CloseClaw() {
 		
@@ -23,6 +23,7 @@ public class CloseClaw extends Command {
 	}
 	
 	protected boolean isFinished() {
+		
 		return true;
 	}
 }
