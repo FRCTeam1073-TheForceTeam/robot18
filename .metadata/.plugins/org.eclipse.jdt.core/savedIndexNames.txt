@@ -1,0 +1,8 @@
+INDEX VERSION 1.130+C:\Users\a1\Documents\GitHub\robot18\.metadata\.plugins\org.eclipse.jdt.core
+3351976123.index
+895975891.index
+2506439293.index
+2731634208.index
+246582324.index
+860784729.index
+1253483651.index
