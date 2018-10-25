@@ -70,8 +70,8 @@ public class TurnToPoint extends Command {
  	   	
    	if (originalDegrees > (turnDegrees - 15) && originalDegrees < (turnDegrees + 15) ){
     		
-    		if(loop%20==0){
-    		turnSpeedDecreased =  turnSpeedDecreased * 0.9;
+    		if(loop%20==0 && loop <= 100){
+    		turnSpeedDecreased =  turnSpeedDecreased * 0.95;
     }
     		
     	}
@@ -86,9 +86,6 @@ public class TurnToPoint extends Command {
     	
     	if (originalDegrees > (turnDegrees - 0.5) && originalDegrees < (turnDegrees + 0.5))
     	{
-    		finish = true;
-    	}
-    	if(Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true){
     		finish = true;
     	}
     	

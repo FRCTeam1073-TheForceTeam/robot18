@@ -69,14 +69,15 @@ public class VisionCubeTracker extends Command{
 		SmartDashboard.putNumber("yDelta", yDelta);
 		SmartDashboard.putNumber("yWidth", yWidth);
 		SmartDashboard.putNumber("Block Count", blockCount);
-
+		SmartDashboard.putBoolean("I see you", false);
 		// BlockCount asks the Pixy how many things it sees
 		// when it sees something, we track it
 		if (blockCount > 0) {
-
+			SmartDashboard.putBoolean("I see you", true);
 			// This code handles the left and right motion of the bot
 			// based on the Pixy's values
 			if (xDelta > 1.75 * side) {
+				
 				if (xDelta > 3 * side) {
 					dir = "Very Right";
 				}
@@ -157,14 +158,18 @@ public class VisionCubeTracker extends Command{
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		boolean finished = false;
+
+		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true || width < xWidth) {
 		if (v > 10 && Robot.clawBool == true) {
 			SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 			finished = true;
 		}
 		if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
-			SmartDashboard.putBoolean("clawBool", Robot.clawBool);
 			finished = true;
 		}
+	}
 		return finished;
 	}
 }
+
+

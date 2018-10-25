@@ -4,16 +4,21 @@ import org.usfirst.frc1073.robot18.Robot;
 import org.usfirst.frc1073.robot18.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class LiftElevatorWithTime extends Command {
 
-	double time;
+
+	double timeStart = 0;
+	double timeFinished;
+	boolean finished = false;
+
 	
-	public LiftElevatorWithTime(double time) {
-		this.time = time*20;
+	public LiftElevatorWithTime(double endTime) {
+		this.timeFinished = endTime;
 	}
 	
     protected void initialize() {
@@ -23,21 +28,22 @@ public class LiftElevatorWithTime extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	int plus = 0;
-    	while(plus < time) {
+
     		Robot.elevator.elevatorDrive.tankDrive(1, -1);
-    		plus = plus + 1;
-    		if(plus == time) {
-    			break;
-    		}
-    	}
+    		timeStart=timeStart+1;
+    		SmartDashboard.putNumber("LIFTUP", timeStart);
     	
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+    	if(timeStart>= timeFinished) {
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
     }
 
     // Called once after isFinished returns true

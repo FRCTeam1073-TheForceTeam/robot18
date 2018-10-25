@@ -60,6 +60,9 @@ public class LiftElevatorToDistanceScale extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	boolean finish = false;
+    	if (Robot.oi.driverCancel.get() == true || Robot.oi.operatorCancel.get() == true) {
+			finish = true;
+		}
     	if(up == false){
 	    	if((Math.abs(distance)) <= target){
 	    		finish = true;
@@ -76,6 +79,7 @@ public class LiftElevatorToDistanceScale extends Command {
     	if(inches == 0 && !RobotMap.liftSwitchBottom.get()) finish = true;
     	//if(!RobotMap.liftSwitchTop.get()) finish = true;
         return finish;
+        
     }
 
     
